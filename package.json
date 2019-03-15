@@ -19,5 +19,8 @@
   "keywords": [
     "vue",
     "ui"
-  ]
+  ],
+  "dependencies": {
+    "vue": "^2.6.9"
+  }
 }
