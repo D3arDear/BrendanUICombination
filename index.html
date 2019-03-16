@@ -32,8 +32,19 @@
 	</head>
 	<body>
 		<div id="app">
-			<g-button icon="setting">设置</g-button>
-			<g-button icon="setting" iconposition="right">设置</g-button>
+			<g-button
+				icon="setting"
+				:loading="loading1"
+				@click="loading1 = !loading1"
+				>设置</g-button
+			>
+			<g-button
+				icon="setting"
+				iconposition="right"
+				:loading="loading2"
+				@click="loading2 = !loading2"
+				>设置</g-button
+			>
 		</div>
 		<script src="./src/app.js"></script>
 		<script src="//at.alicdn.com/t/font_1091935_zazcdwk2aza.js"></script>
