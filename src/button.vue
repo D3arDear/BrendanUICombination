@@ -24,9 +24,7 @@ export default {
       }
     }
   },
-  methods: {
-    x() {}
-  }
+  methods: {}
 };
 </script>
 
