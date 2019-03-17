@@ -23740,93 +23740,102 @@ new _vue.default({
   }
 }); // 单元测试
 
-var expect = _chai.default.expect;
-
 _chai.default.use(_chaiSpies.default);
 
-{
-  var Constructor = _vue.default.extend(_button.default);
+var expect = _chai.default.expect;
 
-  var vm = new Constructor({
-    propsData: {
-      icon: "setting"
-    }
+try {
+  {
+    // 测试按钮含有 icon
+    var Constructor = _vue.default.extend(_button.default);
+
+    var vm = new Constructor({
+      propsData: {
+        icon: "setting"
+      }
+    });
+    vm.$mount();
+    var useElement = vm.$el.querySelector("use");
+    expect(useElement.getAttribute("xlink:href")).to.eq("#i-setting");
+    vm.$el.remove();
+    vm.$destroy();
+  }
+  {
+    var _Constructor = _vue.default.extend(_button.default);
+
+    var _vm = new _Constructor({
+      propsData: {
+        icon: "setting",
+        loading: true
+      }
+    });
+
+    _vm.$mount();
+
+    var _useElement = _vm.$el.querySelector("use");
+
+    var href = _useElement.getAttribute("xlink:href");
+
+    expect(href).to.eq("#i-loading");
+
+    _vm.$el.remove();
+
+    _vm.$destroy();
+  }
+  {
+    var div = document.createElement("div");
+    document.body.appendChild(div);
+
+    var _Constructor2 = _vue.default.extend(_button.default);
+
+    var _vm2 = new _Constructor2({
+      propsData: {
+        icon: "setting",
+        loading: true,
+        iconposition: "right"
+      }
+    });
+
+    _vm2.$mount(div);
+
+    var svg = _vm2.$el.querySelector("svg");
+
+    var _window$getComputedSt = window.getComputedStyle(svg),
+        order = _window$getComputedSt.order;
+
+    expect(order).to.eq("2");
+
+    _vm2.$el.remove();
+
+    _vm2.$destroy();
+  } // click 事件测试
+
+  {
+    var _Constructor3 = _vue.default.extend(_button.default);
+
+    var _vm3 = new _Constructor3({
+      propsData: {
+        icon: "setting"
+      }
+    });
+
+    _vm3.$mount();
+
+    var spy = _chai.default.spy(function () {});
+
+    _vm3.$on("click", spy); // 希望这个函数被执行
+
+
+    var button = _vm3.$el;
+    button.click();
+    expect(spy).to.have.been.called();
+  }
+} catch (error) {
+  window.errors = [error];
+} finally {
+  window.errors && window.errors.forEach(function (error) {
+    console.error(error.message);
   });
-  vm.$mount();
-  var useElement = vm.$el.querySelector("use");
-  expect(useElement.getAttribute("xlink:href")).to.eq("#i-setting");
-  vm.$el.remove();
-  vm.$destroy();
-}
-{
-  var _Constructor = _vue.default.extend(_button.default);
-
-  var _vm = new _Constructor({
-    propsData: {
-      icon: "setting",
-      loading: true
-    }
-  });
-
-  _vm.$mount();
-
-  var _useElement = _vm.$el.querySelector("use");
-
-  var href = _useElement.getAttribute("xlink:href");
-
-  expect(href).to.eq("#i-loading");
-
-  _vm.$el.remove();
-
-  _vm.$destroy();
-}
-{
-  var div = document.createElement("div");
-  document.body.appendChild(div);
-
-  var _Constructor2 = _vue.default.extend(_button.default);
-
-  var _vm2 = new _Constructor2({
-    propsData: {
-      icon: "setting",
-      loading: true,
-      iconposition: "right"
-    }
-  });
-
-  _vm2.$mount(div);
-
-  var svg = _vm2.$el.querySelector("svg");
-
-  var _window$getComputedSt = window.getComputedStyle(svg),
-      order = _window$getComputedSt.order;
-
-  expect(order).to.eq("2");
-
-  _vm2.$el.remove();
-
-  _vm2.$destroy();
-} // click 事件测试
-
-{
-  var _Constructor3 = _vue.default.extend(_button.default);
-
-  var _vm3 = new _Constructor3({
-    propsData: {
-      icon: "setting"
-    }
-  });
-
-  _vm3.$mount();
-
-  var spy = _chai.default.spy(function () {});
-
-  _vm3.$on("click", spy); // 希望这个函数被执行
-
-
-  var button = _vm3.$el;
-  button.click();
-  expect(spy).to.have.been.called();
 }
 },{"vue":"node_modules/vue/dist/vue.common.js","./button":"src/button.vue","./icon":"src/icon.vue","./button-group":"src/button-group.vue","chai":"node_modules/chai/index.js","chai-spies":"node_modules/chai-spies/chai-spies.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
