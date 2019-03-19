@@ -1,6 +1,6 @@
 {
 	"name": "zealot-ui-primarydemo",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "这是一个UI框架(自用)",
 	"main": "dist/index.js",
 	"scripts": {
