@@ -58,12 +58,6 @@ export default {
 }
 ```
 
-### 引入 svg symbols
-
-```html
-<script src="//at.alicdn.com/t/font_1091935_zazcdwk2aza.js"></script>
-```
-
 ## 文档
 
 ## 提问
