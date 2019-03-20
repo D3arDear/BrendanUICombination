@@ -36,13 +36,17 @@
 	</head>
 	<body>
 		<div id="app">
-			<div class="box">
+			<!-- <div class="box">
 				<g-input value="测试"></g-input>
 				<g-input value="不可用" disabled></g-input>
 				<g-input value="只读" readonly></g-input>
 			</div>
 			<div class="box">
 				<g-input value="错误" error="这里有个错误"></g-input>
+			</div>
+ -->
+			<div class="box">
+				<g-input value="change" @change="inputChange"></g-input>
 			</div>
 			<div class="box" style="margin-top: 20px;">
 				<g-button
