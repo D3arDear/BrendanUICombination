@@ -9,10 +9,11 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import Icon from './icon'
-Vue.component('g-icon',Icon)
+import Vue from "vue";
+import Icon from "./icon";
+Vue.component("g-icon", Icon);
 export default {
+  name: "zealotButton",
   props: {
     icon: {},
     loading: {
@@ -31,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes spin {
   0% {
     transform: rotate(0deg);
