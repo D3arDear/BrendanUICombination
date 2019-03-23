@@ -26,7 +26,6 @@ export default {
     },
     rowClass() {
       let { align } = this;
-      console.log(align);
       return [align && `align-${align}`];
     }
   },
@@ -41,6 +40,7 @@ export default {
 <style lang="scss">
 .row {
   display: flex;
+  flex-wrap: wrap;
   &.align-left {
     justify-content: flex-start;
   }

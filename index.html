@@ -51,9 +51,24 @@
 	<body>
 		<div id="app">
 			<g-row>
-				<g-col class="demoBox" span="14"></g-col>
-				<g-col class="demoBox" span="6"></g-col>
-				<g-col class="demoBox" span="4"></g-col>
+				<g-col
+					class="demoBox"
+					span="6"
+					:phone="{span:24,offset:1}"
+					:pad="{span:8,offset:1}"
+					:narrow-Pc="{span:7,offset:1}"
+					:pc="{span:6, offset:1}"
+					:wide-Pc="{span:5, offset:1}"
+				></g-col>
+				<g-col
+					class="demoBox"
+					span="18"
+					:phone="{span:24}"
+					:pad="{span:15}"
+					:narrow-Pc="{span:16}"
+					:pc="{span:17}"
+					:wide-Pc="{span:18}"
+				></g-col>
 			</g-row>
 			<div class="box">
 				<g-input value="测试" v-model="message"></g-input>
