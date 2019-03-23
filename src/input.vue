@@ -59,6 +59,7 @@ $font-size: 16px;
   font-size: $font-size;
   display: inline-block;
   align-items: center;
+  vertical-align: middle;
   &.error {
     > input {
       border-color: #ff000080;

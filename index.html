@@ -11,6 +11,7 @@
 				padding: 0;
 				box-sizing: border-box;
 			}
+
 			:root {
 				--button-height: 32px;
 				--font-size: 16px;
@@ -21,9 +22,11 @@
 				--border-color: #999;
 				--border-color-hover: #666;
 			}
+
 			#app {
 				margin: 20px;
 			}
+
 			body {
 				font-size: var(--font-size);
 			}
@@ -34,8 +37,28 @@
 			}
 		</style>
 	</head>
+
 	<body>
 		<div id="app">
+			<g-row>
+				<g-col></g-col>
+				<g-col></g-col>
+				<g-col></g-col>
+				<g-col></g-col>
+			</g-row>
+			<g-row>
+				<g-col></g-col>
+				<g-col></g-col>
+				<g-col></g-col>
+			</g-row>
+			<g-row>
+				<g-col span="2"></g-col>
+				<g-col span="22"></g-col>
+			</g-row>
+			<g-row>
+				<g-col span="4"></g-col>
+				<g-col span="20"></g-col>
+			</g-row>
 			<div class="box">
 				<g-input value="测试" v-model="message"></g-input>
 				<g-input value="不可用" disabled></g-input>
