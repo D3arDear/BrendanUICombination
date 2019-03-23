@@ -39,26 +39,28 @@
 	</head>
 
 	<body>
-		<div id="app">
-			<g-row>
+		<div id="app" style="border: 1px solid purple">
+			<g-row gutter="20">
 				<g-col></g-col>
 				<g-col></g-col>
 				<g-col></g-col>
 				<g-col></g-col>
 			</g-row>
-			<g-row>
+			<g-row gutter="40">
 				<g-col></g-col>
 				<g-col></g-col>
 				<g-col></g-col>
 			</g-row>
 			<g-row>
 				<g-col span="2"></g-col>
-				<g-col span="22"></g-col>
+				<g-col span="22" :offset="1"></g-col>
 			</g-row>
-			<g-row>
-				<g-col span="4"></g-col>
-				<g-col span="20"></g-col>
+			<g-row gutter="10">
+				<g-col span="3"></g-col>
+				<g-col span="8"></g-col>
+				<g-col :offset="1"></g-col>
 			</g-row>
+
 			<div class="box">
 				<g-input value="测试" v-model="message"></g-input>
 				<g-input value="不可用" disabled></g-input>
