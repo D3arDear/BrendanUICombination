@@ -6,6 +6,9 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Zealot的VueUI框架</title>
 		<style>
+			img {
+				max-width: 100%;
+			}
 			* {
 				margin: 0;
 				padding: 0;
@@ -35,32 +38,23 @@
 			.box {
 				margin: 20px;
 			}
+			.demoBox {
+				background: gray;
+				border: 1px solid black;
+			}
+			.logo-wrapper {
+				padding: 10px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div id="app">
-			<g-row gutter="20">
-				<g-col></g-col>
-				<g-col></g-col>
-				<g-col></g-col>
-				<g-col></g-col>
-			</g-row>
-			<g-row gutter="40">
-				<g-col></g-col>
-				<g-col></g-col>
-				<g-col></g-col>
-			</g-row>
 			<g-row>
-				<g-col span="2"></g-col>
-				<g-col span="22" :offset="1"></g-col>
+				<g-col class="demoBox" span="14"></g-col>
+				<g-col class="demoBox" span="6"></g-col>
+				<g-col class="demoBox" span="4"></g-col>
 			</g-row>
-			<g-row gutter="10">
-				<g-col span="3"></g-col>
-				<g-col span="8"></g-col>
-				<g-col :offset="1"></g-col>
-			</g-row>
-
 			<div class="box">
 				<g-input value="测试" v-model="message"></g-input>
 				<g-input value="不可用" disabled></g-input>
