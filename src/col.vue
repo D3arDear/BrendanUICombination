@@ -46,16 +46,32 @@ export default {
       gutter: 0
     };
   },
+  methods: {
+    selectClass(spanAndOffSet, string = "") {
+      // ipad- or pc-
+      if (!spanAndOffSet) {
+        return [];
+      }
+      let array = [];
+      if (spanAndOffSet.span) {
+        array.push(`col-${string}${spanAndOffSet.span}`);
+      }
+      if (spanAndOffSet.offset) {
+        array.push(`offset-${string}${spanAndOffSet.offset}`);
+      }
+      return array;
+    }
+  },
   computed: {
     colClass() {
       let { span, offset, pad, narrowPc, pc, widePc } = this;
+      let selectClass = this.selectClass;
       return [
-        span && `col-${span}`,
-        offset && `offset-${offset}`,
-        ...(pad ? [`col-pad-${pad.span}`] : []),
-        ...(narrowPc ? [`col-narrow-pc-${narrowPc.span}`] : []),
-        ...(pc ? [`col-pc-${pc.span}`] : []),
-        ...(widePc ? [`col-wide-pc-${widePc.span}`] : [])
+        ...selectClass({ span, offset }),
+        ...selectClass(pad, "pad-"),
+        ...selectClass(narrowPc, "narrow-pc-"),
+        ...selectClass(pc, "pc-"),
+        ...selectClass(widePc, "wide-pc-")
       ];
     },
     colStyle() {
@@ -83,7 +99,7 @@ export default {
       margin-left: ($n/24) * 100%;
     }
   }
-  @media (min-width: 577px)  {
+  @media (min-width: 577px) {
     $class-prefix: col-pad-;
     @for $n from 1 through 24 {
       &.#{$class-prefix}#{$n} {
@@ -97,7 +113,7 @@ export default {
       }
     }
   }
-  @media (min-width: 769px)  {
+  @media (min-width: 769px) {
     $class-prefix: col-narrow-pc-;
     @for $n from 1 through 24 {
       &.#{$class-prefix}#{$n} {
@@ -111,7 +127,7 @@ export default {
       }
     }
   }
-  @media (min-width: 993px)  {
+  @media (min-width: 993px) {
     $class-prefix: col-pc-;
     @for $n from 1 through 24 {
       &.#{$class-prefix}#{$n} {
