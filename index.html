@@ -41,9 +41,7 @@
 			.demoBox {
 				background: gray;
 				border: 1px solid black;
-			}
-			.logo-wrapper {
-				padding: 10px;
+				height: 100px;
 			}
 		</style>
 	</head>
@@ -51,21 +49,19 @@
 	<body>
 		<div id="app">
 			<g-row>
-				<g-col
-					class="demoBox"
-					span="6"
-					:pad="{span:8,offset:1}"
-					:narrow-Pc="{span:7,offset:1}"
-					:pc="{span:6, offset:1}"
-					:wide-Pc="{span:5, offset:1}"
+				<g-col span="24" :pad="{span:12}" :narrow-pc="{span:8}"
+					><div class="demoBox"></div
 				></g-col>
-				<g-col
-					class="demoBox"
-					span="18"
-					:pad="{span:15}"
-					:narrow-Pc="{span:16}"
-					:pc="{span:17}"
-					:wide-Pc="{span:18}"
+				<g-col span="24" :pad="{span:12}" :narrow-pc="{span:8}"
+					><div class="demoBox"></div></g-col
+				><g-col span="24" :pad="{span:12}" :narrow-pc="{span:8}"
+					><div class="demoBox"></div></g-col
+				><g-col span="24" :pad="{span:12}" :narrow-pc="{span:8}"
+					><div class="demoBox"></div></g-col
+				><g-col span="24" :pad="{span:12}" :narrow-pc="{span:8}"
+					><div class="demoBox"></div></g-col
+				><g-col span="24" :pad="{span:12}" :narrow-pc="{span:8}"
+					><div class="demoBox"></div
 				></g-col>
 			</g-row>
 			<div class="box">
