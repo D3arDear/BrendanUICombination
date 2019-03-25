@@ -43,6 +43,10 @@
 				border: 1px solid black;
 				height: 100px;
 			}
+			.demo {
+				border: 1px solid gray;
+				min-height: 100px;
+			}
 		</style>
 	</head>
 
@@ -98,7 +102,17 @@
 					<g-button icon="right" iconposition="right">前进</g-button>
 				</g-button-group>
 			</div>
-			<div id="test"></div>
+
+			<div id="layoutTest">
+				<g-layout style="height:100vh">
+					<g-sider class="demo">sider</g-sider>
+					<g-layout>
+						<g-header class="demo">header</g-header>
+						<g-content class="demo">content</g-content>
+						<g-footer class="demo">footer</g-footer>
+					</g-layout>
+				</g-layout>
+			</div>
 		</div>
 		<script src="./src/app.js"></script>
 	</body>
