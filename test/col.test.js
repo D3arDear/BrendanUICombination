@@ -1,6 +1,5 @@
 const expect = chai.expect
 import Vue from "vue"
-import Row from "../src/row"
 import Col from "../src/col"
 import { ifError } from "assert"
 
