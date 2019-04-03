@@ -39,11 +39,13 @@ new Vue({
 			let inputElement = this.$el.querySelector("input")
 			inputElement.dispatchEvent(event)
 		}, 3000)
-		this.$toast()
 	},
 	methods: {
 		inputChange(e) {
 			console.log(e)
+		},
+		showToast() {
+			this.$toast("这里是message")
 		}
 	}
 })
