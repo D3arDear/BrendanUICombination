@@ -44,10 +44,19 @@ new Vue({
 		inputChange(e) {
 			console.log(e)
 		},
-		showToast() {
+		showToastT() {
+			this.showToast("top")
+		},
+		showToastM() {
+			this.showToast("middle")
+		},
+		showToastB() {
+			this.showToast("bottom")
+		},
+		showToast(position) {
 			this.$toast(`<strong style="color:red;">${parseInt(Math.random() * 100)}</strong> 个 message 未读`, {
 				enableHTML: true,
-				position: "middle",
+				position,
 				closeButton: {
 					text: "关闭",
 					callback(toast) {

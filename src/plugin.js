@@ -21,7 +21,7 @@ export default {
 }
 
 /* helpers */
-function createToast({ Vue, propsData, message }) {
+function createToast({ Vue, propsData, message, onClose }) {
 	let Constructor = Vue.extend(Toast)
 	let toast = new Constructor({
 		propsData
