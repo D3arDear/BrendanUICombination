@@ -1,5 +1,5 @@
 <template>
-  <div class="toast" ref="toast">
+  <div class="toast" ref="toast" :class="toastClasses">
     <div class="message">
       <slot v-if="!enableHTML"></slot>
       <div v-else v-html="$slots.default[0]"></div>
@@ -32,11 +32,23 @@ export default {
     enableHTML: {
       type: Boolean,
       default: false
+    },
+    position: {
+      type: String,
+      default: "top",
+      validator(value) {
+        return ["top", "bottom", "middle"].indexOf(value) >= 0;
+      }
     }
   },
   mounted() {
     this.updateStyles();
     this.execAutoClose();
+  },
+  computed: {
+    toastClasses() {
+      return { [`position-${this.position}`]: true };
+    }
   },
   methods: {
     execAutoClose() {
@@ -80,12 +92,11 @@ $box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
   }
   position: fixed;
   line-height: 1.8;
-  top: 0;
   border-radius: 2px;
-  left: 50%;
+
   color: #eeeeee;
   padding: 0 16px;
-  transform: translateX(-50%);
+  left: 50%;
   font-size: $font-size;
   line-height: 1.8;
   min-height: $toast-min-height;
@@ -94,15 +105,28 @@ $box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
   background: $toast-bg;
   box-shadow: $box-shadow;
   white-space: wrap;
-}
-.close {
-  flex-shrink: 0;
-  padding-left: 16px;
-  cursor: pointer;
-}
-.line {
-  border-left: 1px solid #151515;
-  margin-left: 16px;
+  .close {
+    flex-shrink: 0;
+    padding-left: 16px;
+    cursor: pointer;
+  }
+  .line {
+    border-left: 1px solid #151515;
+    margin-left: 16px;
+  }
+  &.position-top {
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+  }
+  &.position-bottom {
+    transform: translateX(-50%);
+    bottom: 0;
+  }
+  &.position-middle {
+    transform: translate(-50%, -50%);
+    top: 50%;
+  }
 }
 </style>
 
