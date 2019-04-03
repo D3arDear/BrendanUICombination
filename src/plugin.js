@@ -8,7 +8,14 @@ export default {
 			if (currentToast) {
 				currentToast.close()
 			}
-			currentToast = createToast({ Vue, message, propsData: toastOptions }) // 新建一个函数
+			currentToast = createToast({
+				Vue,
+				message,
+				propsData: toastOptions,
+				onClose: () => {
+					currentToast = null
+				}
+			}) // 新建一个函数
 		}
 	}
 }
@@ -21,6 +28,7 @@ function createToast({ Vue, propsData, message }) {
 	})
 	toast.$slots.default = [message]
 	toast.$mount()
+	toast.$on("close", onClose)
 	document.body.appendChild(toast.$el)
 	return toast
 }
