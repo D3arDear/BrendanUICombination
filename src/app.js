@@ -45,7 +45,8 @@ new Vue({
 			console.log(e)
 		},
 		showToast() {
-			this.$toast("这这里是message", {
+			this.$toast(`<strong style="color:red;">${parseInt(Math.random() * 100)}</strong> 个 message 未读`, {
+				enableHTML: true,
 				position: "middle",
 				closeButton: {
 					text: "关闭",
