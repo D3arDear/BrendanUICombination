@@ -1,6 +1,6 @@
 {
 	"name": "zealot-ui-primarydemo",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "这是一个UI框架(自用)",
 	"main": "dist/index.js",
 	"scripts": {
@@ -24,6 +24,7 @@
 		"ui"
 	],
 	"dependencies": {
+		"user": "0.0.0",
 		"vue": "^2.6.9",
 		"vue-hot-reload-api": "^2.3.3"
 	},

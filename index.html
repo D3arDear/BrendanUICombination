@@ -25,9 +25,6 @@
 				--border-color: #999;
 				--border-color-hover: #666;
 			}
-
-			#app {
-			}
 			body {
 				font-size: var(--font-size);
 			}
@@ -55,7 +52,9 @@
 					<g-button>更多</g-button>
 					<g-button icon="right" iconposition="right">前进</g-button>
 				</g-button-group>
-				<g-button @click="showToast">show Toast</g-button>
+				<g-button @click="showToastT">show Toast top</g-button>
+				<g-button @click="showToastM">show Toast middle</g-button>
+				<g-button @click="showToastB">show Toast bottom</g-button>
 			</div>
 		</div>
 		<script src="./src/app.js"></script>
