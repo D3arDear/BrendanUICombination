@@ -45,7 +45,7 @@ new Vue({
 			console.log(e)
 		},
 		showToast() {
-			this.$toast("<strong>这里是message</strong>", {
+			this.$toast("这这里是message", {
 				closeButton: {
 					text: "关闭",
 					callback(toast) {

@@ -1,7 +1,10 @@
 <template>
-  <div class="toast">
-    <slot></slot>
-    <div class="line"></div>
+  <div class="toast" ref="toast">
+    <div class="message">
+      <slot v-if="!enableHTML"></slot>
+      <div v-else v-html="$slots.default[0]"></div>
+    </div>
+    <div class="line" ref="line"></div>
     <span class="close" v-if="closeButton" @click="onClickClose">
       {{ closeButton.text }}
     </span>
@@ -17,7 +20,7 @@ export default {
     },
     autoCloseDelay: {
       type: Number,
-      default: 3
+      default: 20
     },
     closeButton: {
       type: Object,
@@ -25,16 +28,31 @@ export default {
         text: "关闭",
         callback: undefined
       })
+    },
+    enableHTML: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
-    if (this.autoClose) {
-      setTimeout(() => {
-        this.close();
-      }, this.autoCloseDelay * 1000);
-    }
+    this.updateStyles();
+    this.execAutoClose();
   },
   methods: {
+    execAutoClose() {
+      if (this.autoClose) {
+        setTimeout(() => {
+          this.close();
+        }, this.autoCloseDelay * 1000);
+      }
+    },
+    updateStyles() {
+      this.$nextTick(() => {
+        this.$refs.line.style.height = `${
+          this.$refs.toast.getBoundingClientRect().height
+        }px`;
+      });
+    },
     close() {
       this.$el.remove();
       this.$destroy;
@@ -53,11 +71,15 @@ export default {
 </script>
 <style lang="scss">
 $font-size: 14px;
-$toast-height: 40px;
+$toast-min-height: 40px;
 $toast-bg: #222020c2;
 $box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
 .toast {
+  .message {
+    padding: 8px 0;
+  }
   position: fixed;
+  line-height: 1.8;
   top: 0;
   border-radius: 2px;
   left: 50%;
@@ -66,19 +88,20 @@ $box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
   transform: translateX(-50%);
   font-size: $font-size;
   line-height: 1.8;
-  height: $toast-height;
+  min-height: $toast-min-height;
   display: flex;
   align-items: center;
   background: $toast-bg;
   box-shadow: $box-shadow;
+  white-space: wrap;
 }
 .close {
+  flex-shrink: 0;
   padding-left: 16px;
   cursor: pointer;
 }
 .line {
-  height: 100%;
-  border-left: 1px solid #8a8a8a;
+  border-left: 1px solid #151515;
   margin-left: 16px;
 }
 </style>
