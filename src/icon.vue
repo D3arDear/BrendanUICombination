@@ -1,16 +1,16 @@
 <template>
-  <svg class="g-icon"> 
+  <svg class="z-icon">
     <use v-bind:xlink:href="`#i-${name}`"></use>
   </svg>
 </template>
 <script>
-import './svg.js'
+import "./svg.js";
 export default {
   props: ["name"]
 };
 </script>
 <style lang="scss">
-.g-icon {
+.z-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;

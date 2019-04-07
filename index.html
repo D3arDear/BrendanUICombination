@@ -34,27 +34,27 @@
 	<body>
 		<div id="app">
 			<div class="box">
-				<g-input value="测试" v-model="message"></g-input>
-				<g-input value="不可用" disabled></g-input>
-				<g-input value="只读" readonly></g-input>
+				<z-input value="测试" v-model="message"></z-input>
+				<z-input value="不可用" disabled></z-input>
+				<z-input value="只读" readonly></z-input>
 			</div>
 			<div class="box">
-				<g-input value="错误" error="这里有个错误"></g-input>
+				<z-input value="错误" error="这里有个错误"></z-input>
 			</div>
 			<div class="box">
-				<g-input value="change" @change="inputChange"></g-input>
+				<z-input value="change" @change="inputChange"></z-input>
 			</div>
 			<div class="box" style="margin-top: 20px;">
-				<g-button icon="setting" :loading="loading1" @click="loading1 = !loading1">设置</g-button>
-				<g-button icon="setting" iconposition="right" :loading="loading2" @click="loading2 = !loading2">设置</g-button>
-				<g-button-group>
-					<g-button icon="left">后退</g-button>
-					<g-button>更多</g-button>
-					<g-button icon="right" iconposition="right">前进</g-button>
-				</g-button-group>
-				<g-button @click="showToastT">show Toast top</g-button>
-				<g-button @click="showToastM">show Toast middle</g-button>
-				<g-button @click="showToastB">show Toast bottom</g-button>
+				<z-button icon="setting" :loading="loading1" @click="loading1 = !loading1">设置</z-button>
+				<z-button icon="setting" iconposition="right" :loading="loading2" @click="loading2 = !loading2">设置</z-button>
+				<z-button-group>
+					<z-button icon="left">后退</z-button>
+					<z-button>更多</z-button>
+					<z-button icon="right" iconposition="right">前进</z-button>
+				</z-button-group>
+				<z-button @click="showToastT">show Toast top</z-button>
+				<z-button @click="showToastM">show Toast middle</z-button>
+				<z-button @click="showToastB">show Toast bottom</z-button>
 			</div>
 		</div>
 		<script src="./src/app.js"></script>

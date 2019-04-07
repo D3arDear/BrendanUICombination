@@ -1,11 +1,11 @@
 <template>
   <button
-    class="g-button"
+    class="z-button"
     :class="{ [`icon-${iconposition}`]: true }"
     @click="$emit('click')"
   >
-    <g-icon class="icon loading" name="loading" v-if="loading"></g-icon>
-    <g-icon class="icon" v-if="icon && !loading" :name="icon"></g-icon>
+    <z-icon class="icon loading" name="loading" v-if="loading"></z-icon>
+    <z-icon class="icon" v-if="icon && !loading" :name="icon"></z-icon>
     <div class="content">
       <slot></slot>
     </div>
@@ -15,7 +15,7 @@
 <script>
 import Vue from "vue";
 import Icon from "./icon";
-Vue.component("g-icon", Icon);
+Vue.component("z-icon", Icon);
 export default {
   name: "zealotButton",
   props: {
@@ -45,7 +45,7 @@ export default {
     transform: rotate(360deg);
   }
 }
-.g-button {
+.z-button {
   font-size: var(--font-size);
   height: var(--button-height);
   padding: 0 1em;

@@ -52,8 +52,8 @@ export default {
 	name: "app",
 	components: {
 		HelloWorld,
-		"g-button": Button,
-		"g-icon": Icon
+		"z-button": Button,
+		"z-icon": Icon
 	}
 }
 ```

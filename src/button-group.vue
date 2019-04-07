@@ -1,5 +1,5 @@
 <template>
-  <div class="g-button-group">
+  <div class="z-button-group">
     <slot></slot>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
       let name = node.nodeName.toLowerCase();
       if (name !== "button") {
         console.warn(
-          `g-button-group 的子元素应该全是 button,似乎您写的是 <${name}>。`
+          `z-button-group 的子元素应该全是 button,似乎您写的是 <${name}>。`
         );
       }
     }
@@ -21,10 +21,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.g-button-group {
+.z-button-group {
   display: inline-flex;
   vertical-align: middle;
-  > .g-button {
+  > .z-button {
     border-radius: 0;
     &:not(:first-child) {
       margin-left: -1px;
