@@ -40,7 +40,7 @@ html {
 
 ### 安装
 
-`npm i -S zealot-ui-primarydemo`
+`yarn i -S zealot-ui-primarydemo`
 
 ### 引入
 

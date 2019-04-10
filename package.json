@@ -1,10 +1,11 @@
 {
 	"name": "zealot-ui-primarydemo",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "这是一个UI框架(自用)",
 	"main": "dist/index.js",
 	"scripts": {
-		"start": "parcel ./index.html --no-cache",
+    "start": "parcel ./index.html --no-cache",
+    "build":"npx parcel build index.js --no-minify",
 		"test-p": "npx parcel watch ./index.html test/* --no-cache",
 		"test-k": "npx karma start",
 		"test": "parcel build ./index.html test/* --no-cache --no-minify && karma start --single-run"
