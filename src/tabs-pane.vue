@@ -5,7 +5,14 @@
 </template>
 <script>
 export default {
-  name: "zealotTbas-pane"
+  name: "zealotTbas-pane",
+  inject: ["eventBus"],
+  created() {
+    this.eventBus.$on("update:selected", name => {
+      console.log(name);
+    });
+  },
+  methods: {}
 };
 </script>
 <style lang="scss" scoped>

@@ -5,7 +5,9 @@
 </template>
 <script>
 export default {
-  name: "zealotTbas-body"
+  name: "zealotTbas-body",
+  inject: ["eventBus"],
+  created() {}
 };
 </script>
 <style lang="scss" scoped>
