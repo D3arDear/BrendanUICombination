@@ -4,8 +4,8 @@
 	"description": "这是一个UI框架(自用)",
 	"main": "dist/index.js",
 	"scripts": {
-    "start": "parcel ./index.html --no-cache",
-    "build":"npx parcel build index.js --no-minify",
+		"start": "parcel ./index.html --no-cache",
+		"build": "npx parcel build index.js --no-minify",
 		"test-p": "npx parcel watch ./index.html test/* --no-cache",
 		"test-k": "npx karma start",
 		"test": "parcel build ./index.html test/* --no-cache --no-minify && karma start --single-run"
@@ -25,6 +25,7 @@
 		"ui"
 	],
 	"dependencies": {
+		"normalize.css": "^8.0.1",
 		"user": "0.0.0",
 		"vue": "^2.6.9",
 		"vue-hot-reload-api": "^2.3.3"

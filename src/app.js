@@ -17,6 +17,7 @@ import TabsHead from "./tabs-head"
 import TabsBody from "./tabs-body"
 import TabsItem from "./tabs-item"
 import TabsPane from "./tabs-pane"
+import normalize from "normalize.css"
 Vue.component("z-button", Button)
 Vue.component("z-icon", Icon)
 Vue.component("z-button-group", ButtonGroup)
@@ -35,6 +36,7 @@ Vue.component("z-tabs-body", TabsBody)
 Vue.component("z-tabs-item", TabsItem)
 Vue.component("z-tabs-pane", TabsPane)
 Vue.use(plugin)
+Vue.use(normalize)
 
 new Vue({
 	el: "#app",
@@ -42,7 +44,7 @@ new Vue({
 		loading1: false,
 		loading2: false,
 		message: "hi",
-		selectedTab: "sports"
+		selectedTab: "pc"
 	},
 	created() {
 		setTimeout(() => {
