@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "zealotTbas-item",
+  name: "zealotTabs-item",
   inject: ["eventBus"],
   data() {
     return {
@@ -36,12 +36,13 @@ export default {
   },
   methods: {
     selectTab() {
-      this.eventBus.$emit("update:selected", this.name);
+      this.eventBus.$emit("update:selected", this.name, this);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+$color: rgb(255, 103, 57);
 .tabs-item {
   flex-shrink: 0;
   padding: 0 2em;
@@ -50,7 +51,7 @@ export default {
   align-items: center;
   cursor: pointer;
   &.active {
-    background: red;
+    color: $color;
   }
 }
 </style>

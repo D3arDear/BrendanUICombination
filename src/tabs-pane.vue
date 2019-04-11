@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: "zealotTbas-pane",
+  name: "zealotTabs-pane",
   inject: ["eventBus"],
   data() {
     return {
@@ -34,7 +34,6 @@ export default {
 <style lang="scss" scoped>
 .tabs-pane {
   &.active {
-    background: red;
   }
 }
 </style>
