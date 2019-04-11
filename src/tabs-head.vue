@@ -11,10 +11,14 @@
 export default {
   name: "zealotTabs-head",
   inject: ["eventBus"],
-  created() {
+  data() {
+    return {};
+  },
+  mounted() {
     this.eventBus.$on("update:selected", (item, vm) => {
-      console.log(item);
-      console.log(vm);
+      let { width, height, top, left } = vm.$el.getBoundingClientRect();
+      this.$refs.line.style.width = `${width}px`;
+      this.$refs.line.style.left = `${left}px`;
     });
   }
 };
@@ -33,7 +37,7 @@ $color: rgb(255, 103, 57);
     position: absolute;
     bottom: 0;
     border-bottom: 1px solid $color;
-    width: 100px;
+    transition: all 250ms linear;
   }
   > .actions-wrapper {
     margin-left: auto;

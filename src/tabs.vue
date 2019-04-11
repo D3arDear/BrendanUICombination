@@ -33,18 +33,16 @@ export default {
   mounted() {
     this.$children.forEach(vm => {
       if (vm.$options.name === "zealotTabs-head") {
-        vm.$children.forEach(item => {
+        vm.$children.forEach(childVm => {
           if (
-            item.$options.name === "zealotTabs-item" &&
-            item.name === this.selected
+            childVm.$options.name === "zealotTabs-item" &&
+            childVm.name === this.selected
           ) {
-            console.log(item.$el);
-            this.eventBus.$emit("update:selected", this.selected, item);
+            this.eventBus.$emit("update:selected", this.selected, childVm);
           }
         });
       }
     });
-    this.eventBus.$emit("update:selected", this.selected);
   }
 };
 </script>
