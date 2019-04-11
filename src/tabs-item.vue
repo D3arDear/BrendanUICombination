@@ -25,7 +25,8 @@ export default {
   computed: {
     classes() {
       return {
-        active: this.active
+        active: this.active,
+        disabled: this.disabled
       };
     }
   },
@@ -36,6 +37,9 @@ export default {
   },
   methods: {
     selectTab() {
+      if (this.disabled) {
+        return;
+      }
       this.eventBus.$emit("update:selected", this.name, this);
     }
   }
@@ -43,6 +47,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 $color: rgb(255, 103, 57);
+$disabled-text-color: rgb(197, 197, 197);
 .tabs-item {
   flex-shrink: 0;
   padding: 0 2em;
@@ -52,6 +57,10 @@ $color: rgb(255, 103, 57);
   cursor: pointer;
   &.active {
     color: $color;
+  }
+  &.disabled {
+    color: $disabled-text-color;
+    cursor: default;
   }
 }
 </style>
