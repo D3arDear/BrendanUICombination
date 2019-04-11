@@ -31,6 +31,13 @@ export default {
     };
   },
   mounted() {
+    if (this.$children.length === 0) {
+      console &&
+        console.warn &&
+        console.warn(
+          "tabs没有子组件,应该是tabs-head和tabs-nav,但你没有写子组件"
+        );
+    }
     this.$children.forEach(vm => {
       if (vm.$options.name === "zealotTabs-head") {
         vm.$children.forEach(childVm => {
