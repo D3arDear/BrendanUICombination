@@ -1,9 +1,9 @@
 <template>
-  <div class="popover" @click="xxx">
-    <div class="content-wrapper" v-if="visible">
+  <div class="popover" @click.stop="xxx">
+    <div class="content-wrapper" v-if="visible" @click.stop>
       <slot name="content"></slot>
     </div>
-    <slot @click="xxx"></slot>
+    <slot></slot>
   </div>
 </template>
 <script>
@@ -15,6 +15,19 @@ export default {
   methods: {
     xxx() {
       this.visible = !this.visible;
+      console.log("切换 visible");
+      if (this.visible === true) {
+        setTimeout(() => {
+          console.log("新增 document click 监听器");
+          let eventHandler = () => {
+            this.visible = false;
+            document.removeEventListener("click", eventHandler);
+          };
+          document.addEventListener("click", eventHandler);
+        });
+      } else {
+        console.log("隐藏 popover");
+      }
     }
   }
 };
