@@ -18,6 +18,7 @@ import TabsBody from "./tabs-body"
 import TabsItem from "./tabs-item"
 import TabsPane from "./tabs-pane"
 import normalize from "normalize.css"
+import Popover from "./popover"
 Vue.component("z-button", Button)
 Vue.component("z-icon", Icon)
 Vue.component("z-button-group", ButtonGroup)
@@ -35,6 +36,7 @@ Vue.component("z-tabs-head", TabsHead)
 Vue.component("z-tabs-body", TabsBody)
 Vue.component("z-tabs-item", TabsItem)
 Vue.component("z-tabs-pane", TabsPane)
+Vue.component("z-popover", Popover)
 Vue.use(plugin)
 Vue.use(normalize)
 

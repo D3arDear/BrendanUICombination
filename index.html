@@ -61,6 +61,7 @@
 					</z-tabs-pane>
 				</z-tabs-body>
 			</z-tabs>
+
 			<div class="box">
 				<z-input value="测试" v-model="message"></z-input>
 				<z-input value="不可用" disabled></z-input>
@@ -83,6 +84,14 @@
 				<z-button @click="showToastT">show Toast top</z-button>
 				<z-button @click="showToastM">show Toast middle</z-button>
 				<z-button @click="showToastB">show Toast bottom</z-button>
+				<div style="padding-top: 100px;padding-left:100px">
+					<z-popover>
+						<template slot="content">
+							<div>popover内容</div>
+						</template>
+						<z-button>点我弹出popover</z-button>
+					</z-popover>
+				</div>
 			</div>
 		</div>
 		<script src="./src/app.js"></script>

@@ -6,7 +6,7 @@
 <script>
 import Vue from "vue";
 export default {
-  name: "zealottabs",
+  name: "zealotTabs",
   props: {
     selected: {
       type: String,
