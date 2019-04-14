@@ -85,11 +85,30 @@
 				<z-button @click="showToastM">show Toast middle</z-button>
 				<z-button @click="showToastB">show Toast bottom</z-button>
 				<div style="padding-top: 100px;padding-left:100px">
-					<z-popover>
+					<z-popover position="bottom">
 						<template slot="content">
-							<div>popover内容</div>
+							<div>Popover content</div>
 						</template>
-						<z-button>点我弹出popover</z-button>
+						<z-button>Popover Bottom</z-button>
+					</z-popover>
+
+					<z-popover position="left">
+						<template slot="content">
+							<div>Popover content</div>
+						</template>
+						<z-button>Popover left</z-button>
+					</z-popover>
+					<z-popover position="right">
+						<template slot="content">
+							<div>Popover content</div>
+						</template>
+						<z-button>Popover right</z-button>
+					</z-popover>
+					<z-popover position="top">
+						<template slot="content">
+							<div>Popover content</div>
+						</template>
+						<z-button>Popover top</z-button>
 					</z-popover>
 				</div>
 			</div>
