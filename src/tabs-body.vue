@@ -14,4 +14,3 @@ export default {
 .tabs-body {
 }
 </style>
-
