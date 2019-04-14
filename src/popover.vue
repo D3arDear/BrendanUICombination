@@ -34,6 +34,13 @@ export default {
       ) {
         return;
       }
+      if (
+        this.$refs.contentWrapper &&
+        (this.$refs.popover === e.target ||
+          this.$refs.popover.contains(e.target))
+      ) {
+        return;
+      }
       this.close();
     },
     close() {
@@ -71,11 +78,14 @@ $border-color: #ddd;
 }
 .content-wrapper {
   position: absolute;
-  box-shadow: 0 0 3px $box-shadow-color;
   border: 1px solid $border-color;
+  filter: drop-shadow(0 0 2px $box-shadow-color);
   transform: translateY(-100%);
   margin-top: -10px;
   padding: 0.5em 1em;
+  max-width: 20em;
+  word-break: break-all;
+  background: white;
   &::before,
   &::after {
     content: "";
@@ -83,14 +93,14 @@ $border-color: #ddd;
     display: block;
     width: 15px;
     height: 10px;
-    background: $box-shadow-color;
+    background: $border-color;
     position: absolute;
-    top: calc(100% - 1px);
+    top: calc(100%);
     left: 10px;
   }
   &::after {
     background: white;
-    top: calc(100% - 2px);
+    top: calc(100% - 1px);
   }
 }
 </style>
