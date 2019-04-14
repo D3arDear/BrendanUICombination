@@ -3,7 +3,7 @@
     <div ref="contentWrapper" class="content-wrapper" v-if="visible">
       <slot name="content"></slot>
     </div>
-    <span ref="triggerWrapper">
+    <span ref="triggerWrapper" style="display:inline-block">
       <slot></slot>
     </span>
   </div>
@@ -30,7 +30,7 @@ export default {
       if (
         this.$refs.popover &&
         (this.$refs.popover === e.target ||
-          this.$refs.contentWrapper.contains(event.target))
+          this.$refs.popover.contains(e.target))
       ) {
         return;
       }
@@ -42,9 +42,9 @@ export default {
     },
     open() {
       this.visible = true;
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.positionContent();
-        document.addEventListener("click", this.eventHandler);
+        document.addEventListener("click", this.onClickDocument);
       });
     },
     onClick(event) {
@@ -63,6 +63,7 @@ export default {
 </script>
 <style lang="scss" >
 $box-shadow-color: rgba(0, 0, 0, 0.3);
+$border-color: #ddd;
 .popover {
   display: inline-block;
   vertical-align: top;
@@ -71,7 +72,25 @@ $box-shadow-color: rgba(0, 0, 0, 0.3);
 .content-wrapper {
   position: absolute;
   box-shadow: 0 0 3px $box-shadow-color;
-  border: 1px solid red;
+  border: 1px solid $border-color;
   transform: translateY(-100%);
+  margin-top: -10px;
+  padding: 0.5em 1em;
+  &::before,
+  &::after {
+    content: "";
+    clip-path: polygon(0% 0%, 30% 100%, 100% 0%);
+    display: block;
+    width: 15px;
+    height: 10px;
+    background: $box-shadow-color;
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 10px;
+  }
+  &::after {
+    background: white;
+    top: calc(100% - 2px);
+  }
 }
 </style>
