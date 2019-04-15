@@ -6,9 +6,7 @@
         <div v-else v-html="$slots.default[0]"></div>
       </div>
       <div class="line" ref="line"></div>
-      <span class="close" v-if="closeButton" @click="onClickClose">
-        {{ closeButton.text }}
-      </span>
+      <span class="close" v-if="closeButton" @click="onClickClose">{{ closeButton.text }}</span>
     </div>
   </div>
 </template>
@@ -71,9 +69,7 @@ export default {
       this.$emit("close");
       this.$destroy;
     },
-    log() {
-      console.log("测试");
-    },
+    log() {},
     onClickClose() {
       this.close();
       if (this.closeButton && typeof this.closeButton.callback === "function") {

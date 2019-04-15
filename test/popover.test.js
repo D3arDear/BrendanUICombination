@@ -51,13 +51,10 @@ describe('Popover存在', () => {
 		setTimeout(() => {
 			let event = new Event('mouseenter')
 			vm.$el.dispatchEvent(event)
-			console.log(1)
 			vm.$nextTick(() => {
-				console.log(2)
 				const { contentWrapper } = vm.$refs.a.$refs
 				expect(contentWrapper).to.exist
 				done()
-				console.log(3)
 			})
 		}, 300)
 	})
