@@ -32,9 +32,33 @@ describe('Popover存在', () => {
 				done()
 			})
 		})
-
-		// const useElement = vm.$el.querySelector('use')
-		// expect(useElement.getAttribute('xlink:href')).to.equal('#i-settings')
-		// vm.$destroy()
+	})
+	xit('可以设置 trigger', (done) => {
+		Vue.component('z-popover', Popover)
+		const div = document.createElement('div')
+		document.body.appendChild(div)
+		div.innerHTML = `
+<z-popover position="bottom" ref="a">
+<template v-slot:content>
+<div>Popover content</div>
+</template>
+<button>Popover Bottom</button>
+</z-popover>
+    `
+		const vm = new Vue({
+			el: div,
+		})
+		setTimeout(() => {
+			let event = new Event('mouseenter')
+			vm.$el.dispatchEvent(event)
+			console.log(1)
+			vm.$nextTick(() => {
+				console.log(2)
+				const { contentWrapper } = vm.$refs.a.$refs
+				expect(contentWrapper).to.exist
+				done()
+				console.log(3)
+			})
+		}, 300)
 	})
 })
