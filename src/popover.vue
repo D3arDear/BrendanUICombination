@@ -130,7 +130,6 @@ export default {
       });
     },
     onClick(event) {
-      console.log(event.target);
       if (this.$refs.triggerWrapper.contains(event.target)) {
         if (this.visible === true) {
           this.close();

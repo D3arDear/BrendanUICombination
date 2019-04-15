@@ -6,21 +6,35 @@ Vue.config.productionTip = false
 Vue.config.devtools = false
 
 describe('Popover存在', () => {
-	// BDD 行为驱动测试
-
-	it('存在.', (done) => {
-		expect(Popover).to.exist // 断言 Button 存在
+	it('存在.', () => {
+		expect(Popover).to.exist
 	})
-	it('可以设置position.', () => {
-		const Constructor = Vue.extend(Button)
-		const vm = new Constructor({
-			propsData: {
-				position: 'settings',
-			},
-		}).$mount()
+	it('可以设置position.', (done) => {
+		Vue.component('z-popover', Popover)
+		const div = document.createElement('div')
+		document.body.appendChild(div)
+		div.innerHTML = `
+<z-popover position="bottom" ref="a">
+<template v-slot:content>
+<div>Popover content</div>
+</template>
+<button>Popover Bottom</button>
+</z-popover>
+    `
+		const vm = new Vue({
+			el: div,
+		})
+		setTimeout(() => {
+			vm.$el.querySelector('button').click()
+			setTimeout(() => {
+				const { contentWrapper } = vm.$refs.a.$refs
+				expect(contentWrapper.classList.contains('position-bottom')).to.be.true
+				done()
+			})
+		})
 
-		const useElement = vm.$el.querySelector('use')
-		expect(useElement.getAttribute('xlink:href')).to.equal('#i-settings')
-		vm.$destroy()
+		// const useElement = vm.$el.querySelector('use')
+		// expect(useElement.getAttribute('xlink:href')).to.equal('#i-settings')
+		// vm.$destroy()
 	})
 })
