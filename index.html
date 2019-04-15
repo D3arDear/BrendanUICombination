@@ -86,25 +86,26 @@
 				<z-button @click="showToastB">show Toast bottom</z-button>
 				<div style="padding-top: 100px;padding-left:100px">
 					<z-popover position="bottom" trigger="click">
-						<template slot="content">
+						<template v-slot:content="{close}">
 							<div>Popover content</div>
+							<z-button @click="close">关闭</z-button>
 						</template>
 						<z-button>Popover Bottom</z-button>
 					</z-popover>
 					<z-popover position="left" trigger="click">
-						<template slot="content">
+						<template v-slot:content>
 							<div>Popover content</div>
 						</template>
 						<z-button>Popover left</z-button>
 					</z-popover>
 					<z-popover position="right" trigger="click">
-						<template slot="content">
+						<template v-slot:content>
 							<div>Popover content</div>
 						</template>
 						<z-button>Popover right</z-button>
 					</z-popover>
 					<z-popover position="top" trigger="click">
-						<template slot="content">
+						<template v-slot:content>
 							<div>Popover content</div>
 						</template>
 						<z-button>Popover top</z-button>
@@ -112,25 +113,25 @@
 				</div>
 				<div style="padding-top: 100px;padding-left:100px">
 					<z-popover position="bottom" trigger="hover">
-						<template slot="content">
+						<template v-slot:content>
 							<div>Popover content</div>
 						</template>
 						<z-button>Popover Bottom</z-button>
 					</z-popover>
 					<z-popover position="left" trigger="hover">
-						<template slot="content">
+						<template v-slot:content>
 							<div>Popover content</div>
 						</template>
 						<z-button>Popover left</z-button>
 					</z-popover>
 					<z-popover position="right" trigger="hover">
-						<template slot="content">
+						<template v-slot:content>
 							<div>Popover content</div>
 						</template>
 						<z-button>Popover right</z-button>
 					</z-popover>
 					<z-popover position="top" trigger="hover">
-						<template slot="content">
+						<template v-slot:content>
 							<div>Popover content</div>
 						</template>
 						<z-button>Popover top</z-button>
