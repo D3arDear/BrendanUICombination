@@ -5,6 +5,8 @@ node_js:
     - "10"
 addons:
     chrome: stable
+before_script:
+    - yarn install --ignore-engines
 sudo: required
 before_script:
     - "sudo chown root /opt/google/chrome/chrome-sandbox"
