@@ -50,7 +50,7 @@ new Vue({
 		loading1: false,
 		loading2: false,
 		message: 'hi',
-		selectedTab: 'pc',
+		selectedTab: '2',
 	},
 	created() {
 		setTimeout(() => {
