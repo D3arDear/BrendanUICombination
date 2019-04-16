@@ -2,7 +2,7 @@
   <button class="z-button" :class="{ [`icon-${iconposition}`]: true }" @click="$emit('click')">
     <z-icon class="icon loading" name="loading" v-if="loading"></z-icon>
     <z-icon class="icon" v-if="icon && !loading" :name="icon"></z-icon>
-    <div class="content">
+    <div class="z-button-content">
       <slot></slot>
     </div>
   </button>
@@ -41,24 +41,34 @@ export default {
     transform: rotate(360deg);
   }
 }
+
+$button-height: 32px;
+$font-size: 16px;
+$button-bg: white;
+$button-active-bg: #eee;
+$border-radius: 2px;
+$color: #333;
+$border-color: #999;
+$border-color-hover: #666;
+
 .z-button {
-  font-size: var(--font-size);
-  height: var(--button-height);
+  font-size: $font-size;
+  height: $button-height;
   padding: 0 1em;
   font: inherit;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-  background: var(--button-bg);
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  background: $button-bg;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   vertical-align: middle;
 
   &:hover {
-    border-color: var(--border-color-hover);
+    border-color: $border-color-hover;
   }
   &:active {
-    background-color: var(--button-active-bg);
+    background-color: $button-active-bg;
   }
   &:focus {
     outline: none;
@@ -69,7 +79,7 @@ export default {
     margin-left: 0;
     fill: #636363;
   }
-  > .content {
+  > .z-button-content {
     order: 2;
     vertical-align: middle;
     display: inline-flex;
@@ -83,7 +93,7 @@ export default {
       margin-left: 0.1em;
       margin-right: 0;
     }
-    > .content {
+    > .z-button-content {
       order: 1;
     }
   }
