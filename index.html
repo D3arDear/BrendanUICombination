@@ -138,12 +138,11 @@
 					</z-popover>
 				</div>
 				<div style="padding:100px">
-					<z-collapse :selected.sync="selectedTab" single>
+					<z-collapse :selected="['1','2']" single>
 						<z-collapse-item title="标题1" name="1">item 1</z-collapse-item>
 						<z-collapse-item title="标题2" name="2">item 2</z-collapse-item>
 						<z-collapse-item title="标题3" name="3">item 3</z-collapse-item>
 					</z-collapse>
-					{{ selectedTab }}
 				</div>
 			</div>
 		</div>
