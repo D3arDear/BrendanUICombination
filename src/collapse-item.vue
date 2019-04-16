@@ -1,6 +1,6 @@
 <template>
   <div class="collapseItem">
-    <div class="title" @click="toggle">{{title}}</div>
+    <div class="title" @click="toggle" :class="{open}">{{title}}</div>
     <div class="content" v-if="open">
       <slot></slot>
     </div>
@@ -50,6 +50,8 @@ export default {
 <style lang="scss" scoped>
 .collapseItem {
   $background-white: #fafafa;
+  $card-item-shadow: 0px 2px 2px rgba(0, 0, 0, 0.06),
+    0px 0px 2px rgba(0, 0, 0, 0.03);
   > .title {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     min-height: 32px;
@@ -57,6 +59,9 @@ export default {
     align-items: center;
     padding: 0 8px;
     cursor: pointer;
+    &.open {
+      box-shadow: $card-item-shadow;
+    }
   }
   > .content {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
