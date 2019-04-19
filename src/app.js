@@ -1,56 +1,86 @@
-import Vue from 'vue'
 import Button from './button'
-import Icon from './icon'
 import ButtonGroup from './button-group'
-import Input from './input'
-import Row from './row'
+import Cascader from './cascader'
 import Col from './col'
-import Layout from './layout'
-import Header from './header'
-import Sider from './sider'
-import Content from './content'
-import Footer from './footer'
-import Toast from './toast'
-import plugin from './plugin'
-import Tabs from './tabs'
-import TabsHead from './tabs-head'
-import TabsBody from './tabs-body'
-import TabsItem from './tabs-item'
-import TabsPane from './tabs-pane'
-import normalize from 'normalize.css'
-import Popover from './popover'
 import Collapse from './collapse'
 import CollapseItem from './collapse-item'
-Vue.component('z-button', Button)
-Vue.component('z-icon', Icon)
+import Content from './content'
+import Footer from './footer'
+import Header from './header'
+import Icon from './icon'
+import Input from './input'
+import Layout from './layout'
+import normalize from 'normalize.css'
+import plugin from './plugin'
+import Popover from './popover'
+import Row from './row'
+import Sider from './sider'
+import Tabs from './tabs'
+import TabsBody from './tabs-body'
+import TabsHead from './tabs-head'
+import TabsItem from './tabs-item'
+import TabsPane from './tabs-pane'
+import Toast from './toast'
+import Vue from 'vue'
 Vue.component('z-button-group', ButtonGroup)
-Vue.component('z-input', Input)
-Vue.component('z-row', Row)
+Vue.component('z-button', Button)
+Vue.component('z-cascader', Cascader)
 Vue.component('z-col', Col)
-Vue.component('z-layout', Layout)
-Vue.component('z-header', Header)
-Vue.component('z-sider', Sider)
+Vue.component('z-collapse-item', CollapseItem)
+Vue.component('z-collapse', Collapse)
 Vue.component('z-content', Content)
 Vue.component('z-footer', Footer)
-Vue.component('z-toast', Toast)
-Vue.component('z-tabs', Tabs)
-Vue.component('z-tabs-head', TabsHead)
+Vue.component('z-header', Header)
+Vue.component('z-icon', Icon)
+Vue.component('z-input', Input)
+Vue.component('z-layout', Layout)
+Vue.component('z-popover', Popover)
+Vue.component('z-row', Row)
+Vue.component('z-sider', Sider)
 Vue.component('z-tabs-body', TabsBody)
+Vue.component('z-tabs-head', TabsHead)
 Vue.component('z-tabs-item', TabsItem)
 Vue.component('z-tabs-pane', TabsPane)
-Vue.component('z-popover', Popover)
-Vue.component('z-collapse', Collapse)
-Vue.component('z-collapse-item', CollapseItem)
+Vue.component('z-tabs', Tabs)
+Vue.component('z-toast', Toast)
+
 Vue.use(plugin)
 Vue.use(normalize)
 
 new Vue({
 	el: '#app',
 	data: {
-		loading1: false,
-		loading2: false,
 		message: 'hi',
 		selectedTab: '2',
+		source: [
+			{
+				name: '四川',
+				children: [
+					{
+						name: '成都',
+						children: [{ name: '锦江区' }, { name: '青羊区' }, { name: '武侯区' }, { name: '金牛区' }],
+					},
+					{ name: '自贡' },
+					{ name: '攀枝花' },
+					{ name: '泸州' },
+					{ name: '绵阳' },
+					{ name: '德阳' },
+				],
+			},
+			{
+				name: '辽宁',
+				children: [
+					{ name: '沈阳' },
+					{ name: '大连' },
+					{ name: '鞍山' },
+					{ name: '抚顺' },
+					{ name: '本溪' },
+					{ name: '丹东' },
+					{ name: '营口' },
+					{ name: '锦州' },
+				],
+			},
+		],
 	},
 	created() {
 		setTimeout(() => {

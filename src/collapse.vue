@@ -47,7 +47,6 @@ export default {
     });
     this.$children.forEach(vm => {
       vm.single = this.single;
-      console.log(vm);
     });
   }
 };

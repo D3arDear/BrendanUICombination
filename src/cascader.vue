@@ -1,16 +1,32 @@
 <template>
   <div class="cascader">
-    <slot></slot>
+    <div class="trigger">
+      <slot></slot>
+    </div>
+    <div class="popover">
+      <div v-for="item in source">
+        <cascader-item :sourceItem="item"></cascader-item>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import CascaderItem from "./cascader-item";
+import Col from "./col";
 export default {
-  name: "ZealotCascader"
+  name: "ZealotCascader",
+  components: { CascaderItem },
+  props: {
+    source: {
+      type: Array
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "var" .cascader {
+@import "var";
+.cascader {
 }
 </style>

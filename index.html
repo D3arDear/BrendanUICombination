@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Zealot的VueUI框架</title>
+		<title>Zealot 的 VueUI 框架</title>
 		<style>
 			img {
 				max-width: 100%;
@@ -64,8 +64,8 @@
 				<z-input value="change" @change="inputChange"></z-input>
 			</div>
 			<div class="box" style="margin-top: 20px;">
-				<z-button icon="setting" :loading="loading1" @click="loading1 = !loading1">设置</z-button>
-				<z-button icon="setting" iconposition="right" :loading="loading2" @click="loading2 = !loading2">设置</z-button>
+				<z-button icon="setting">设置</z-button>
+				<z-button icon="setting" iconposition="right">设置</z-button>
 				<z-button-group>
 					<z-button icon="left">后退</z-button>
 					<z-button>更多</z-button>
@@ -133,6 +133,9 @@
 						<z-collapse-item title="标题2" name="2">item 2</z-collapse-item>
 						<z-collapse-item title="标题3" name="3">item 3</z-collapse-item>
 					</z-collapse>
+				</div>
+				<div>
+					<z-cascader :source="source"></z-cascader>
 				</div>
 			</div>
 		</div>
