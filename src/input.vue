@@ -49,12 +49,7 @@ export default {
 --color: #333;
 --border-color: #999;
 --border-color-hover: #666; */
-$height: 32px;
-$border-color: #999;
-$border-color-hover: #666;
-$border-radius: 2px;
-$box-shadow-color: rgba(0, 0, 0, 0.12);
-$font-size: 16px;
+@import "var";
 .wrapper {
   font-size: $font-size;
   display: inline-block;
