@@ -2,30 +2,17 @@
   <div class="cascader">
     <div class="trigger" @click="popoverVisible = !popoverVisible"></div>
     <div class="popover" v-if="popoverVisible">
-      <div class="level1">
-        <div
-          class="label"
-          v-for="item in source"
-          style="border:1px solid red"
-          @click="level1Selected = item"
-        >{{item.name}}</div>
-      </div>
-      <div class="level2">
-        <div class="label" v-for="item in level2Items" @click="level2Selected = item">{{item.name}}</div>
-      </div>
-      <div class="level3">
-        <div class="label" v-for="item in level3Items">{{item.name}}</div>
-      </div>
+      <cascader-items :items="source"></cascader-items>
     </div>
   </div>
 </template>
 
 <script>
-import CascaderItem from "./cascader-item";
+import CascaderItems from "./cascader-items";
 import Col from "./col";
 export default {
   name: "ZealotCascader",
-  components: { CascaderItem },
+  components: { CascaderItems },
   props: {
     source: {
       type: Array
@@ -33,26 +20,8 @@ export default {
   },
   data() {
     return {
-      popoverVisible: false,
-      level1Selected: null,
-      level2Selected: null
+      popoverVisible: false
     };
-  },
-  computed: {
-    level2Items() {
-      if (this.level1Selected) {
-        return this.level1Selected.children;
-      } else {
-        return [];
-      }
-    },
-    level3Items() {
-      if (this.level2Selected) {
-        return this.level2Selected.children;
-      } else {
-        return [];
-      }
-    }
   }
 };
 </script>
