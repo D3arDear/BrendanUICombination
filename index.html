@@ -21,7 +21,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="padding:10px;">
 		<div id="app">
 			<z-tabs :selected.sync="selectedTab">
 				<z-tabs-head class="zealot">
@@ -135,7 +135,7 @@
 					</z-collapse>
 				</div>
 				<div>
-					<z-cascader :source="source"></z-cascader>
+					<z-cascader :source="source" popover-height="200px"></z-cascader>
 				</div>
 			</div>
 		</div>
