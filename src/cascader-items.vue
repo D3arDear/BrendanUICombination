@@ -37,5 +37,11 @@ export default {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  .left {
+    border: 1px solid red;
+  }
+  .right {
+    margin-top: -1px;
+  }
 }
 </style>
