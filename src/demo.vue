@@ -2,7 +2,7 @@
   <div>
     <p>这里有个cascader</p>
     <z-cascader
-      :source="source"
+      :source.sync="source"
       popover-height="200px"
       :selected.sync="selected"
       :load-data="loadData"

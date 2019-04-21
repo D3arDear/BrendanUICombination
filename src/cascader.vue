@@ -79,9 +79,10 @@ export default {
         }
       };
       let updateSource = result => {
-        let toUpdate = complex(this.source, lastItem.id);
-        console.log(toUpdate);
-        this.$set(toUpdate, "children", result);
+        let copy = JSON.parse(JSON.stringify(this.source))
+        let toUpdate = complex(copy, lastItem.id);
+        toUpdate.children = result
+        this.$emit('update:source',copy)
       };
       this.loadData(lastItem, updateSource); // 调用传入的loadData
       // 调回调的时候传一个函数,这个函数理论上应该被调用
@@ -91,6 +92,10 @@ export default {
     result() {
       return this.selected.map(item => item.name).join("/");
     }
+  },
+  updated(){
+    console.log('更新了')
+    console.log(this.items)
   }
 };
 </script>

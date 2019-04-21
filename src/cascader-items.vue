@@ -42,6 +42,7 @@ export default {
   },
   computed: {
     rightItems() {
+      console.log('计算items')
       let currentSelected = this.selected[this.level];
       if (currentSelected && currentSelected.children) {
         return currentSelected.children;
