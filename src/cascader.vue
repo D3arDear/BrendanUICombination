@@ -79,12 +79,14 @@ export default {
         }
       };
       let updateSource = result => {
-        let copy = JSON.parse(JSON.stringify(this.source))
+        let copy = JSON.parse(JSON.stringify(this.source));
         let toUpdate = complex(copy, lastItem.id);
-        toUpdate.children = result
-        this.$emit('update:source',copy)
+        toUpdate.children = result;
+        this.$emit("update:source", copy);
       };
-      this.loadData(lastItem, updateSource); // 调用传入的loadData
+      if (!lastItem.isLeaf) {
+        this.loadData(lastItem, updateSource); // 调用传入的loadData
+      }
       // 调回调的时候传一个函数,这个函数理论上应该被调用
     }
   },
@@ -93,9 +95,9 @@ export default {
       return this.selected.map(item => item.name).join("/");
     }
   },
-  updated(){
-    console.log('更新了')
-    console.log(this.items)
+  updated() {
+    console.log("更新了");
+    console.log(this.items);
   }
 };
 </script>
