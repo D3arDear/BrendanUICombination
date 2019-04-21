@@ -19,7 +19,7 @@ function ajax(parentId = 0) {
     setTimeout(() => {
       let result = db.filter(item => item.parent_id === parentId);
       success(result);
-    }, 2000);
+    }, 300);
   });
 }
 
@@ -39,6 +39,7 @@ export default {
       this.source = result;
     });
   },
+  
   methods: {
     loadData(node, fn) {
       let id = node.id;
