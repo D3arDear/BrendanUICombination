@@ -1,7 +1,12 @@
 <template>
   <div>
     <p>这里有个cascader</p>
-    <z-cascader :source="source" popover-height="200px"></z-cascader>
+    <z-cascader
+      :selected="selected"
+      :source="source"
+      popover-height="200px"
+      @update:selected="selected = $event"
+    ></z-cascader>
     <p>这里有个cascader</p>
   </div>
 </template>
@@ -14,6 +19,7 @@ export default {
   },
   data() {
     return {
+      selected: [],
       source: [
         {
           name: "四川",
