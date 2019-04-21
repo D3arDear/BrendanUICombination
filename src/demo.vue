@@ -1,12 +1,7 @@
 <template>
   <div>
     <p>这里有个cascader</p>
-    <z-cascader
-      :selected="selected"
-      :source="source"
-      popover-height="200px"
-      @update:selected="selected = $event"
-    ></z-cascader>
+    <z-cascader :selected.sync="selected" :source="source" popover-height="200px"></z-cascader>
     <p>这里有个cascader</p>
   </div>
 </template>
