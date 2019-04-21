@@ -3,7 +3,7 @@
     <div class="left">
       <div class="label" v-for="item in items" @click="onClickLabel(item)">
         <span class="name">{{item.name}}</span>
-        <z-icon class="icon" v-if="!item.isLeaf" name="right"></z-icon>
+        <z-icon class="icon" v-if="rightArrowVisible(item)" name="right"></z-icon>
       </div>
     </div>
     <div class="right" v-if="rightItems">
@@ -28,6 +28,9 @@ export default {
       default: () => {
         return [];
       }
+    },
+    loadData: {
+      type: Function
     },
     level: {
       type: Number,
@@ -57,6 +60,9 @@ export default {
     }
   },
   methods: {
+    rightArrowVisible(item) {
+      return this.loadData ? !this.item.isLeaf : item.children;
+    },
     onClickLabel(item) {
       let copy = JSON.parse(JSON.stringify(this.selected));
       copy[this.level] = item;
@@ -111,6 +117,10 @@ export default {
     align-items: center;
     > .name {
       margin-right: 1em;
+      user-select: none;
+    }
+    &:hover {
+      background: $border-color;
     }
     .icon {
       margin-left: auto;
