@@ -1,17 +1,28 @@
 <template>
   <div>
     <p>这里有个cascader</p>
-    <z-cascader :selected.sync="selected" :source="source" popover-height="200px"></z-cascader>
+    <z-cascader
+      :source="source"
+      popover-height="200px"
+      :selected.sync="selected"
+      :load-data="loadData"
+    ></z-cascader>
     <p>这里有个cascader</p>
   </div>
 </template>
 <script>
 import Cascader from "./cascader";
 import db from "./db";
+
 function ajax(parentId = 0) {
-  return db.filter(item => item.parent_id == parentId);
+  return new Promise((success, fail) => {
+    setTimeout(() => {
+      let result = db.filter(item => item.parent_id === parentId);
+      success(result);
+    }, 2000);
+  });
 }
-console.log(ajax());
+
 export default {
   name: "demo",
   components: {
@@ -20,8 +31,31 @@ export default {
   data() {
     return {
       selected: [],
-      source: ajax()
+      source: []
     };
+  },
+  created() {
+    ajax(0).then(result => {
+      this.source = result;
+    });
+  },
+  methods: {
+    loadData(node, fn) {
+      let id = node.id;
+      ajax(id).then(result => {
+        fn(result); // 把cascader传给我的函数调用一下
+      });
+    },
+    xxx() {
+      ajax(this.selected[0].id).then(result => {
+        let lastLevelSelected = this.source.filter(
+          item => item.id === this.selected[0].id
+        )[0];
+        //lastLevelSelected.children = result;
+        this.$set(lastLevelSelected, "children", result);
+        console.log(lastLevelSelected);
+      });
+    }
   }
 };
 </script>

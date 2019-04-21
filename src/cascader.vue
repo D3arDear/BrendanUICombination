@@ -17,6 +17,7 @@
 <script>
 import CascaderItems from "./cascader-items";
 import Col from "./col";
+import { close } from "fs";
 export default {
   name: "ZealotCascader",
   components: { CascaderItems },
@@ -32,6 +33,9 @@ export default {
     },
     popoverHeight: {
       type: String
+    },
+    loadData: {
+      type: Function
     }
   },
   data() {
@@ -42,6 +46,15 @@ export default {
   methods: {
     onUpdateSelected(newSelected) {
       this.$emit("update:selected", newSelected);
+      let lastItem = newSelected[newSelected.length - 1];
+      console.log(lastItem);
+      console.log(this.source);
+      let updateSource = result => {
+        let toUpdate = this.source.filter(item => item.id === lastItem.id)[0];
+        this.$set(toUpdate, "children", result);
+      };
+      this.loadData(lastItem, updateSource); // 调用传入的loadData
+      // 调回调的时候传一个函数,这个函数理论上应该被调用
     }
   },
   computed: {
