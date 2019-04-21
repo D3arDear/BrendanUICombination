@@ -1,59 +1,51 @@
 {
-  "name": "zealot-ui-primarydemo",
-  "version": "0.0.7",
-  "description": "这是一个UI框架(自用)",
-  "main": "dist/index.js",
-  "scripts": {
-    "start": "parcel ./index.html --no-cache",
-    "build": "npx parcel build index.js --no-minify",
-    "test-p": "npx parcel watch ./index.html test/* --no-cache",
-    "test-k": "npx karma start",
-    "test": "parcel build ./index.html test/* --no-cache --no-minify && karma start --single-run",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BrendanZhang/BrendanUICombination.git"
-  },
-  "author": "BrendanZhang",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/BrendanZhang/BrendanUICombination/issues"
-  },
-  "homepage": "https://github.com/BrendanZhang/BrendanUICombination#readme",
-  "keywords": [
-    "vue",
-    "ui"
-  ],
-  "dependencies": {
-    "normalize.css": "^8.0.1",
-    "tab": "^1.0.0",
-    "user": "0.0.0",
-    "vue": "^2.6.9",
-    "vue-hot-reload-api": "^2.3.3"
-  },
-  "devDependencies": {
-    "@vue/component-compiler-utils": "^2.6.0",
-    "chai": "*",
-    "chai-spies": "^1.0.0",
-    "karma": "^4.0.1",
-    "karma-chai": "^0.1.0",
-    "karma-chai-spies": "^0.1.4",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-mocha": "^1.3.0",
-    "karma-sinon-chai": "^2.0.2",
-    "mocha": "^6.1.3",
-    "node-sass": "^4.11.0",
-    "parcel-bundler": "^1.12.2",
-    "sass": "^1.17.3",
-    "sass-loader": "^7.1.0",
-    "sinon": "^7.3.0",
-    "sinon-chai": "^3.3.0",
-    "vue-template-compiler": "^2.6.9",
-    "vuepress": "^0.14.11"
-  },
-  "alias": {
-    "vue": "./node_modules/vue/dist/vue.common.js"
-  }
+	"name": "zealot-ui-primarydemo",
+	"version": "0.0.7",
+	"description": "这是一个UI框架(自用)",
+	"private": true,
+	"main": "dist/index.js",
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"test:unit": "vue-cli-service test:unit"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BrendanZhang/BrendanUICombination.git"
+	},
+	"author": "BrendanZhang",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/BrendanZhang/BrendanUICombination/issues"
+	},
+	"homepage": "https://github.com/BrendanZhang/BrendanUICombination#readme",
+	"keywords": [
+		"vue",
+		"ui"
+	],
+	"dependencies": {
+		"normalize.css": "^8.0.1",
+		"core-js": "^2.6.5",
+		"vue": "^2.6.10"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "^3.6.0",
+		"@vue/cli-plugin-unit-mocha": "^3.6.0",
+		"@vue/cli-service": "^3.6.0",
+		"@vue/test-utils": "1.0.0-beta.29",
+		"chai": "^4.1.2",
+		"node-sass": "^4.9.0",
+		"sass-loader": "^7.1.0",
+		"vue-template-compiler": "^2.5.21"
+	},
+	"postcss": {
+		"plugins": {
+			"autoprefixer": {}
+		}
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not ie <= 8"
+	]
 }

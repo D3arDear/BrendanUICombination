@@ -12,10 +12,10 @@
   </div>
 </template>
 <script>
-import Icon from "icon";
+import Icon from "./icon";
 export default {
   name: "ZealotCascaderItems",
-  components: { Icon },
+  components: { "z-icon": Icon },
   props: {
     items: {
       type: Array
@@ -63,6 +63,7 @@ export default {
     .icon {
       margin-left: 0.5em;
       transform: scale(0.5);
+      fill: $symbol-color;
     }
   }
 }
