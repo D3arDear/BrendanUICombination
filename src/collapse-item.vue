@@ -49,9 +49,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .collapseItem {
-  $background-white: #fafafa;
-  $card-item-shadow: 0px 2px 2px rgba(0, 0, 0, 0.06),
-    0px 0px 2px rgba(0, 0, 0, 0.03);
+  @import "var";
   > .title {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     min-height: 32px;
