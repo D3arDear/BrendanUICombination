@@ -54,7 +54,7 @@ export default {
     onClickLabel(item) {
       let copy = JSON.parse(JSON.stringify(this.selected));
       copy[this.level] = item;
-      copy.splice(this.level + 1)
+      copy.splice(this.level + 1);
       this.$emit("update:selected", copy);
     },
     onUpdateSelected(newSelected) {
@@ -74,9 +74,29 @@ export default {
     height: 100%;
     padding: 0.3em 0;
     border-left: 1px solid $border-color;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0 !important;
+    }
+    & {
+      -ms-overflow-style: none;
+    }
+    & {
+      overflow: -moz-scrollbars-none;
+    }
   }
   .right {
     height: 100%;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0 !important;
+    }
+    & {
+      -ms-overflow-style: none;
+    }
+    & {
+      overflow: -moz-scrollbars-none;
+    }
   }
   .label {
     padding: 0.3em 1em;
