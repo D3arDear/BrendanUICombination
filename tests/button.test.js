@@ -15,8 +15,8 @@ describe("Button", () => {
 		const Constructor = Vue.extend(Button)
 		const vm = new Constructor({
 			propsData: {
-				icon: "settings"
-			}
+				icon: "settings",
+			},
 		}).$mount()
 		const useElement = vm.$el.querySelector("use")
 		expect(useElement.getAttribute("xlink:href")).to.equal("#i-settings")
@@ -27,8 +27,8 @@ describe("Button", () => {
 		const vm = new Constructor({
 			propsData: {
 				icon: "settings",
-				loading: true
-			}
+				loading: true,
+			},
 		}).$mount()
 		const useElements = vm.$el.querySelectorAll("use")
 		expect(useElements.length).to.equal(1)
@@ -41,8 +41,8 @@ describe("Button", () => {
 		const Constructor = Vue.extend(Button)
 		const vm = new Constructor({
 			propsData: {
-				icon: "settings"
-			}
+				icon: "settings",
+			},
 		}).$mount(div)
 		const icon = vm.$el.querySelector("svg")
 		expect(getComputedStyle(icon).order).to.eq("1")
@@ -56,8 +56,8 @@ describe("Button", () => {
 		const vm = new Constructor({
 			propsData: {
 				icon: "settings",
-				iconPosition: "right"
-			}
+				iconPosition: "right",
+			},
 		}).$mount(div)
 		const icon = vm.$el.querySelector("svg")
 		expect(getComputedStyle(icon).order).to.eq("1")
@@ -68,8 +68,8 @@ describe("Button", () => {
 		const Constructor = Vue.extend(Button)
 		const vm = new Constructor({
 			propsData: {
-				icon: "settings"
-			}
+				icon: "settings",
+			},
 		}).$mount()
 
 		const callback = sinon.fake()
