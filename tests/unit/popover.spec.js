@@ -1,6 +1,11 @@
+
+import chai, { expect } from "chai"
+import sinon from "sinon"
+import sinonChai from "sinon-chai"
+chai.use(sinonChai)
 const expect = chai.expect
 import Vue from 'vue'
-import Popover from '../src/popover'
+import Popover from '@/popover'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
