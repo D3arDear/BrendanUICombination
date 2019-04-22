@@ -3,11 +3,20 @@
     <div class="left">
       <div class="label" v-for="item in items" @click="onClickLabel(item)">
         <span class="name">{{item.name}}</span>
-        <z-icon class="icon" v-if="rightArrowVisible(item)" name="right"></z-icon>
+        <span class="icons">
+          <template v-if="item.name === loadingItem.name">
+            <z-icon class="loading" name="loading"></z-icon>
+          </template>
+          <template v-else>
+            <z-icon class="next" v-if="rightArrowVisible(item)" name="right"></z-icon>
+          </template>
+        </span>
       </div>
     </div>
     <div class="right" v-if="rightItems">
       <zealot-cascader-items
+        :load-data="loadData"
+        :loading-item="loadingItem"
         @update:selected="onUpdateSelected"
         :selected="selected"
         :level="level+1"
@@ -31,6 +40,10 @@ export default {
     },
     loadData: {
       type: Function
+    },
+    loadingItem: {
+      type: Object,
+      default: () => ({})
     },
     level: {
       type: Number,
@@ -123,10 +136,16 @@ export default {
     &:hover {
       background: $border-color;
     }
-    .icon {
+    .icons {
       margin-left: auto;
-      transform: scale(0.5);
-      fill: $symbol-color;
+      .next {
+        fill: $symbol-color;
+        transform: scale(0.5);
+      }
+      .loading {
+        fill: $symbol-color;
+        animation: spin 2s infinite linear;
+      }
     }
   }
 }

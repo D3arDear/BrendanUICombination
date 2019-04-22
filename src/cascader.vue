@@ -3,6 +3,7 @@
     <div class="trigger" @click="toggle">{{result || '&nbsp'}}</div>
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-items
+        :loading-item="loadingItem"
         :selected="selected"
         :items="source"
         :loadData="loadData"
@@ -42,7 +43,8 @@ export default {
   },
   data() {
     return {
-      popoverVisible: false
+      popoverVisible: false,
+      loadingItem: {}
     };
   },
   methods: {
@@ -95,13 +97,15 @@ export default {
         }
       };
       let updateSource = result => {
+        this.loadingItem = {};
         let copy = JSON.parse(JSON.stringify(this.source));
         let toUpdate = complex(copy, lastItem.id);
         toUpdate.children = result;
         this.$emit("update:source", copy);
       };
-      if (!lastItem.isLeaf) {
-        this.loadData & this.loadData(lastItem, updateSource); // 调用传入的loadData
+      if (!lastItem.isLeaf && this.loadData) {
+        this.loadData(lastItem, updateSource); // 调用传入的loadData
+        this.loadingItem = lastItem;
       }
       // 调回调的时候传一个函数,这个函数理论上应该被调用
     }
@@ -139,6 +143,7 @@ export default {
     height: 200px;
     display: flex;
     border-radius: $border-radius;
+    z-index: 1;
     @extend .card-shadow;
     .label {
       white-space: nowrap;

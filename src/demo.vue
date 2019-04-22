@@ -1,18 +1,22 @@
 <template>
   <div>
     <p>这里有个cascader</p>
-    <z-cascader
-      :source.sync="source"
-      popover-height="200px"
-      :selected.sync="selected"
-      :load-data="loadData"
-    ></z-cascader>
-    <z-cascader
-      :source.sync="source"
-      popover-height="200px"
-      :selected.sync="selected"
-      :load-data="loadData"
-    ></z-cascader>
+    <div class="cascader-wrapper">
+      <z-cascader
+        :source.sync="source"
+        popover-height="200px"
+        :selected.sync="selected"
+        :load-data="loadData"
+      ></z-cascader>
+    </div>
+    <div class="cascader-wrapper">
+      <z-cascader
+        :source.sync="source"
+        popover-height="200px"
+        :selected.sync="selected"
+        :load-data="loadData"
+      ></z-cascader>
+    </div>
     <p>这里有个cascader</p>
   </div>
 </template>
