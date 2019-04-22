@@ -7,12 +7,19 @@
       :selected.sync="selected"
       :load-data="loadData"
     ></z-cascader>
+    <z-cascader
+      :source.sync="source"
+      popover-height="200px"
+      :selected.sync="selected"
+      :load-data="loadData"
+    ></z-cascader>
     <p>这里有个cascader</p>
   </div>
 </template>
 <script>
 import Cascader from "./cascader";
 import db from "./db";
+import { removeListener } from "./click-outside";
 
 function ajax(parentId = 0) {
   return new Promise((success, fail) => {
@@ -47,7 +54,9 @@ export default {
       this.source = result;
     });
   },
-
+  destroyed() {
+    removeListener();
+  },
   methods: {
     loadData(node, fn) {
       let id = node.id;

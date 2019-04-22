@@ -1,7 +1,6 @@
 <template>
-  <div class="cascader" ref="cascader">
+  <div class="cascader" ref="cascader" v-click-outside="close">
     <div class="trigger" @click="toggle">{{result || '&nbsp'}}</div>
-
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-items
         :selected="selected"
@@ -19,9 +18,11 @@
 import CascaderItems from "./cascader-items";
 import Col from "./col";
 import { close } from "fs";
+import ClickOutside from "./click-outside";
 export default {
   name: "ZealotCascader",
   components: { CascaderItems },
+  directives: { ClickOutside },
   props: {
     selected: {
       type: Array,
@@ -45,23 +46,12 @@ export default {
     };
   },
   methods: {
-    onClickDocument(e) {
-      let { cascader } = this.$refs;
-      let { target } = e;
-      if (cascader === target || cascader.contains(target)) {
-        return;
-      }
-      this.close();
-    },
     close() {
+      console.log("close");
       this.popoverVisible = false;
-      document.removeEventListener("click", this.onClickDocument);
     },
     open() {
       this.popoverVisible = true;
-      this.$nextTick(() => {
-        document.addEventListener("click", this.onClickDocument);
-      });
     },
     toggle() {
       if (this.popoverVisible === false) {
