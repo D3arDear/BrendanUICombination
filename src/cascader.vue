@@ -1,6 +1,6 @@
 <template>
-  <div class="cascader">
-    <div class="trigger" @click="popoverVisible = !popoverVisible">{{result || '&nbsp'}}</div>
+  <div class="cascader" ref="cascader">
+    <div class="trigger" @click="toggle">{{result || '&nbsp'}}</div>
 
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-items
@@ -45,6 +45,31 @@ export default {
     };
   },
   methods: {
+    onClickDocument(e) {
+      let { cascader } = this.$refs;
+      let { target } = e;
+      if (cascader === target || cascader.contains(target)) {
+        return;
+      }
+      this.close();
+    },
+    close() {
+      this.popoverVisible = false;
+      document.removeEventListener("click", this.onClickDocument);
+    },
+    open() {
+      this.popoverVisible = true;
+      this.$nextTick(() => {
+        document.addEventListener("click", this.onClickDocument);
+      });
+    },
+    toggle() {
+      if (this.popoverVisible === false) {
+        this.open();
+      } else {
+        this.close();
+      }
+    },
     onUpdateSelected(newSelected) {
       this.$emit("update:selected", newSelected);
       let lastItem = newSelected[newSelected.length - 1];
@@ -96,16 +121,14 @@ export default {
       return this.selected.map(item => item.name).join("/");
     }
   },
-  updated() {
-    console.log("更新了");
-    console.log(this.items);
-  }
+  updated() {}
 };
 </script>
 
 <style lang="scss" scoped>
 @import "var";
 .cascader {
+  display: inline-block;
   position: relative;
   .trigger {
     border: 1px solid $border-color;

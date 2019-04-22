@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     rightArrowVisible(item) {
-      return this.loadData ? !this.item.isLeaf : item.children;
+      return this.loadData ? !item.isLeaf : item.children;
     },
     onClickLabel(item) {
       let copy = JSON.parse(JSON.stringify(this.selected));
@@ -115,6 +115,7 @@ export default {
     cursor: pointer;
     display: flex;
     align-items: center;
+    white-space: nowrap;
     > .name {
       margin-right: 1em;
       user-select: none;
