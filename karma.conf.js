@@ -1,5 +1,7 @@
 var webpackConfig = require("@vue/cli-service/webpack.config.js")
-var chromePATH = 'C:/"Program Files (x86)"/Google/Chrome/Application'
+const puppeteer = require("puppeteer")
+process.env.CHROME_BIN = puppeteer.executablePath()
+
 module.exports = function(config) {
 	config.set({
 		// base path that will be used to resolve all patterns (eg. files, exclude)

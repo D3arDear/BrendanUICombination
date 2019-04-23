@@ -1,6 +1,9 @@
-const expect = chai.expect
+import chai, { expect } from "chai"
+import sinon from "sinon"
+import sinonChai from "sinon-chai"
+chai.use(sinonChai)
 import Vue from "vue"
-import Toast from "../src/toast"
+import Toast from "@/toast"
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -11,14 +14,14 @@ describe("Toast", () => {
 		expect(Toast).to.exist // 断言 Button 存在
 	})
 	describe("props", function() {
-		it("接受 autoClose", done => {
+		it("接受 autoClose", (done) => {
 			let div = document.createElement("div")
 			document.body.appendChild(div)
 			const Constructor = Vue.extend(Toast)
 			const vm = new Constructor({
 				propsData: {
-					autoClose: 1
-				}
+					autoClose: 1,
+				},
 			}).$mount(div)
 			vm.$on("close", () => {
 				expect(document.body.contains(vm.$el)).to.eq(false)
@@ -26,16 +29,16 @@ describe("Toast", () => {
 			})
 			expect(vm.autoClose).to.eq(1)
 		})
-		it("接受 closeButton", done => {
+		it("接受 closeButton", (done) => {
 			const callback = sinon.fake()
 			const Constructor = Vue.extend(Toast)
 			const vm = new Constructor({
 				propsData: {
 					closeButton: {
 						text: "关闭",
-						callback: callback
-					}
-				}
+						callback: callback,
+					},
+				},
 			}).$mount()
 			let closeButton = vm.$el.querySelector(".close")
 			expect(closeButton.textContent.trim()).to.eq("关闭")
@@ -48,7 +51,7 @@ describe("Toast", () => {
 		it("接受 enableHTML", () => {
 			const Constructor = Vue.extend(Toast)
 			const vm = new Constructor({
-				propsData: { enableHTML: true }
+				propsData: { enableHTML: true },
 			})
 			vm.$slots.default = ['<strong id="test-hi">hi</strong>']
 			vm.$mount()
@@ -59,8 +62,8 @@ describe("Toast", () => {
 			const Constructor = Vue.extend(Toast)
 			const vm = new Constructor({
 				propsData: {
-					position: "bottom"
-				}
+					position: "bottom",
+				},
 			}).$mount()
 			expect(vm.$el.classList.contains("position-bottom")).to.eq(true)
 		})

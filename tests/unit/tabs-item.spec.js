@@ -1,10 +1,13 @@
-const expect = chai.expect
+import chai, { expect } from "chai"
+import sinon from "sinon"
+import sinonChai from "sinon-chai"
+chai.use(sinonChai)
 import Vue from "vue"
-import Tabs from "../src/tabs"
-import TabsHead from "../src/tabs-head"
-import TabsBody from "../src/tabs-body"
-import TabsItem from "../src/tabs-item"
-import TabsPane from "../src/tabs-pane"
+import Tabs from "@/tabs"
+import TabsHead from "@/tabs-head"
+import TabsBody from "@/tabs-body"
+import TabsItem from "@/tabs-item"
+import TabsPane from "@/tabs-pane"
 
 Vue.component("z-tabs", Tabs)
 Vue.component("z-tabs-head", TabsHead)
@@ -22,8 +25,8 @@ describe("TabsItem", () => {
 		const Constructor = Vue.extend(TabsItem)
 		const vm = new Constructor({
 			propsData: {
-				name: "xxx"
-			}
+				name: "xxx",
+			},
 		}).$mount()
 		expect(vm.$el.getAttribute("data-name")).to.eq("xxx")
 	})
@@ -31,8 +34,8 @@ describe("TabsItem", () => {
 		const Constructor = Vue.extend(TabsItem)
 		const vm = new Constructor({
 			propsData: {
-				disabled: true
-			}
+				disabled: true,
+			},
 		}).$mount()
 		expect(vm.$el.classList.contains("disabled")).to.be.true
 		const callback = sinon.fake()

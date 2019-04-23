@@ -2,9 +2,10 @@ import chai, { expect } from "chai"
 import sinon from "sinon"
 import sinonChai from "sinon-chai"
 chai.use(sinonChai)
+import Vue from "vue"
 
 import { shallowMount, mount } from "@vue/test-utils"
-import Input from "@/col.vue"
+import Input from "@/input.vue"
 
 describe("input", () => {
 	// BDD 行为驱动测试
