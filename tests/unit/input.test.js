@@ -1,9 +1,10 @@
-const expect = chai.expect
-import Vue from "vue"
-import Input from "../src/input"
+import chai, { expect } from "chai"
+import sinon from "sinon"
+import sinonChai from "sinon-chai"
+chai.use(sinonChai)
 
-Vue.config.productionTip = false
-Vue.config.devtools = false
+import { shallowMount, mount } from "@vue/test-utils"
+import Input from "@/col.vue"
 
 describe("input", () => {
 	// BDD 行为驱动测试
@@ -19,8 +20,8 @@ describe("input", () => {
 		it("接收 value", () => {
 			vm = new Constructor({
 				propsData: {
-					value: "1234"
-				}
+					value: "1234",
+				},
 			}).$mount()
 			const inputElement = vm.$el.querySelector("input")
 			expect(inputElement.value).to.equal("1234")
@@ -28,8 +29,8 @@ describe("input", () => {
 		it("接收 disabled", () => {
 			const vm = new Constructor({
 				propsData: {
-					disabled: true
-				}
+					disabled: true,
+				},
 			}).$mount()
 			const inputElement = vm.$el.querySelector("input")
 			expect(inputElement.disabled).to.equal(true)
@@ -37,8 +38,8 @@ describe("input", () => {
 		it("接收 readonly", () => {
 			const vm = new Constructor({
 				propsData: {
-					readonly: true
-				}
+					readonly: true,
+				},
 			}).$mount()
 			const inputElement = vm.$el.querySelector("input")
 			expect(inputElement.readOnly).to.equal(true)
@@ -46,8 +47,8 @@ describe("input", () => {
 		it("接收 error", () => {
 			const vm = new Constructor({
 				propsData: {
-					error: "这里有问题"
-				}
+					error: "这里有问题",
+				},
 			}).$mount()
 			const useElement = vm.$el.querySelector("use")
 			expect(useElement.getAttribute("xlink:href")).to.equal("#i-error")
@@ -62,14 +63,14 @@ describe("input", () => {
 			vm.$destroy()
 		})
 		it("支持 change/input/focus/blur 事件", () => {
-			;["change", "input", "focus", "blur"].forEach(eventName => {
+			;["change", "input", "focus", "blur"].forEach((eventName) => {
 				vm = new Constructor({}).$mount()
 				const callback = sinon.fake()
 				vm.$on(eventName, callback)
 				let event = new Event(eventName)
 				Object.defineProperty(event, "target", {
 					value: { value: "hi" },
-					enumerable: true
+					enumerable: true,
 				})
 				let inputElement = vm.$el.querySelector("input")
 				inputElement.dispatchEvent(event)
