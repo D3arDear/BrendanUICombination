@@ -5,7 +5,7 @@
       <z-cascader
         :source.sync="source"
         popover-height="200px"
-        :selected.sync="selected"
+        :selected.sync="selectedSync"
         :load-data="loadData"
       ></z-cascader>
     </div>
@@ -13,15 +13,30 @@
       <z-cascader
         :source.sync="source"
         popover-height="200px"
-        :selected.sync="selected"
+        :selected.sync="selectedSync"
         :load-data="loadData"
       ></z-cascader>
     </div>
     <p>这里有个cascader</p>
+    <div class="box">
+      <z-slides :selected="selected">
+        <z-slides-item name="1">
+          <div class="slide-content">1</div>
+        </z-slides-item>
+        <z-slides-item name="2">
+          <div class="slide-content">2</div>
+        </z-slides-item>
+        <z-slides-item name="3">
+          <div class="slide-content">3</div>
+        </z-slides-item>
+      </z-slides>
+    </div>
   </div>
 </template>
 <script>
+import SlidesItem from "./slides-item";
 import Cascader from "./cascader";
+import Slides from "./slides";
 import db from "./db";
 import { removeListener } from "./click-outside";
 
@@ -45,15 +60,26 @@ function ajax(parentId = 0) {
 export default {
   name: "demo",
   components: {
-    "z-cascader": Cascader
+    "z-cascader": Cascader,
+    "z-slides": Slides,
+    "z-slides-item": SlidesItem
   },
   data() {
     return {
-      selected: [],
-      source: []
+      selected: "1",
+      source: [],
+      selectedSync: []
     };
   },
   created() {
+    let n = 1;
+    setInterval(() => {
+      if (n === 4) {
+        n = 1;
+      }
+      this.selected = n.toString();
+      n++;
+    }, 3000);
     ajax(0).then(result => {
       this.source = result;
     });
@@ -69,9 +95,9 @@ export default {
       });
     },
     xxx() {
-      ajax(this.selected[0].id).then(result => {
+      ajax(this.selectedSync[0].id).then(result => {
         let lastLevelSelected = this.source.filter(
-          item => item.id === this.selected[0].id
+          item => item.id === this.selectedSync[0].id
         )[0];
         //lastLevelSelected.children = result;
         this.$set(lastLevelSelected, "children", result);
@@ -82,6 +108,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.box {
+  margin: 20px;
+}
 img {
   max-width: 100%;
 }
@@ -95,5 +124,11 @@ html {
 }
 body {
   font-size: var(--font-size);
+}
+.slide-content {
+  width: 200px;
+  height: 150px;
+  background: #ddd;
+  border: 1px solid red;
 }
 </style>
