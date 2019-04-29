@@ -19,14 +19,14 @@
     </div>
     <p>这里有个cascader</p>
     <div class="box">
-      <z-slides :selected="selected">
-        <z-slides-item name="1">
+      <z-slides :selected.sync="selected" height="300px">
+        <z-slides-item name="hey">
           <div class="slide-content">1</div>
         </z-slides-item>
-        <z-slides-item name="2">
+        <z-slides-item name="hello">
           <div class="slide-content">2</div>
         </z-slides-item>
-        <z-slides-item name="3">
+        <z-slides-item name="hola">
           <div class="slide-content">3</div>
         </z-slides-item>
       </z-slides>
@@ -56,7 +56,6 @@ function ajax(parentId = 0) {
     }, 300);
   });
 }
-
 export default {
   name: "demo",
   components: {
@@ -66,20 +65,20 @@ export default {
   },
   data() {
     return {
-      selected: "1",
+      selected: "hola",
       source: [],
       selectedSync: []
     };
   },
   created() {
-    let n = 1;
-    setInterval(() => {
-      if (n === 4) {
-        n = 1;
-      }
-      this.selected = n.toString();
-      n++;
-    }, 3000);
+    // let n = 1;
+    // setInterval(() => {
+    //   if (n === 4) {
+    //     n = 1;
+    //   }
+    //   this.selected = n.toString();
+    //   n++;
+    // }, 3000);
     ajax(0).then(result => {
       this.source = result;
     });
@@ -101,7 +100,6 @@ export default {
         )[0];
         //lastLevelSelected.children = result;
         this.$set(lastLevelSelected, "children", result);
-        console.log(lastLevelSelected);
       });
     }
   }
@@ -110,6 +108,7 @@ export default {
 <style lang="scss">
 .box {
   margin: 20px;
+  height: 400px;
 }
 img {
   max-width: 100%;
@@ -126,8 +125,8 @@ body {
   font-size: var(--font-size);
 }
 .slide-content {
-  width: 200px;
-  height: 150px;
+  width: 100%;
+  height: 400px;
   background: #ddd;
   border: 1px solid red;
 }
