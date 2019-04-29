@@ -1,5 +1,5 @@
 <template>
-  <div class="z-slides">
+  <div class="z-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div class="z-slides-window" ref="window">
       <div class="z-slides-wrapper">
         <slot></slot>
@@ -29,20 +29,17 @@ export default {
   data() {
     return {
       childrenLength: 0,
-      lastSelectedIndex: undefined
+      lastSelectedIndex: undefined,
+      timerId: undefined
     };
   },
   mounted() {
-    // this.updateChildren();
-    // this.toggleAutoPlay();
+    this.updateChildren();
+    this.toggleAutoPlay();
     this.childrenLength = this.$children.length;
     this.lastSelectedIndex = this.selectedIndex;
   },
   updated() {
-    console.log("this.lastSelectedIndex");
-    console.log(this.lastSelectedIndex);
-    console.log("this.selectedIndex");
-    console.log(this.selectedIndex);
     this.updateChildren();
   },
   computed: {
@@ -54,9 +51,18 @@ export default {
     }
   },
   methods: {
+    onMouseEnter() {
+      this.pause();
+    },
+    onMouseLeave() {
+      this.toggleAutoPlay();
+    },
     toggleAutoPlay() {
-      let index = this.names.indexOf(this.getSelected());
+      if (this.timerId) {
+        return;
+      }
       let run = () => {
+        let index = this.names.indexOf(this.getSelected());
         let newIndex = index - 1;
         if (newIndex === -1) {
           newIndex = this.names.length - 1;
@@ -65,23 +71,35 @@ export default {
           newIndex = 0;
         }
         this.select(newIndex);
-        setTimeout(run, 2000);
+        this.timerId = setTimeout(run, 2000);
       };
-      setTimeout(run, 2000);
+      this.timerId = setTimeout(run, 2000);
     },
     getSelected() {
       let first = this.$children[0];
       return this.selected || first.name;
     },
+    pause() {
+      window.clearTimeout(this.timerId);
+      this.timerId = undefined;
+    },
     updateChildren() {
       let selected = this.getSelected();
       this.$children.forEach(vm => {
-        vm.selected = this.selected;
-        let newIndex = this.names.indexOf(selected);
-        let oldIndex = this.names.indexOf(vm.name);
-        console.log(`last + ${this.lastSelectedIndex}`);
-        console.log(`current + ${this.selectedIndex}`);
-        vm.reverse = this.selectedIndex > this.lastSelectedIndex ? false : true;
+        let reverse =
+          this.selectedIndex > this.lastSelectedIndex ? false : true;
+        if (
+          this.lastSelectedIndex === this.$children.length - 1 &&
+          this.selectedIndex === 0
+        ) {
+          vm.reverse = false;
+        }
+        if (
+          this.lastSelectedIndex === this.$children.length - 1 &&
+          this.selectedIndex === 0
+        ) {
+          vm.reverse = true;
+        }
         this.$nextTick(() => {
           vm.selected = selected;
         });

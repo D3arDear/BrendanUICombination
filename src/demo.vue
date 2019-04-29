@@ -18,15 +18,15 @@
       ></z-cascader>
     </div>
     <p>这里有个cascader</p>
-    <div class="box">
+    <div class="wrapper">
       <z-slides :selected.sync="selected" height="300px">
-        <z-slides-item name="1">
+        <z-slides-item class="box" name="1">
           <div class="slide-content">1</div>
         </z-slides-item>
-        <z-slides-item name="2">
+        <z-slides-item class="box" name="2">
           <div class="slide-content">2</div>
         </z-slides-item>
-        <z-slides-item name="3">
+        <z-slides-item class="box" name="3">
           <div class="slide-content">3</div>
         </z-slides-item>
       </z-slides>
@@ -107,8 +107,13 @@ export default {
 </script>
 <style lang="scss">
 .box {
-  margin: 20px;
-  height: 400px;
+  height: 350px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 30px;
 }
 img {
   max-width: 100%;
@@ -128,6 +133,9 @@ body {
   width: 100%;
   height: 400px;
   background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid red;
 }
 </style>
