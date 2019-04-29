@@ -1,5 +1,12 @@
 <template>
-  <div class="z-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+  <div
+    class="z-slides"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+    @ontouchstart="onTouchStart"
+    @ontouchmove="onTouchMove"
+    @ontouchend="onTouchEnd"
+  >
     <div class="z-slides-window" ref="window">
       <div class="z-slides-wrapper">
         <slot></slot>
@@ -56,6 +63,15 @@ export default {
     },
     onMouseLeave() {
       this.toggleAutoPlay();
+    },
+    onTouchStart() {
+      console.log("摸了");
+    },
+    onTouchMove() {
+      console.log("动");
+    },
+    onTouchEnd() {
+      console.log("摸完了");
     },
     toggleAutoPlay() {
       if (this.timerId) {
