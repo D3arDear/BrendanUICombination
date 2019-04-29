@@ -10,7 +10,7 @@
         v-for="n in childrenLength"
         :class="{active: selectedIndex === n-1}"
         @click="select(n-1)"
-      >{{n}}</span>
+      >{{n-1}}</span>
     </div>
   </div>
 </template>
@@ -28,15 +28,21 @@ export default {
   },
   data() {
     return {
-      childrenLength: 0
+      childrenLength: 0,
+      lastSelectedIndex: undefined
     };
   },
   mounted() {
-    this.updateChildren();
-    this.toggleAutoPlay();
+    // this.updateChildren();
+    // this.toggleAutoPlay();
     this.childrenLength = this.$children.length;
+    this.lastSelectedIndex = this.selectedIndex;
   },
   updated() {
+    console.log("this.lastSelectedIndex");
+    console.log(this.lastSelectedIndex);
+    console.log("this.selectedIndex");
+    console.log(this.selectedIndex);
     this.updateChildren();
   },
   computed: {
@@ -58,7 +64,7 @@ export default {
         if (newIndex === this.names.length) {
           newIndex = 0;
         }
-        this.$emit("update:selected", this.names[newIndex]);
+        this.select(newIndex);
         setTimeout(run, 2000);
       };
       setTimeout(run, 2000);
@@ -73,11 +79,16 @@ export default {
         vm.selected = this.selected;
         let newIndex = this.names.indexOf(selected);
         let oldIndex = this.names.indexOf(vm.name);
-        vm.reverse = newIndex > oldIndex ? false : true;
+        console.log(`last + ${this.lastSelectedIndex}`);
+        console.log(`current + ${this.selectedIndex}`);
+        vm.reverse = this.selectedIndex > this.lastSelectedIndex ? false : true;
+        this.$nextTick(() => {
+          vm.selected = selected;
+        });
       });
     },
     select(index) {
-      console.log(index);
+      this.lastSelectedIndex = this.selectedIndex;
       this.$emit("update:selected", this.names[index]);
     }
   }

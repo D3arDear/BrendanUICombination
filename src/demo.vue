@@ -20,13 +20,13 @@
     <p>这里有个cascader</p>
     <div class="box">
       <z-slides :selected.sync="selected" height="300px">
-        <z-slides-item name="hey">
+        <z-slides-item name="1">
           <div class="slide-content">1</div>
         </z-slides-item>
-        <z-slides-item name="hello">
+        <z-slides-item name="2">
           <div class="slide-content">2</div>
         </z-slides-item>
-        <z-slides-item name="hola">
+        <z-slides-item name="3">
           <div class="slide-content">3</div>
         </z-slides-item>
       </z-slides>
@@ -65,7 +65,7 @@ export default {
   },
   data() {
     return {
-      selected: "hola",
+      selected: "2",
       source: [],
       selectedSync: []
     };
