@@ -10,7 +10,7 @@
         v-for="n in childrenLength"
         :class="{active: selectedIndex === n-1}"
         @click="select(n-1)"
-      >{{n-1}}</span>
+      >{{n}}</span>
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
       }
       let run = () => {
         let index = this.names.indexOf(this.getSelected());
-        let newIndex = index - 1;
+        let newIndex = index + 1;
         if (newIndex === -1) {
           newIndex = this.names.length - 1;
         }
@@ -71,9 +71,9 @@ export default {
           newIndex = 0;
         }
         this.select(newIndex);
-        this.timerId = setTimeout(run, 2000);
+        this.timerId = setTimeout(run, 3000);
       };
-      this.timerId = setTimeout(run, 2000);
+      this.timerId = setTimeout(run, 3000);
     },
     getSelected() {
       let first = this.$children[0];
@@ -88,18 +88,21 @@ export default {
       this.$children.forEach(vm => {
         let reverse =
           this.selectedIndex > this.lastSelectedIndex ? false : true;
-        if (
-          this.lastSelectedIndex === this.$children.length - 1 &&
-          this.selectedIndex === 0
-        ) {
-          vm.reverse = false;
+        if (this.timerId) {
+          if (
+            this.lastSelectedIndex === this.$children.length - 1 &&
+            this.selectedIndex === 0
+          ) {
+            vm.reverse = false;
+          }
+          if (
+            this.selectedIndex === this.$children.length - 1 &&
+            this.lastSelectedIndex === 0
+          ) {
+            vm.reverse = true;
+          }
         }
-        if (
-          this.lastSelectedIndex === this.$children.length - 1 &&
-          this.selectedIndex === 0
-        ) {
-          vm.reverse = true;
-        }
+        vm.reverse = reverse;
         this.$nextTick(() => {
           vm.selected = selected;
         });
@@ -122,10 +125,29 @@ export default {
     position: relative;
   }
   &-dots {
+    padding: 8px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     > span {
-      padding: 10px;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      background: #ddd;
+      margin: 0 8px;
+      font-size: 12px;
+      &:hover {
+        cursor: pointer;
+      }
       &.active {
-        background: red;
+        background: #1b1b1b;
+        color: #ddd;
+        &:hover {
+          cursor: default;
+        }
       }
     }
   }
