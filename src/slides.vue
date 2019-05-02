@@ -84,7 +84,6 @@ export default {
       if (slope > 2) {
         if (x2 > x1) {
           this.select(this.selectedIndex - 1);
-          console.log(this.selectedIndex);
         } else {
           this.select(this.selectedIndex + 1);
         }
@@ -111,13 +110,13 @@ export default {
             this.lastSelectedIndex === this.$children.length - 1 &&
             this.selectedIndex === 0
           ) {
-            vm.reverse = false;
+            reverse = false;
           }
           if (
             this.selectedIndex === this.$children.length - 1 &&
             this.lastSelectedIndex === 0
           ) {
-            vm.reverse = true;
+            reverse = true;
           }
         }
         vm.reverse = reverse;
@@ -146,7 +145,9 @@ export default {
       if (newIndex === this.names.length) {
         newIndex = 0;
       }
-      this.$emit("update:selected", this.names[newIndex]);
+      this.$nextTick(() => {
+        this.$emit("update:selected", this.names[newIndex]);
+      });
     }
   }
 };
