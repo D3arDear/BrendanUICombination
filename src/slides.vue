@@ -3,9 +3,9 @@
     class="z-slides"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
-    @ontouchstart="onTouchStart"
-    @ontouchmove="onTouchMove"
-    @ontouchend="onTouchEnd"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
   >
     <div class="z-slides-window" ref="window">
       <div class="z-slides-wrapper">
@@ -37,7 +37,8 @@ export default {
     return {
       childrenLength: 0,
       lastSelectedIndex: undefined,
-      timerId: undefined
+      timerId: undefined,
+      startTouch: undefined
     };
   },
   mounted() {
@@ -51,7 +52,8 @@ export default {
   },
   computed: {
     selectedIndex() {
-      return this.names.indexOf(this.selected) || 0;
+      let index = this.names.indexOf(this.selected);
+      return index === -1 ? 0 : index;
     },
     names() {
       return this.$children.map(vm => vm.name);
@@ -64,32 +66,32 @@ export default {
     onMouseLeave() {
       this.toggleAutoPlay();
     },
-    onTouchStart() {
-      console.log("摸了");
-    },
-    onTouchMove() {
-      console.log("动");
-    },
-    onTouchEnd() {
-      console.log("摸完了");
-    },
-    toggleAutoPlay() {
-      if (this.timerId) {
+    onTouchStart(e) {
+      this.pause();
+      if (e.touches.length > 1) {
         return;
       }
-      let run = () => {
-        let index = this.names.indexOf(this.getSelected());
-        let newIndex = index + 1;
-        if (newIndex === -1) {
-          newIndex = this.names.length - 1;
+      this.startTouch = e.touches[0];
+    },
+    onTouchMove() {},
+    onTouchEnd(e) {
+      let endTouch = e.changedTouches[0];
+      let { clientX: x1, clientY: y1 } = this.startTouch;
+      let { clientX: x2, clientY: y2 } = endTouch;
+      let horizon = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+      let deltaY = Math.abs(y2 - y1);
+      let slope = horizon / deltaY;
+      if (slope > 2) {
+        if (x2 > x1) {
+          this.select(this.selectedIndex - 1);
+          console.log(this.selectedIndex);
+        } else {
+          this.select(this.selectedIndex + 1);
         }
-        if (newIndex === this.names.length) {
-          newIndex = 0;
-        }
-        this.select(newIndex);
-        this.timerId = setTimeout(run, 3000);
-      };
-      this.timerId = setTimeout(run, 3000);
+      }
+      this.$nextTick(() => {
+        this.toggleAutoPlay();
+      });
     },
     getSelected() {
       let first = this.$children[0];
@@ -124,9 +126,27 @@ export default {
         });
       });
     },
-    select(index) {
+    toggleAutoPlay() {
+      if (this.timerId) {
+        return;
+      }
+      let run = () => {
+        let index = this.names.indexOf(this.getSelected());
+        let newIndex = index + 1;
+        this.select(newIndex);
+        this.timerId = setTimeout(run, 3000);
+      };
+      this.timerId = setTimeout(run, 3000);
+    },
+    select(newIndex) {
       this.lastSelectedIndex = this.selectedIndex;
-      this.$emit("update:selected", this.names[index]);
+      if (newIndex === -1) {
+        newIndex = this.names.length - 1;
+      }
+      if (newIndex === this.names.length) {
+        newIndex = 0;
+      }
+      this.$emit("update:selected", this.names[newIndex]);
     }
   }
 };

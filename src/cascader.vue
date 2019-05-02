@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     close() {
-      console.log("close");
       this.popoverVisible = false;
     },
     open() {
