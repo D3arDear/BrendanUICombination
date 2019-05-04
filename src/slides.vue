@@ -13,15 +13,17 @@
       </div>
     </div>
     <div class="z-slides-dots">
-      <span @click="onClickPrev">
+      <span @click="onClickPrev" class="prev">
         <z-icon name="left"></z-icon>
       </span>
       <span
         v-for="n in childrenLength"
+        :key="n"
+        :data-index="n-1"
         :class="{active: selectedIndex === n-1}"
         @click="select(n-1)"
       >{{n}}</span>
-      <span @click="onClickNext">
+      <span @click="onClickNext" class="next">
         <z-icon name="right"></z-icon>
       </span>
     </div>
@@ -39,6 +41,10 @@ export default {
     autoPlay: {
       type: Boolean,
       default: true
+    },
+    autoPlayDelay: {
+      type: Number,
+      default: 3000
     }
   },
   data() {
@@ -51,7 +57,9 @@ export default {
   },
   mounted() {
     this.updateChildren();
-    this.toggleAutoPlay();
+    if (this.autoPlay) {
+      this.toggleAutoPlay();
+    }
     this.childrenLength = this.items.length;
     this.lastSelectedIndex = this.selectedIndex;
   },
@@ -75,13 +83,9 @@ export default {
   methods: {
     onClickPrev() {
       this.select(this.selectedIndex - 1);
-      console.log(this.selectedIndex);
-      console.log("prev");
     },
     onClickNext() {
       this.select(this.selectedIndex + 1);
-      console.log(this.selectedIndex);
-      console.log("next");
     },
     onMouseEnter() {
       this.pause();
@@ -156,9 +160,9 @@ export default {
         let index = this.names.indexOf(this.getSelected());
         let newIndex = index + 1;
         this.select(newIndex);
-        this.timerId = setTimeout(run, 3000);
+        this.timerId = setTimeout(run, this.autoPlayDelay);
       };
-      this.timerId = setTimeout(run, 3000);
+      this.timerId = setTimeout(run, this.autoPlayDelay);
     },
     select(newIndex) {
       this.lastSelectedIndex = this.selectedIndex;
