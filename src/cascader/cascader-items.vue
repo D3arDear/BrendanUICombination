@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import Icon from "./icon";
+import Icon from "../icon";
 export default {
   name: "ZealotCascaderItems",
   components: { "z-icon": Icon },
@@ -89,7 +89,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "var";
+@import "../var";
 .cascaderItem {
   display: flex;
   align-items: flex-start;

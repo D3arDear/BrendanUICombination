@@ -4,7 +4,7 @@ import sinonChai from "sinon-chai"
 chai.use(sinonChai)
 
 import { shallowMount, mount } from "@vue/test-utils"
-import Col from "@/col.vue"
+import Col from "@/grid/col.vue"
 
 describe("Col", () => {
 	it("存在.", () => {

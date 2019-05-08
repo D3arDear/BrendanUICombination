@@ -9,10 +9,11 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Icon from "./icon";
-Vue.component("z-icon", Icon);
+import Icon from "../icon";
 export default {
+  components: {
+    "z-icon": Icon
+  },
   name: "zealotButton",
   props: {
     icon: {},
@@ -33,8 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-@import "var";
+@import "../var";
 .z-button {
   font-size: $font-size;
   height: $button-height;

@@ -17,9 +17,9 @@
 
 <script>
 import CascaderItems from "./cascader-items";
-import Col from "./col";
+import Col from "../grid/col";
 import { close } from "fs";
-import ClickOutside from "./click-outside";
+import ClickOutside from "../click-outside";
 export default {
   name: "ZealotCascader",
   components: { CascaderItems },
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "var";
+@import "../var";
 .cascader {
   display: inline-block;
   position: relative;

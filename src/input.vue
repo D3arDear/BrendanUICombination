@@ -49,7 +49,7 @@ export default {
 --color: #333;
 --border-color: #999;
 --border-color-hover: #666; */
-@import "var";
+@import "./var";
 .wrapper {
   font-size: $font-size;
   display: inline-block;

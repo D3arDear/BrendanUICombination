@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>这里有个cascader</p>
     <div class="cascader-wrapper">
       <z-cascader
         :source.sync="source"
@@ -16,8 +15,8 @@
         :selected.sync="selectedSync"
         :load-data="loadData"
       ></z-cascader>
+      <z-button icon="setting">默认样式</z-button>
     </div>
-    <p>这里有个cascader</p>
     <div class="wrapper">
       <z-slides :selected.sync="selected" height="300px">
         <z-slides-item class="box" name="1">
@@ -34,9 +33,10 @@
   </div>
 </template>
 <script>
-import SlidesItem from "./slides-item";
-import Cascader from "./cascader";
-import Slides from "./slides";
+import Button from "./button/button";
+import SlidesItem from "./slides/slides-item";
+import Cascader from "./cascader/cascader";
+import Slides from "./slides/slides";
 import db from "./db";
 import { removeListener } from "./click-outside";
 
@@ -61,7 +61,8 @@ export default {
   components: {
     "z-cascader": Cascader,
     "z-slides": Slides,
-    "z-slides-item": SlidesItem
+    "z-slides-item": SlidesItem,
+    "z-button": Button
   },
   data() {
     return {

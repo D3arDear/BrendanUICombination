@@ -30,10 +30,12 @@
   </div>
 </template>
 <script>
-import ZIcon from "./icon";
+import Icon from "../icon";
 export default {
   name: "zealotSlides",
-  components: { ZIcon },
+  components: {
+    "z-icon": Icon
+  },
   props: {
     selected: {
       type: String
@@ -61,10 +63,12 @@ export default {
       this.toggleAutoPlay();
     }
     this.childrenLength = this.items.length;
-    this.lastSelectedIndex = this.selectedIndex;
   },
   updated() {
     this.updateChildren();
+  },
+  beforeDestroy() {
+    this.pause();
   },
   computed: {
     selectedIndex() {
@@ -140,8 +144,8 @@ export default {
             reverse = false;
           }
           if (
-            this.selectedIndex === this.items.length - 1 &&
-            this.lastSelectedIndex === 0
+            this.lastSelectedIndex === 0 &&
+            this.selectedIndex === this.items.length - 1
           ) {
             reverse = true;
           }
@@ -172,9 +176,7 @@ export default {
       if (newIndex === this.names.length) {
         newIndex = 0;
       }
-      this.$nextTick(() => {
-        this.$emit("update:selected", this.names[newIndex]);
-      });
+      this.$emit("update:selected", this.names[newIndex]);
     }
   }
 };
