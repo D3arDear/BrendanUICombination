@@ -38,7 +38,7 @@ describe("Tabs", () => {
       </z-tabs>`
 		let vm = new Vue({
 			el: div,
-		})
+		}).$mount(div)
 		vm.$nextTick(() => {
 			let x = vm.$el.querySelector(`.tabs-item[data-name='pc']`)
 			expect(x.classList.contains("active")).to.be.true

@@ -49,7 +49,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .collapseItem {
-  @import "../var";
+  @import "../../style/var";
   > .title {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     min-height: 32px;

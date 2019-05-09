@@ -27,7 +27,7 @@ describe("Row", () => {
 		let vm = new Vue({
 			el: div,
 		})
-
+		console.log(vm.$el)
 		setTimeout(() => {
 			let row = vm.$el.querySelectorAll(".row")
 			console.log(row[0])

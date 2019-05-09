@@ -37,7 +37,7 @@ import Button from "./button/button";
 import SlidesItem from "./slides/slides-item";
 import Cascader from "./cascader/cascader";
 import Slides from "./slides/slides";
-import db from "./db";
+import db from "../tests/fixture/db";
 import { removeListener } from "./click-outside";
 
 function ajax(parentId = 0) {
