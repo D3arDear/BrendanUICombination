@@ -92,6 +92,11 @@ export default {
   }
 }
 .z-sub-nav .z-sub-nav {
+  &.active {
+    &::after {
+      display: none;
+    }
+  }
   .z-sub-nav-popover {
     top: 0;
     left: 100%;
