@@ -1,6 +1,6 @@
 
 <template>
-  <div class="z-sub-nav">
+  <div class="z-sub-nav" :class="{active}">
     <span @click="onClick">
       <slot name="title"></slot>
     </span>
@@ -13,14 +13,24 @@
 <script>
 export default {
   name: "ZealotSubNav",
+  props: {
+    name: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      open: false
+      open: false,
+      active: false
     };
   },
   methods: {
     onClick() {
       this.open = !this.open;
+    },
+    x() {
+      this.active = true;
     }
   }
 };
@@ -30,6 +40,17 @@ export default {
 @import "../../style/var";
 .z-sub-nav {
   position: relative;
+  &.active {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-bottom: 2px solid $blue;
+      width: 100%;
+    }
+  }
   > span {
     padding: 10px 20px;
     display: block;
