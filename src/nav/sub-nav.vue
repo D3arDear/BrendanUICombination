@@ -1,10 +1,10 @@
 
 <template>
-  <div class="g-sub-nav">
+  <div class="z-sub-nav">
     <span @click="onClick">
       <slot name="title"></slot>
     </span>
-    <div class="g-sub-nav-popover" v-show="open">
+    <div class="z-sub-nav-popover" v-show="open">
       <slot></slot>
     </div>
   </div>
@@ -27,12 +27,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.g-sub-nav {
+.z-sub-nav {
   position: relative;
   > span {
     padding: 10px 20px;
-    display: inline-block;
-    vertical-align: top;
+    display: block;
   }
   &-popover {
     position: absolute;
@@ -41,5 +40,10 @@ export default {
     border: 1px solid black;
     white-space: nowrap;
   }
+}
+.z-sub-nav .z-sub-nav .z-sub-nav-popover {
+  top: 0;
+  left: 100%;
+  margin-left: 8px;
 }
 </style>

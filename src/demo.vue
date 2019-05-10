@@ -6,7 +6,17 @@
         <template slot="title">关于</template>
         <z-nav-item name="culture">企业文化</z-nav-item>
         <z-nav-item name="developers">开发团队</z-nav-item>
-        <z-nav-item name="contacts">联系电话</z-nav-item>
+        <z-sub-nav>
+          <template slot="title">联系方式</template>
+          <z-nav-item name="wechat">微信</z-nav-item>
+          <z-nav-item name="qq">QQ</z-nav-item>
+          <z-sub-nav>
+            <template slot="title">手机</template>
+            <z-nav-item name="cm">移动</z-nav-item>
+            <z-nav-item name="cu">联通</z-nav-item>
+            <z-nav-item name="cn">电信</z-nav-item>
+          </z-sub-nav>
+        </z-sub-nav>
       </z-sub-nav>
       <z-nav-item name="hire">招聘</z-nav-item>
     </z-nav>
