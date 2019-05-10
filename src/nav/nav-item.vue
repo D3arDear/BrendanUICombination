@@ -1,6 +1,7 @@
 
 <template>
   <div class="z-nav-item" :class="{selected}" @click="onClick">
+    {{this.selected}}
     <slot></slot>
   </div>
 </template>
