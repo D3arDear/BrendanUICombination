@@ -24,7 +24,8 @@ export default {
   },
   data() {
     return {
-      items: []
+      items: [],
+      namePath: []
     };
   },
   mounted() {
@@ -75,5 +76,6 @@ export default {
   box-shadow: $card-shadow;
   background: $background-white;
   cursor: pointer;
+  user-select: none;
 }
 </style>
