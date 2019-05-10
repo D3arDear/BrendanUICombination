@@ -68,8 +68,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/var";
 .z-nav {
+  color: $color;
   display: flex;
-  border: 1px solid red;
+  box-shadow: $card-shadow;
+  background: $background-white;
+  cursor: pointer;
 }
 </style>

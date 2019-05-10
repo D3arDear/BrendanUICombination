@@ -27,6 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/var";
 .z-sub-nav {
   position: relative;
   > span {
@@ -34,11 +35,17 @@ export default {
     display: block;
   }
   &-popover {
+    margin-top: 8px;
+    background: $background-white;
     position: absolute;
     top: 100%;
     left: 0;
-    border: 1px solid black;
+    box-shadow: $card-item-shadow;
     white-space: nowrap;
+    border-radius: $border-radius;
+    font-size: $font-size-small;
+    color: $color-light;
+    min-width: 8em;
   }
 }
 .z-sub-nav .z-sub-nav .z-sub-nav-popover {
