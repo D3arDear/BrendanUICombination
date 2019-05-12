@@ -1,6 +1,26 @@
 <template>
   <div>
-    <z-nav :selected.sync="selected">
+    <z-nav :selected.sync="selected" style="margin-top:20px">
+      <z-nav-item name="home">首页</z-nav-item>
+      <z-sub-nav name="about">
+        <template slot="title">关于</template>
+        <z-nav-item name="culture">企业文化</z-nav-item>
+        <z-nav-item name="developers">开发团队</z-nav-item>
+        <z-sub-nav name="contacts">
+          <template slot="title">联系方式</template>
+          <z-nav-item name="wechat">微信</z-nav-item>
+          <z-nav-item name="qq">QQ</z-nav-item>
+          <z-sub-nav name="phone">
+            <template slot="title">手机</template>
+            <z-nav-item name="cm">移动</z-nav-item>
+            <z-nav-item name="cu">联通</z-nav-item>
+            <z-nav-item name="cn">电信</z-nav-item>
+          </z-sub-nav>
+        </z-sub-nav>
+      </z-sub-nav>
+      <z-nav-item name="hire">招聘</z-nav-item>
+    </z-nav>
+    <z-nav :selected.sync="selected" vertical style="width:200px;margin-top:100px">
       <z-nav-item name="home">首页</z-nav-item>
       <z-sub-nav name="about">
         <template slot="title">关于</template>

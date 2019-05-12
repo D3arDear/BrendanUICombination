@@ -1,5 +1,5 @@
 <template>
-  <div class="z-nav">
+  <div class="z-nav" :class="{vertical:vertical}">
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,8 @@ export default {
   name: "ZealotNav",
   provide() {
     return {
-      root: this
+      root: this,
+      vertical: this.vertical
     };
   },
   props: {
@@ -18,6 +19,10 @@ export default {
       default: () => {}
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    vertical: {
       type: Boolean,
       default: false
     }
@@ -77,5 +82,8 @@ export default {
   background: $background-white;
   cursor: pointer;
   user-select: none;
+  &.vertical {
+    flex-direction: column;
+  }
 }
 </style>
