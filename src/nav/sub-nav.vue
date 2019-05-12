@@ -1,9 +1,9 @@
 
 <template>
-  <div class="z-sub-nav" :class="{active}" v-click-outside="close">
+  <div class="z-sub-nav" :class="{active,vertical}" v-click-outside="close">
     <span class="z-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
-      <span class="z-sub-nav-icon" :class="{open}">
+      <span class="z-sub-nav-icon" :class="{open,vertical}">
         <z-icon name="right"></z-icon>
       </span>
     </span>
@@ -95,15 +95,17 @@ export default {
 @import "../../style/var";
 .z-sub-nav {
   position: relative;
-  &.active {
-    position: relative;
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      border-bottom: 2px solid $blue;
-      width: 100%;
+  &:not(.vertical) {
+    &.active {
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-bottom: 2px solid $blue;
+        width: 100%;
+      }
     }
   }
   &-label {
@@ -162,8 +164,14 @@ export default {
     svg {
       fill: $color-light;
     }
-    &.open {
+    &.vertical {
       transform: rotate(90deg);
+      &.open {
+        transform: rotate(270deg);
+      }
+    }
+    &.open {
+      transform: rotate(180deg);
     }
   }
 }
