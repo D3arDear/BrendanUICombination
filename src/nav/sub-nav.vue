@@ -1,17 +1,24 @@
 
 <template>
-  <div class="z-sub-nav" :class="{active,veritcal}" v-click-outside="close">
+  <div class="z-sub-nav" :class="{active}" v-click-outside="close">
     <span class="z-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
       <span class="z-sub-nav-icon" :class="{open}">
         <z-icon name="right"></z-icon>
       </span>
     </span>
-    <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
-      <div class="z-sub-nav-popover" v-show="open" :class="{vertical}">
+    <template v-if="vertical">
+      <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
+        <div class="z-sub-nav-popover" v-show="open" :class="{vertical}">
+          <slot></slot>
+        </div>
+      </transition>
+    </template>
+    <template v-else>
+      <div class="z-sub-nav-popover" v-show="open">
         <slot></slot>
       </div>
-    </transition>
+    </template>
   </div>
 </template>
 
@@ -118,6 +125,7 @@ export default {
     font-size: $font-size-small;
     color: $color-light;
     min-width: 8em;
+    transition: all 0.3s;
     &.vertical {
       position: static;
       box-shadow: none;
