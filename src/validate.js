@@ -29,9 +29,7 @@ export default function validate(data, rules) {
 	return errors
 }
 
-validate.required = (value ) => {
-if
-}
+validate.required = (value) => {}
 
 function ensureObject(obj, key) {
 	if (typeof obj[key] !== "object") {
