@@ -1,6 +1,6 @@
 
 <template>
-  <div class="z-nav-item" :class="{selected,vertical}" @click="onClick">
+  <div class="z-nav-item" :class="{selected,vertical}" @click="onClick" :data-name="name">
     <slot></slot>
   </div>
 </template>
