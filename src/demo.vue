@@ -51,7 +51,7 @@ export default {
   components: { ZNav, ZNavItem, ZSubNav },
   data() {
     return {
-      selected: ["culture"]
+      selected: "culture"
     };
   },
   created() {}

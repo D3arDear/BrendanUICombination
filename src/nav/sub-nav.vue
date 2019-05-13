@@ -85,6 +85,7 @@ export default {
       if (this.$parent.updateNamePath) {
         this.$parent.updateNamePath();
       } else {
+        // this.root.namePath=[]
       }
     }
   }
