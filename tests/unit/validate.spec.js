@@ -74,4 +74,59 @@ describe("validate", () => {
 		expect(errors.email.minLength).to.exist
 		expect(errors.email.pattern).to.exist
 	})
+	it("maxLength", () => {
+		let data = {
+			email: "123123123123",
+		}
+		let rules = [{ key: "email", pattern: "email", maxLength: 10 }]
+		let errors = validate(data, rules)
+		expect(errors.email.maxLength).to.exist
+	})
+	it("test keys", () => {
+		let data = {
+			email: "checkcheckcheck@gmail.com",
+		}
+		let rules = [
+			{
+				key: "email",
+				required: true,
+				minLength: 6,
+				maxLength: 20,
+				hasNumber: true,
+				hasLowerCaseAndUpperCase: true,
+				hasDot: true,
+				hasUnderscore: true,
+				hasZealot: true,
+			},
+		]
+		let fn = () => {
+			validate(data, rules)
+		}
+		expect(fn).to.throw()
+	})
+	it("custom rule", () => {
+		let data = {
+			email: "cxkcxkcxk@gmail.com",
+		}
+		validate.hasNumber = (value) => {
+			if (!/\d/.test(value)) {
+				return "必须含有数字"
+			}
+		}
+		let rules = [
+			{
+				key: "email",
+				required: true,
+				minLength: 6,
+				maxLength: 20,
+				hasNumber: true,
+			},
+		]
+		let errors
+		let fn = () => {
+			errors = validate(data, rules)
+		}
+		expect(fn).to.not.throw()
+		expect(errors.email.hasNumber).to.eq("必须含有数字")
+	})
 })
