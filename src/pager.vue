@@ -1,6 +1,10 @@
 <template>
-  <div class="zealot-pager">
-    <span class="zealot-pager-nav prev" :class="{disabled: currentPage === 1}">
+  <div class="zealot-pager" :class="{hide:hideIfOnePage === true && totalPage <= 1}">
+    <span
+      class="zealot-pager-nav prev"
+      :class="{disabled: currentPage === 1}"
+      @click="onClickPage(currentPage-1)"
+    >
       <z-icon name="left"></z-icon>
     </span>
     <template v-for="page in pages">
@@ -11,10 +15,14 @@
         <z-icon class="zealot-pager-separator" name="dots"></z-icon>
       </template>
       <template v-else>
-        <span class="zealot-pager-item other">{{page}}</span>
+        <span class="zealot-pager-item other" @click="onClickPage(page)">{{page}}</span>
       </template>
     </template>
-    <span class="zealot-pager-nav next" :class="{disabled: currentPage === totalPage}">
+    <span
+      class="zealot-pager-nav next"
+      :class="{disabled: currentPage === totalPage}"
+      @click="onClickPage(currentPage+1)"
+    >
       <z-icon name="right"></z-icon>
     </span>
   </div>
@@ -28,8 +36,12 @@
   $font-size: 12px;
   font-style: normal;
   display: flex;
+  user-select: none;
   justify-content: flex-start;
   align-items: center;
+  &.hide {
+    display: none;
+  }
   &-nav {
     display: inline-flex;
     justify-content: center;
@@ -42,8 +54,7 @@
     svg {
       fill: #009688;
     }
-    &.disabled {
-      cursor: auto;
+    &.disabled { cursor: default;
       svg {
         fill: $darker-grey;
       }
@@ -66,7 +77,6 @@
     margin: 0 4px;
     font-size: $font-size;
     cursor: pointer;
-    user-select: none;
     &.separator {
       &:hover {
         user-select: none;
@@ -121,30 +131,35 @@ export default {
       default: true
     }
   },
-  data() {
-    let pages = unique(
-      [
-        1,
-        this.totalPage,
-        this.currentPage,
-        this.currentPage - 1,
-        this.currentPage - 2,
-        this.currentPage + 1,
-        this.currentPage + 2
-      ]
-        .filter(n => n >= 1 && n <= this.totalPage)
-        .sort((a, b) => a - b)
-    ).reduce((prev, current, index, array) => {
-      prev.push(current); // 1
-      array[index + 1] !== undefined &&
-        array[index + 1] - array[index] > 1 &&
-        prev.push("...");
-      return prev;
-    }, []);
-
-    return {
-      pages: pages
-    };
+  computed: {
+    pages() {
+      return unique(
+        [
+          1,
+          this.totalPage,
+          this.currentPage,
+          this.currentPage - 1,
+          this.currentPage - 2,
+          this.currentPage + 1,
+          this.currentPage + 2
+        ]
+          .filter(n => n >= 1 && n <= this.totalPage)
+          .sort((a, b) => a - b)
+      ).reduce((prev, current, index, array) => {
+        prev.push(current); // 1
+        array[index + 1] !== undefined &&
+          array[index + 1] - array[index] > 1 &&
+          prev.push("...");
+        return prev;
+      }, []);
+    }
+  },
+  methods: {
+    onClickPage(n) {
+      if (n >= 1 && n <= this.totalPage) {
+        this.$emit("update:currentPage", n);
+      }
+    }
   }
 };
 function unique(array) {

@@ -1,6 +1,6 @@
 <template>
   <div style="margin:20px;">
-    <z-pager :total-page="20" :current-page="1"></z-pager>
+    <z-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false"></z-pager>
   </div>
 </template>
 <script>
@@ -12,7 +12,9 @@ export default {
   name: "demo",
   components: { ZNav, ZNavItem, ZSubNav, ZPager },
   data() {
-    return {};
+    return {
+      currentPage: 1
+    };
   }
 };
 </script>
