@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <z-pager :total-page="20" :current-page="3"></z-pager>
+  <div style="margin:20px;">
+    <z-pager :total-page="20" :current-page="1"></z-pager>
   </div>
 </template>
 <script>
