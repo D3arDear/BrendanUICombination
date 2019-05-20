@@ -4,14 +4,14 @@
       <thead>
         <tr>
           <th>
-            <input type="checkbox" @change="onChangeAllItems">
+            <input type="checkbox" @change="onChangeAllItems" ref="allChecked">
           </th>
           <th v-if="numberVisible">#</th>
-          <th v-for="column in columns">{{column.text}}</th>
+          <th :key="column.field" v-for="column in columns">{{column.text}}</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item,index in dataSource">
+        <tr v-for="item,index in dataSource" :key="item.id">
           <td>
             <input
               type="checkbox"
@@ -21,7 +21,7 @@
           </td>
           <td v-if="numberVisible">{{ index+1 }}</td>
           <template v-for="column in columns">
-            <td>{{item[column.field]}}</td>
+            <td :key="column.field">{{item[column.field]}}</td>
           </template>
         </tr>
       </tbody>
@@ -68,6 +68,17 @@ export default {
       default: false
     }
   },
+  watch: {
+    selectedItems() {
+      if (this.selectedItems.length === this.dataSource.length) {
+        this.$refs.allChecked.indeterminate = false;
+      } else if (this.selectedItems.length === 0) {
+        this.$refs.allChecked.indeterminate = false;
+      } else {
+        this.$refs.allChecked.indeterminate = true;
+      }
+    }
+  },
   methods: {
     inSelectedItems(item) {
       return this.selectedItems.filter(i => i.id === item.id).length > 0;
@@ -78,8 +89,7 @@ export default {
       if (selected) {
         copy.push(item);
       } else {
-        let index = copy.indexOf(item);
-        copy.splice(index, 1);
+        copy = copy.filter(i => i.id !== item.id);
       }
       this.$emit("update:selectedItems", copy);
     },
