@@ -13,7 +13,11 @@
       <tbody>
         <tr v-for="item,index in dataSource">
           <td>
-            <input type="checkbox" @change="onChangeItem(item,index,$event)" :checked="selectedItems.filter((i)=>i.id === item.id).length>0">
+            <input
+              type="checkbox"
+              @change="onChangeItem(item,index,$event)"
+              :checked="inSelectedItems(item)"
+            >
           </td>
           <td v-if="numberVisible">{{ index+1 }}</td>
           <template v-for="column in columns">
@@ -46,7 +50,14 @@ export default {
     },
     dataSource: {
       type: Array,
-      required: true
+      required: true,
+      validator(array) {
+        if (array.filter(item => item.id === undefined).length > 0) {
+          return false;
+        } else {
+          return true;
+        }
+      }
     },
     numberVisible: {
       type: Boolean,
@@ -58,6 +69,9 @@ export default {
     }
   },
   methods: {
+    inSelectedItems(item) {
+      return this.selectedItems.filter(i => i.id === item.id).length > 0;
+    },
     onChangeItem(item, index, e) {
       let selected = e.target.checked;
       let copy = JSON.parse(JSON.stringify(this.selectedItems));
