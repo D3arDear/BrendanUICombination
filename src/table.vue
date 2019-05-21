@@ -4,7 +4,12 @@
       <thead>
         <tr>
           <th>
-            <input type="checkbox" @change="onChangeAllItems" ref="allChecked">
+            <input
+              type="checkbox"
+              @change="onChangeAllItems"
+              ref="allChecked"
+              :checked="areAllItemsSelected"
+            >
           </th>
           <th v-if="numberVisible">#</th>
           <th :key="column.field" v-for="column in columns">{{column.text}}</th>
@@ -96,6 +101,22 @@ export default {
     onChangeAllItems(e) {
       let selected = e.target.checked;
       this.$emit("update:selectedItems", selected ? this.dataSource : []);
+    }
+  },
+  computed: {
+    areAllItemsSelected() {
+      const a = this.dataSource.map(item => item.id).sort();
+      const b = this.selectedItems.map(item => item.id).sort();
+      if (a.length !== b.length) {
+        return false;
+      }
+      let equal = true;
+      for (let index = 0; index < a.length; index++)
+        if (a[index] !== b[index]) {
+          equal = false;
+          break;
+        }
+      return equal;
     }
   }
 };

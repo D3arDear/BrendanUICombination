@@ -1,6 +1,5 @@
 <template>
   <div style="margin:20px;">
-    {{selected}}
     <div style="margin: 50px 20px;">
       <z-table bordered :columns="columns" :dataSource="dataSource" :selected-items.sync="selected"></z-table>
     </div>
