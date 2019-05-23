@@ -1,7 +1,14 @@
 <template>
   <div style="margin:20px;">
     <div style="margin: 50px 20px;">
-      <z-table bordered :columns="columns" :dataSource="dataSource" :selected-items.sync="selected"></z-table>
+      <z-table
+        bordered
+        :columns="columns"
+        :dataSource="dataSource"
+        :selected-items.sync="selected"
+        :order-by.sync="orderBy"
+        @update:orderBy="requireNewData"
+      ></z-table>
     </div>
     <div style="margin: 50px 20px;">
       <z-table bordered :columns="columns" :dataSource="dataSource" compact :striped="false"></z-table>
@@ -22,6 +29,9 @@ export default {
     return {
       currentPage: 1,
       selected: [],
+      orderBy: {
+        score: "desc"
+      },
       columns: [
         { text: "姓名", field: "name" },
         { text: "分数", field: "score" }
@@ -39,7 +49,15 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    requireNewData() {
+      // ajax(url, orderBy).then(response => {
+      setTimeout(() => {
+        this.dataSource = this.dataSource.sort((a, b) => a.score - b.score);
+      }, 2000);
+      // });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

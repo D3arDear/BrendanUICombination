@@ -12,7 +12,19 @@
             >
           </th>
           <th v-if="numberVisible">#</th>
-          <th :key="column.field" v-for="column in columns">{{column.text}}</th>
+          <th :key="column.field" v-for="column in columns">
+            <div class="zealot-table-header">
+              {{column.text}}
+              <span
+                v-if="column.field in orderBy"
+                class="zealot-table-sorter"
+                @click="changeOrderBy(column.field)"
+              >
+                <z-icon name="up" :class="{active:orderBy[column.field] === 'asc'}"></z-icon>
+                <z-icon name="down" :class="{active:orderBy[column.field] === 'desc'}"></z-icon>
+              </span>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -31,15 +43,31 @@
         </tr>
       </tbody>
     </table>
+    <div class="zealot-table-loading">
+      <z-icon name="loading"/>
+    </div>
   </div>
 </template>
 <script>
+import ZIcon from "./icon";
+import { deepEqual } from "assert";
 export default {
   name: "ZealotTable",
+  components: {
+    ZIcon
+  },
   props: {
     striped: {
       type: Boolean,
       default: true
+    },
+    orderBy: {
+      type: Object,
+      default: () => ({})
+    },
+    loading: {
+      type: Boolean,
+      default: false
     },
     selectedItems: {
       type: Array,
@@ -85,6 +113,18 @@ export default {
     }
   },
   methods: {
+    changeOrderBy(key) {
+      const copy = JSON.parse(JSON.stringify(this.orderBy));
+      let oldValue = copy[key];
+      if (oldValue === "asc") {
+        copy[key] = "desc";
+      } else if (oldValue === "desc") {
+        copy[key] = true;
+      } else {
+        copy[key] = "asc";
+      }
+      this.$emit("update:orderBy", copy);
+    },
     inSelectedItems(item) {
       return this.selectedItems.filter(i => i.id === item.id).length > 0;
     },
@@ -159,6 +199,33 @@ export default {
         }
       }
     }
+  }
+  &-sorter {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0 4px;
+    cursor: pointer;
+
+    svg.active {
+      fill: red;
+    }
+    svg {
+      width: 10px;
+      height: 10px;
+      fill: $darker-grey;
+      &:first-child {
+        position: relative;
+        bottom: -1px;
+      }
+      &:nth-child(2) {
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
+  &-header {
+    display: flex;
+    align-items: center;
   }
 }
 </style>
