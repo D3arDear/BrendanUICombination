@@ -43,7 +43,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="zealot-table-loading">
+    <div class="zealot-table-loading" v-if="loading">
       <z-icon name="loading"/>
     </div>
   </div>
@@ -226,6 +226,26 @@ export default {
   &-header {
     display: flex;
     align-items: center;
+  }
+  &-wrapper {
+    position: relative;
+  }
+  &-loading {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 100px;
+      height: 100px;
+      @include spin;
+      fill: $grey;
+    }
   }
 }
 </style>

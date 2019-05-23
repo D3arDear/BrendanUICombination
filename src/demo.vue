@@ -8,6 +8,7 @@
         :selected-items.sync="selected"
         :order-by.sync="orderBy"
         @update:orderBy="requireNewData"
+        :loading="loading"
       ></z-table>
     </div>
     <div style="margin: 50px 20px;">
@@ -32,6 +33,7 @@ export default {
       orderBy: {
         score: "desc"
       },
+      loading: false,
       columns: [
         { text: "姓名", field: "name" },
         { text: "分数", field: "score" }
@@ -51,10 +53,12 @@ export default {
   },
   methods: {
     requireNewData() {
+      this.loading = true;
       // ajax(url, orderBy).then(response => {
       setTimeout(() => {
         this.dataSource = this.dataSource.sort((a, b) => a.score - b.score);
-      }, 2000);
+        this.loading = false;
+      }, 3000);
       // });
     }
   }

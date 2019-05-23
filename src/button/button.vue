@@ -82,7 +82,7 @@ export default {
     }
   }
   .loading {
-    animation: spin 2s infinite linear;
+    @include spin;
     fill: #acacac;
   }
 }
