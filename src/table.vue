@@ -4,8 +4,8 @@
       <table class="zealot-table" :class="{bordered,compact,striped:striped}" ref="table">
         <thead>
           <tr>
-            <th :style="{width:'30px'}"></th>
-            <th :style="{width:'50px'}">
+            <th :style="{width:'36px'}" class="zealot-table-center"></th>
+            <th :style="{width:'50px'}" class="zealot-table-center">
               <input
                 type="checkbox"
                 @change="onChangeAllItems"
@@ -32,10 +32,15 @@
         <tbody>
           <template v-for="item,index in dataSource">
             <tr :key="item.id">
-              <td :style="{width:'30px'}">
-                <z-icon class="zealot-table-expendIcon" name="right" @click="expendItem(item.id)"/>
+              <td :style="{width:'36px'}" class="zealot-table-center">
+                <z-icon
+                  v-if="item.description"
+                  class="zealot-table-expendIcon"
+                  name="right"
+                  @click="expendItem(item.id)"
+                />
               </td>
-              <td :style="{width:'50px'}">
+              <td :style="{width:'50px'}" class="zealot-table-center">
                 <input
                   type="checkbox"
                   @change="onChangeItem(item,index,$event)"
@@ -320,6 +325,9 @@ export default {
     height: 15px;
     fill: $darker-grey;
     position: relative;
+  }
+  & &-center {
+    text-align: center;
   }
 }
 ::-webkit-scrollbar {
