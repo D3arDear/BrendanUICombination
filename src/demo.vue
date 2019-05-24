@@ -9,7 +9,17 @@
         :order-by.sync="orderBy"
         @update:orderBy="requireNewData"
         :loading="loading"
-        height="400px"
+        :height="400"
+        numberVisible
+      ></z-table>
+    </div>
+    <div style="margin: 50px 20px;overflow:auto">
+      <z-table
+        bordered
+        :columns="columns"
+        :dataSource="dataSource"
+        :selected-items.sync="selected"
+        compact
       ></z-table>
     </div>
     <z-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false"></z-pager>
@@ -35,8 +45,8 @@ export default {
       loading: false,
       columns: [
         { text: "姓名", field: "name" },
-        { text: "分数", field: "score" },
-        { text: "排名", field: "rank" }
+        { text: "分数", field: "score", width: 100 },
+        { text: "排名", field: "rank", width: 100 }
       ],
       dataSource: [
         { id: 1, name: "Brendan", score: 100, rank: 1 },
@@ -71,8 +81,14 @@ export default {
         if (this.orderBy.score === "asc") {
           this.dataSource = this.dataSource.sort((a, b) => a.score - b.score);
         }
+        if (this.orderBy.rank === "desc") {
+          this.dataSource = this.dataSource.sort((a, b) => b.score - a.score);
+        }
+        if (this.orderBy.rank === "asc") {
+          this.dataSource = this.dataSource.sort((a, b) => a.score - b.score);
+        }
         this.loading = false;
-      }, 3000);
+      }, 1000);
       // });
     }
   }
