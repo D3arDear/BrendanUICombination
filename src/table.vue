@@ -120,6 +120,7 @@ export default {
   methods: {
     updateHeadersWidth() {
       let table2 = this.table2;
+      const tableWidth = this.$refs.table.getBoundingClientRect().width;
       let tableHeader = Array.from(this.$refs.table.children).filter(
         node => node.tagName.toLowerCase() === "thead"
       )[0];
@@ -133,8 +134,8 @@ export default {
       });
       Array.from(tableHeader.children[0].children).map((th, i) => {
         const { width } = th.getBoundingClientRect();
-        console.log(tableHeader2.children[0].children[i]);
-        tableHeader2.children[0].children[i].style.width = width + "px";
+        const percentage = (width / tableWidth) * 100;
+        tableHeader2.children[0].children[i].style.width = `${width}px`;
       });
     },
     changeOrderBy(key) {
@@ -285,15 +286,14 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    background: $background-white;
+    background: white;
   }
 }
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 1px;
 }
 ::-webkit-scrollbar-track {
-  background: #f6f6f6;
+  background: #f6f6f600;
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb {
@@ -305,5 +305,8 @@ export default {
 }
 ::-webkit-scrollbar-corner {
   background: #f6f6f6;
+}
+* {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 </style>

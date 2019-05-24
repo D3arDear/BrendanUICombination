@@ -12,9 +12,6 @@
         height="400px"
       ></z-table>
     </div>
-    <div style="margin: 50px 20px;">
-      <z-table bordered :columns="columns" :dataSource="dataSource" compact :striped="false"></z-table>
-    </div>
     <z-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false"></z-pager>
   </div>
 </template>
