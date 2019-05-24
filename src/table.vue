@@ -1,48 +1,50 @@
 <template>
-  <div class="zealot-table-wrapper">
-    <table class="zealot-table" :class="{bordered,compact,striped:striped}">
-      <thead>
-        <tr>
-          <th>
-            <input
-              type="checkbox"
-              @change="onChangeAllItems"
-              ref="allChecked"
-              :checked="areAllItemsSelected"
-            >
-          </th>
-          <th v-if="numberVisible">#</th>
-          <th :key="column.field" v-for="column in columns">
-            <div class="zealot-table-header">
-              {{column.text}}
-              <span
-                v-if="column.field in orderBy"
-                class="zealot-table-sorter"
-                @click="changeOrderBy(column.field)"
+  <div class="zealot-table-wrapper" ref="wrapper">
+    <div :style="{height,overflow:'auto'}">
+      <table class="zealot-table" :class="{bordered,compact,striped:striped}" ref="table">
+        <thead>
+          <tr>
+            <th>
+              <input
+                type="checkbox"
+                @change="onChangeAllItems"
+                ref="allChecked"
+                :checked="areAllItemsSelected"
               >
-                <z-icon name="up" :class="{active:orderBy[column.field] === 'asc'}"></z-icon>
-                <z-icon name="down" :class="{active:orderBy[column.field] === 'desc'}"></z-icon>
-              </span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item,index in dataSource" :key="item.id">
-          <td>
-            <input
-              type="checkbox"
-              @change="onChangeItem(item,index,$event)"
-              :checked="inSelectedItems(item)"
-            >
-          </td>
-          <td v-if="numberVisible">{{ index+1 }}</td>
-          <template v-for="column in columns">
-            <td :key="column.field">{{item[column.field]}}</td>
-          </template>
-        </tr>
-      </tbody>
-    </table>
+            </th>
+            <th v-if="numberVisible">#</th>
+            <th :key="column.field" v-for="column in columns">
+              <div class="zealot-table-header">
+                {{column.text}}
+                <span
+                  v-if="column.field in orderBy"
+                  class="zealot-table-sorter"
+                  @click="changeOrderBy(column.field)"
+                >
+                  <z-icon name="up" :class="{active:orderBy[column.field] === 'asc'}"></z-icon>
+                  <z-icon name="down" :class="{active:orderBy[column.field] === 'desc'}"></z-icon>
+                </span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item,index in dataSource" :key="item.id">
+            <td>
+              <input
+                type="checkbox"
+                @change="onChangeItem(item,index,$event)"
+                :checked="inSelectedItems(item)"
+              >
+            </td>
+            <td v-if="numberVisible">{{ index+1 }}</td>
+            <template v-for="column in columns">
+              <td :key="column.field">{{item[column.field]}}</td>
+            </template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="zealot-table-loading" v-if="loading">
       <z-icon name="loading"/>
     </div>
@@ -60,6 +62,9 @@ export default {
     striped: {
       type: Boolean,
       default: true
+    },
+    height: {
+      type: [Number, String]
     },
     orderBy: {
       type: Object,
@@ -113,6 +118,25 @@ export default {
     }
   },
   methods: {
+    updateHeadersWidth() {
+      let table2 = this.table2;
+      let tableHeader = Array.from(this.$refs.table.children).filter(
+        node => node.tagName.toLowerCase() === "thead"
+      )[0];
+      let tableHeader2;
+      Array.from(table2.children).map(node => {
+        if (node.tagName.toLowerCase() !== "thead") {
+          node.remove();
+        } else {
+          tableHeader2 = node;
+        }
+      });
+      Array.from(tableHeader.children[0].children).map((th, i) => {
+        const { width } = th.getBoundingClientRect();
+        console.log(tableHeader2.children[0].children[i]);
+        tableHeader2.children[0].children[i].style.width = width + "px";
+      });
+    },
     changeOrderBy(key) {
       const copy = JSON.parse(JSON.stringify(this.orderBy));
       let oldValue = copy[key];
@@ -142,6 +166,16 @@ export default {
       let selected = e.target.checked;
       this.$emit("update:selectedItems", selected ? this.dataSource : []);
     }
+  },
+  mounted() {
+    let table2 = this.$refs.table.cloneNode(true);
+    this.table2 = table2;
+    table2.classList.add("zealot-table-copy");
+    this.$refs.wrapper.appendChild(table2);
+    this.updateHeadersWidth();
+    window.addEventListener("resize", () => {
+      this.updateHeadersWidth();
+    });
   },
   computed: {
     areAllItemsSelected() {
@@ -247,5 +281,29 @@ export default {
       fill: $grey;
     }
   }
+  &-copy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: $background-white;
+  }
+}
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #f6f6f6;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #747474;
+}
+::-webkit-scrollbar-corner {
+  background: #f6f6f6;
 }
 </style>
