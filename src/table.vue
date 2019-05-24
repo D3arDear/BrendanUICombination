@@ -35,6 +35,7 @@
               <td :style="{width:'36px'}" class="zealot-table-center">
                 <z-icon
                   v-if="item.description"
+                  :class="{active:inExpendedIds(item.id)}"
                   class="zealot-table-expendIcon"
                   name="right"
                   @click="expendItem(item.id)"
@@ -52,10 +53,12 @@
                 <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
               </template>
             </tr>
-            <tr v-if="inExpendedIds(item.id)" :key="`${item.id}-expend`">
-              <td class="descriptionHolder"></td>
-              <td class="description" :colspan="columns.length + 1">{{item[expendField]}}</td>
-            </tr>
+            <transition name="scroll">
+              <tr class="descriptionTr" v-if="inExpendedIds(item.id)" :key="`${item.id}-expend`">
+                <td class="descriptionHolder"></td>
+                <td class="description" :colspan="columns.length + 2">{{item[expendField]}}</td>
+              </tr>
+            </transition>
           </template>
         </tbody>
       </table>
@@ -218,36 +221,27 @@ export default {
   border-radius: $border-radius;
   border-spacing: 0;
   border-bottom: 1px solid $grey;
-  &.bordered {
-    border: 1px solid $grey;
+  tr.descriptionTr {
+    transition: all 0.3s;
     td.descriptionHolder {
       border: none;
     }
     td.description {
       border: none;
     }
+  }
+  &.bordered {
+    border: 1px solid $grey;
     td,
     th {
       border: 1px solid $grey;
     }
   }
   &.compact {
-    td.descriptionHolder {
-      border: none;
-    }
-    td.description {
-      border: none;
-    }
     td,
     th {
       padding: 4px;
     }
-  }
-  td.descriptionHolder {
-    border: none;
-  }
-  td.description {
-    border: none;
   }
   td,
   th {
@@ -325,6 +319,10 @@ export default {
     height: 15px;
     fill: $darker-grey;
     position: relative;
+    transition: all 0.3s;
+    &.active {
+      transform: rotate(90deg);
+    }
   }
   & &-center {
     text-align: center;
@@ -349,5 +347,13 @@ export default {
 }
 * {
   -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.scroll-enter-active,
+.scroll-leave-active {
+  transition: all 0.3s;
+}
+.scroll-enter,
+.scroll-leave-to {
+  opacity: 0;
 }
 </style>

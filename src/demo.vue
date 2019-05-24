@@ -96,14 +96,11 @@ export default {
       setTimeout(() => {
         if (this.orderBy.score === "desc") {
           this.dataSource = this.dataSource.sort((a, b) => b.score - a.score);
-        }
-        if (this.orderBy.score === "asc") {
+        } else if (this.orderBy.score === "asc") {
           this.dataSource = this.dataSource.sort((a, b) => a.score - b.score);
-        }
-        if (this.orderBy.rank === "desc") {
+        } else if (this.orderBy.rank === "desc") {
           this.dataSource = this.dataSource.sort((a, b) => b.score - a.score);
-        }
-        if (this.orderBy.rank === "asc") {
+        } else if (this.orderBy.rank === "asc") {
           this.dataSource = this.dataSource.sort((a, b) => a.score - b.score);
         }
         this.loading = false;
