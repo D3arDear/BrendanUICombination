@@ -1,6 +1,6 @@
 <template>
   <div style="margin:20px;">
-    <div style="margin: 50px 20px;overflow:auto">
+    <div style="margin: 50px 20px;">
       <z-table
         bordered
         :columns="columns"
@@ -11,6 +11,7 @@
         :loading="loading"
         :height="400"
         numberVisible
+        expend-field="description"
       ></z-table>
     </div>
     <div style="margin: 50px 20px;overflow:auto">
@@ -49,9 +50,27 @@ export default {
         { text: "排名", field: "rank", width: 100 }
       ],
       dataSource: [
-        { id: 1, name: "Brendan", score: 100, rank: 1 },
-        { id: 2, name: "Oracle", score: 99, rank: 2 },
-        { id: 3, name: "Zealot", score: 98, rank: 3 },
+        {
+          id: 1,
+          name: "Brendan",
+          score: 100,
+          rank: 1,
+          description: "blablabla blablabla"
+        },
+        {
+          id: 2,
+          name: "Oracle",
+          score: 99,
+          rank: 2,
+          description: "blablabla blablabla"
+        },
+        {
+          id: 3,
+          name: "Zealot",
+          score: 98,
+          rank: 3,
+          description: "blablabla blablabla"
+        },
         { id: 4, name: "Frank", score: 97, rank: 4 },
         { id: 5, name: "Jack", score: 97, rank: 5 },
         { id: 6, name: "Clark", score: 97, rank: 6 },

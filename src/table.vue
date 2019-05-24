@@ -4,6 +4,7 @@
       <table class="zealot-table" :class="{bordered,compact,striped:striped}" ref="table">
         <thead>
           <tr>
+            <th :style="{width:'30px'}"></th>
             <th :style="{width:'50px'}">
               <input
                 type="checkbox"
@@ -29,19 +30,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item,index in dataSource" :key="item.id">
-            <td :style="{width:'50px'}">
-              <input
-                type="checkbox"
-                @change="onChangeItem(item,index,$event)"
-                :checked="inSelectedItems(item)"
-              >
-            </td>
-            <td v-if="numberVisible" :style="{width:'50px'}">{{ index+1 }}</td>
-            <template v-for="column in columns">
-              <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
-            </template>
-          </tr>
+          <template v-for="item,index in dataSource">
+            <tr :key="item.id">
+              <td :style="{width:'30px'}">
+                <z-icon class="zealot-table-expendIcon" name="right" @click="expendItem(item.id)"/>
+              </td>
+              <td :style="{width:'50px'}">
+                <input
+                  type="checkbox"
+                  @change="onChangeItem(item,index,$event)"
+                  :checked="inSelectedItems(item)"
+                >
+              </td>
+              <td v-if="numberVisible" :style="{width:'50px'}">{{ index+1 }}</td>
+              <template v-for="column in columns">
+                <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
+              </template>
+            </tr>
+            <tr v-if="inExpendedIds(item.id)" :key="`${item.id}-expend`">
+              <td class="descriptionHolder"></td>
+              <td class="description" :colspan="columns.length + 1">{{item[expendField]}}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -58,10 +68,18 @@ export default {
   components: {
     ZIcon
   },
+  data() {
+    return {
+      expendedIDs: []
+    };
+  },
   props: {
     striped: {
       type: Boolean,
       default: true
+    },
+    expendField: {
+      type: String
     },
     height: {
       type: Number
@@ -118,6 +136,16 @@ export default {
     }
   },
   methods: {
+    inExpendedIds(id) {
+      return this.expendedIDs.indexOf(id) >= 0;
+    },
+    expendItem(id) {
+      if (this.inExpendedIds(id)) {
+        this.expendedIDs.splice(this.expendedIDs.indexOf(id), 1);
+      } else {
+        this.expendedIDs.push(id);
+      }
+    },
     changeOrderBy(key) {
       const copy = JSON.parse(JSON.stringify(this.orderBy));
       let oldValue = copy[key];
@@ -154,7 +182,7 @@ export default {
     table2.classList.add("zealot-table-copy");
     let tHead = this.$refs.table.children[0];
     let { height } = tHead.getBoundingClientRect();
-    this.$refs.tableWrapper.style.marginTop = height + "px";
+    this.$refs.wrapper.style.paddingTop = height + "px";
     this.$refs.tableWrapper.style.height = this.height - height + "px";
     table2.appendChild(tHead);
     this.$refs.wrapper.appendChild(table2);
@@ -187,16 +215,34 @@ export default {
   border-bottom: 1px solid $grey;
   &.bordered {
     border: 1px solid $grey;
+    td.descriptionHolder {
+      border: none;
+    }
+    td.description {
+      border: none;
+    }
     td,
     th {
       border: 1px solid $grey;
     }
   }
   &.compact {
+    td.descriptionHolder {
+      border: none;
+    }
+    td.description {
+      border: none;
+    }
     td,
     th {
       padding: 4px;
     }
+  }
+  td.descriptionHolder {
+    border: none;
+  }
+  td.description {
+    border: none;
   }
   td,
   th {
@@ -268,6 +314,12 @@ export default {
     top: 0;
     left: 0;
     background: white;
+  }
+  &-expendIcon {
+    width: 15px;
+    height: 15px;
+    fill: $darker-grey;
+    position: relative;
   }
 }
 ::-webkit-scrollbar {
