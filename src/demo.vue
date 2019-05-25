@@ -17,6 +17,7 @@
         <template v-slot="{ item }">
           <z-button @click="edit(item)">编辑</z-button>
           <z-button @click="view(item)">查看</z-button>
+          <z-button @click="view(item)">删除</z-button>
         </template>
       </z-table>
     </div>
@@ -53,7 +54,7 @@ export default {
       },
       loading: false,
       columns: [
-        { text: "姓名", field: "name", width: 600 },
+        { text: "姓名", field: "name" },
         { text: "分数", field: "score", width: 100 },
         { text: "排名", field: "rank", width: 100 }
       ],

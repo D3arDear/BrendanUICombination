@@ -27,7 +27,7 @@
                 </span>
               </div>
             </th>
-            <th></th>
+            <th v-if="$scopedSlots.default" ref="actionsHeader"></th>
           </tr>
         </thead>
         <tbody>
@@ -53,8 +53,10 @@
               <template v-for="column in columns">
                 <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
               </template>
-              <td>
-                <slot :item="item"></slot>
+              <td v-if="$scopedSlots.default">
+                <div ref="actions" style="display:inline-block">
+                  <slot :item="item"></slot>
+                </div>
               </td>
             </tr>
             <transition name="scroll">
@@ -205,6 +207,27 @@ export default {
     this.$refs.tableWrapper.style.height = this.height - height + "px";
     table2.appendChild(tHead);
     this.$refs.wrapper.appendChild(table2);
+    if (this.$scopedSlots.default) {
+      let div = this.$refs.actions[0];
+      let { width } = div.getBoundingClientRect();
+      let parent = div.parentNode;
+      let style = getComputedStyle(parent);
+      let paddingLeft = style.getPropertyValue("padding-left");
+      let paddingRight = style.getPropertyValue("padding-Right");
+      let borderLeft = style.getPropertyValue("border-left-width");
+      let borderRight = style.getPropertyValue("border-right-width");
+      let width2 =
+        width +
+        parseInt(paddingLeft) +
+        parseInt(paddingRight) +
+        parseInt(borderLeft) +
+        parseInt(borderRight) +
+        "px";
+      this.$refs.actionsHeader.style.width = width2;
+      this.$refs.actions.map(div => {
+        div.parentNode.style.width = width2;
+      });
+    }
   },
   computed: {
     areAllItemsSelected() {
