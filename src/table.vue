@@ -4,8 +4,8 @@
       <table class="zealot-table" :class="{bordered,compact,striped:striped}" ref="table">
         <thead>
           <tr>
-            <th :style="{width:'36px'}" class="zealot-table-center"></th>
-            <th :style="{width:'50px'}" class="zealot-table-center">
+            <th v-if="expendField" :style="{width:'36px'}" class="zealot-table-center"></th>
+            <th v-if="checkable" :style="{width:'50px'}" class="zealot-table-center">
               <input
                 type="checkbox"
                 @change="onChangeAllItems"
@@ -27,12 +27,13 @@
                 </span>
               </div>
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <template v-for="item,index in dataSource">
             <tr :key="item.id">
-              <td :style="{width:'36px'}" class="zealot-table-center">
+              <td v-if="expendField" :style="{width:'36px'}" class="zealot-table-center">
                 <z-icon
                   v-if="item.description"
                   :class="{active:inExpendedIds(item.id)}"
@@ -41,7 +42,7 @@
                   @click="expendItem(item.id)"
                 />
               </td>
-              <td :style="{width:'50px'}" class="zealot-table-center">
+              <td v-if="checkable" :style="{width:'50px'}" class="zealot-table-center">
                 <input
                   type="checkbox"
                   @change="onChangeItem(item,index,$event)"
@@ -52,11 +53,17 @@
               <template v-for="column in columns">
                 <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
               </template>
+              <td>
+                <slot :item="item"></slot>
+              </td>
             </tr>
             <transition name="scroll">
               <tr class="descriptionTr" v-if="inExpendedIds(item.id)" :key="`${item.id}-expend`">
-                <td class="descriptionHolder"></td>
-                <td class="description" :colspan="columns.length + 2">{{item[expendField]}}</td>
+                <td v-for="n in expendedCellColSpan" class="descriptionHolder"></td>
+                <td
+                  class="description"
+                  :colspan="columns.length + expendedCellColSpan"
+                >{{item[expendField]}}</td>
               </tr>
             </transition>
           </template>
@@ -82,6 +89,10 @@ export default {
     };
   },
   props: {
+    checkable: {
+      type: Boolean,
+      default: false
+    },
     striped: {
       type: Boolean,
       default: true
@@ -209,6 +220,16 @@ export default {
           break;
         }
       return equal;
+    },
+    expendedCellColSpan() {
+      let result = 0;
+      if (this.checkable) {
+        result += 1;
+      }
+      if (this.expendField) {
+        result += 1;
+      }
+      return result;
     }
   }
 };

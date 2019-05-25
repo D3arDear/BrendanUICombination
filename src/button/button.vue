@@ -47,7 +47,7 @@ export default {
   justify-content: center;
   align-items: center;
   vertical-align: middle;
-
+  cursor: pointer;
   &:hover {
     border-color: $border-color-hover;
   }

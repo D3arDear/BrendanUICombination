@@ -11,8 +11,14 @@
         :loading="loading"
         :height="400"
         numberVisible
+        checkable
         expend-field="description"
-      ></z-table>
+      >
+        <template v-slot="{ item }">
+          <z-button @click="edit(item)">编辑</z-button>
+          <z-button @click="view(item)">查看</z-button>
+        </template>
+      </z-table>
     </div>
     <div style="margin: 50px 20px;overflow:auto">
       <z-table
@@ -20,6 +26,7 @@
         :columns="columns"
         :dataSource="dataSource"
         :selected-items.sync="selected"
+        expend-field="description"
         compact
       ></z-table>
     </div>
@@ -32,9 +39,10 @@ import ZNavItem from "./nav/nav-item";
 import ZSubNav from "./nav/sub-nav";
 import ZPager from "./pager";
 import ZTable from "./table";
+import ZButton from "./button/button";
 export default {
   name: "demo",
-  components: { ZNav, ZNavItem, ZSubNav, ZPager, ZTable },
+  components: { ZButton, ZNav, ZNavItem, ZSubNav, ZPager, ZTable },
   data() {
     return {
       currentPage: 1,
@@ -45,7 +53,7 @@ export default {
       },
       loading: false,
       columns: [
-        { text: "姓名", field: "name" },
+        { text: "姓名", field: "name", width: 600 },
         { text: "分数", field: "score", width: 100 },
         { text: "排名", field: "rank", width: 100 }
       ],
@@ -90,6 +98,12 @@ export default {
     };
   },
   methods: {
+    edit(item) {
+      alert(`开始编辑${item.id}`);
+    },
+    view(item) {
+      alert(`开始查看${item.id}`);
+    },
     requireNewData() {
       this.loading = true;
       // ajax(url, orderBy).then(response => {
