@@ -1,5 +1,19 @@
 <template>
   <div style="margin:20px;">
+    <main style="margin: 50px 20px;">
+      <z-uploader
+        accept="image/*"
+        action="http://127.0.0.1:3000/upload"
+        methods="POST"
+        name="file"
+        :parseResponse="parseResponse"
+        :file-list.sync="fileList"
+      >
+        <z-button>上传</z-button>
+      </z-uploader>
+    </main>
+
+    <!-- 上面的有效 -->
     <div style="margin: 50px 20px;">
       <z-table
         bordered
@@ -41,11 +55,13 @@ import ZSubNav from "./nav/sub-nav";
 import ZPager from "./pager";
 import ZTable from "./table";
 import ZButton from "./button/button";
+import ZUploader from "./uploader";
 export default {
   name: "demo",
-  components: { ZButton, ZNav, ZNavItem, ZSubNav, ZPager, ZTable },
+  components: { ZButton, ZNav, ZNavItem, ZSubNav, ZPager, ZTable, ZUploader },
   data() {
     return {
+      fileList: [],
       currentPage: 1,
       selected: [],
       orderBy: {
@@ -64,21 +80,21 @@ export default {
           name: "Brendan",
           score: 100,
           rank: 1,
-          description: "blablabla blablabla"
+          description: "这个人很浮躁"
         },
         {
           id: 2,
           name: "Oracle",
           score: 99,
           rank: 2,
-          description: "blablabla blablabla"
+          description: "这个人很懒"
         },
         {
           id: 3,
           name: "Zealot",
           score: 98,
           rank: 3,
-          description: "blablabla blablabla"
+          description: "这个人很疯狂"
         },
         { id: 4, name: "Frank", score: 97, rank: 4 },
         { id: 5, name: "Jack", score: 97, rank: 5 },
@@ -99,6 +115,11 @@ export default {
     };
   },
   methods: {
+    parseResponse(response) {
+      let object = JSON.parse(response);
+      let url = `http://127.0.0.1:3000/preview/${object.id}`;
+      return url;
+    },
     edit(item) {
       alert(`开始编辑${item.id}`);
     },
