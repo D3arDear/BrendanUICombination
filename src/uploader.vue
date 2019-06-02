@@ -10,6 +10,7 @@
         <img :src="file.url" width="100" height="100">
         {{file.name}}
         <button @click="onRemoveFile(file)">x</button>
+        <span>{{file.status}}</span>
       </li>
     </ol>
   </div>
@@ -117,11 +118,11 @@ export default {
       return name;
     },
     doUploadFile(formData, success, fail) {
-      fail();
       let xhr = new XMLHttpRequest();
       xhr.open(this.method, this.action);
       xhr.onload = () => {
-        success(xhr.response);
+        // success(xhr.response);
+        fail();
       };
       xhr.send(formData);
     },
