@@ -6,8 +6,10 @@
     <div ref="temp" style="width:0;height:0;overflow:hidden"></div>
     <ol>
       <li v-for="file in fileList" :key="file.name">
-        {{file.name}}
+        <template v-if="file.status === 'uploading'">这里有个菊花</template>
         <img :src="file.url" width="100" height="100">
+        {{file.name}}
+        <button @click="onRemoveFile(file)">x</button>
       </li>
     </ol>
   </div>
@@ -44,35 +46,78 @@ export default {
     };
   },
   methods: {
+    onRemoveFile(file) {
+      let answer = window.confirm("你确定要删除它吗?");
+      if (answer) {
+        let copy = [...this.fileList];
+        let index = copy.indexOf();
+        copy.splice(index, 1);
+        this.$emit("update:fileList", copy);
+      }
+    },
     onClickUpload() {
       let input = this.createInput();
       input.addEventListener("change", () => {
-        let file = input.files[0];
-        this.uploadFile(file);
+        this.uploadFile(input.files[0]);
         input.remove();
       });
       input.click();
     },
-    uploadFile(file) {
-      let formData = new FormData();
-      formData.append(this.name, file);
-      let { name, size, type } = file;
-      this.doUploadFile(formData, response => {
-        let url = this.parseResponse(response);
-        this.url = url;
-        while (this.fileList.filter(f => f.name === name).length > 0) {
-          let dotIndex = name.lastIndexOf(".");
-          let nameWithoutExtension = name.substring(0, dotIndex);
-          let extension = name.substring(dotIndex);
-          name = nameWithoutExtension + "(1)" + extension;
-        }
-        this.$emit("update:fileList", [
-          ...this.fileList,
-          { name, type, size, url }
-        ]);
-      });
+    afterUploadFile(newName, url) {
+      let file = this.fileList.filter(f => f.name === newName)[0];
+      let index = this.fileList.indexOf(file);
+      let fileCopy = JSON.parse(JSON.stringify(file));
+      fileCopy.url = url;
+      fileCopy.status = "success";
+      let fileListCopy = [...this.fileList];
+      fileListCopy.splice(index, 1, copy);
+      this.$emit("update:fileList", fileListCopy);
     },
-    doUploadFile(formData, success) {
+    beforeUploadFile(rawFile, newName, url) {
+      let { size, type } = rawFile;
+      this.$emit("update:fileList", [
+        ...this.fileList,
+        { name: newName, type, size, status: "uploading" }
+      ]);
+    },
+    uploadFile(rawFile) {
+      let { name, size, type } = rawFile;
+      let newName = this.generateName(name);
+      this.beforeUploadFile(rawFile, newName);
+      let formData = new FormData();
+      formData.append(this.name, rawFile);
+      this.doUploadFile(
+        formData,
+        response => {
+          let url = this.parseResponse(response);
+          this.url = url;
+          this.afterUploadFile(newName, url);
+        },
+        () => {
+          this.uploadError(newName);
+        }
+      );
+    },
+    uploadError(newName) {
+      let file = this.fileList.filter(f => f.name === newName)[0];
+      let index = this.fileList.indexOf(file);
+      let fileCopy = JSON.parse(JSON.stringify(file));
+      fileCopy.status = "fail";
+      let fileListCopy = [...this.fileList];
+      fileListCopy.splice(index, 1, fileCopy);
+      this.$emit("update:fileList", fileListCopy);
+    },
+    generateName(name) {
+      while (this.fileList.filter(f => f.name === name).length > 0) {
+        let dotIndex = name.lastIndexOf(".");
+        let nameWithoutExtension = name.substring(0, dotIndex);
+        let extension = name.substring(dotIndex);
+        name = nameWithoutExtension + "(1)" + extension;
+      }
+      return name;
+    },
+    doUploadFile(formData, success, fail) {
+      fail();
       let xhr = new XMLHttpRequest();
       xhr.open(this.method, this.action);
       xhr.onload = () => {
