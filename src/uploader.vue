@@ -3,6 +3,7 @@
     <div @click="onClickUpload">
       <slot></slot>
     </div>
+    <slot name="tips"></slot>
     <div ref="temp" style="width:0;height:0;overflow:hidden"></div>
     <ol>
       <li v-for="file in fileList" :key="file.name">

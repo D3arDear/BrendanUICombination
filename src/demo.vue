@@ -10,6 +10,9 @@
         :file-list.sync="fileList"
       >
         <z-button>上传</z-button>
+        <template slot="tips">
+          <div>只能上传 300kb 以内的 png jpeg 文件</div>
+        </template>
       </z-uploader>
     </main>
 
