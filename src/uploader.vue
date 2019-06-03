@@ -5,21 +5,32 @@
     </div>
     <slot name="tips"></slot>
     <div ref="temp" style="width:0;height:0;overflow:hidden"></div>
-    <ol>
+    <ol class="zealot-uploader-fileList">
       <li v-for="file in fileList" :key="file.name">
-        <template v-if="file.status === 'uploading'">这里有个菊花</template>
-        <img :src="file.url" width="100" height="100">
-        {{file.name}}
-        <button @click="onRemoveFile(file)">x</button>
-        <span>{{file.status}}</span>
+        <template v-if="file.status === 'uploading'">
+          <div class="zealot-uploader-spin-wrapper">
+            <z-icon name="loading" class="zealot-uploader-spin"></z-icon>
+          </div>
+        </template>
+        <template v-else-if="file.type.indexOf('image') === 0">
+          <img class="zealot-uploader-image" :src="file.url" width="32" height="32">
+        </template>
+        <template v-else>
+          <div class="zealot-uploader-defaultImage"></div>
+        </template>
+        <span class="zealot-uploader-name" :class="{[file.status] : file.status}">{{file.name}}</span>
+        <z-button class="zealot-uploader-remove" @click="onRemoveFile(file)">x</z-button>
       </li>
     </ol>
   </div>
 </template>
 <script>
 import { Stream } from "stream";
+import ZButton from "./button/button";
+import ZIcon from "./icon";
 export default {
   name: "ZealotUploader",
+  components: { ZButton, ZIcon },
   props: {
     name: {
       type: String,
@@ -72,7 +83,7 @@ export default {
       fileCopy.url = url;
       fileCopy.status = "success";
       let fileListCopy = [...this.fileList];
-      fileListCopy.splice(index, 1, copy);
+      fileListCopy.splice(index, 1, fileCopy);
       this.$emit("update:fileList", fileListCopy);
     },
     beforeUploadFile(rawFile, newName, url) {
@@ -122,8 +133,11 @@ export default {
       let xhr = new XMLHttpRequest();
       xhr.open(this.method, this.action);
       xhr.onload = () => {
-        // success(xhr.response);
-        fail();
+        if (Math.random() > 0.5) {
+          success(xhr.response);
+        } else {
+          fail();
+        }
       };
       xhr.send(formData);
     },
@@ -137,4 +151,55 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "../style/var";
+.zealot-uploader {
+  box-shadow: $card-shadow;
+  padding: 8px 0;
+  border-radius: $border-radius;
+  &-fileList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    > li {
+      display: flex;
+      align-items: center;
+      margin: 4px 0;
+      border-radius: $border-radius;
+      box-shadow: $card-item-shadow;
+    }
+  }
+  &-defaultImage {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    border: none;
+  }
+  &-image {
+    margin-right: 8px;
+  }
+  &-name {
+    margin-right: auto;
+    &.success {
+      color: green;
+    }
+    &.fail {
+      color: red;
+    }
+  }
+  &-remove {
+    width: 32px;
+    height: 32px;
+  }
+  &-spin {
+    width: 100%;
+    height: 100%;
+    @include spin;
+    &-wrapper {
+      height: 32px;
+      width: 32px;
+      padding: 4px;
+      margin-right: 8px;
+    }
+  }
+}
 </style>

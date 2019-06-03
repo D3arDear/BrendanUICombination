@@ -1,6 +1,7 @@
 <template>
   <div style="margin:20px;">
     <main style="margin: 50px 20px;">
+      <div>只能上传 300kb 以内的 png jpeg 文件</div>
       <z-uploader
         accept="image/*"
         action="http://127.0.0.1:3000/upload"
@@ -9,10 +10,7 @@
         :parseResponse="parseResponse"
         :file-list.sync="fileList"
       >
-        <z-button>上传</z-button>
-        <template slot="tips">
-          <div>只能上传 300kb 以内的 png jpeg 文件</div>
-        </template>
+        <z-button icon="upload">上传</z-button>
       </z-uploader>
     </main>
 
@@ -59,9 +57,19 @@ import ZPager from "./pager";
 import ZTable from "./table";
 import ZButton from "./button/button";
 import ZUploader from "./uploader";
+import ZIcon from "./icon";
 export default {
   name: "demo",
-  components: { ZButton, ZNav, ZNavItem, ZSubNav, ZPager, ZTable, ZUploader },
+  components: {
+    ZButton,
+    ZNav,
+    ZNavItem,
+    ZSubNav,
+    ZPager,
+    ZTable,
+    ZUploader,
+    ZIcon
+  },
   data() {
     return {
       fileList: [],
