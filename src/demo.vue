@@ -1,6 +1,7 @@
 <template>
   <div style="margin:20px;">
     <main style="margin: 50px 20px;">
+      {{error}}
       <div>只能上传 300kb 以内的 png jpeg 文件</div>
       <z-uploader
         accept="image/*"
@@ -9,6 +10,8 @@
         name="file"
         :parseResponse="parseResponse"
         :file-list.sync="fileList"
+        @error="error=$event"
+        :size-limit="3 * 1024 * 1024"
       >
         <z-button icon="upload">上传</z-button>
       </z-uploader>
@@ -72,6 +75,7 @@ export default {
   },
   data() {
     return {
+      error: "",
       fileList: [],
       currentPage: 1,
       selected: [],
@@ -126,6 +130,9 @@ export default {
     };
   },
   methods: {
+    alert(error) {
+      window.alert(error || "上传失败");
+    },
     parseResponse(response) {
       let object = JSON.parse(response);
       let url = `http://127.0.0.1:3000/preview/${object.id}`;
