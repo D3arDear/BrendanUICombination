@@ -7,7 +7,7 @@
         accept="image/*"
         action="http://127.0.0.1:3000/upload"
         methods="POST"
-        name="file"
+        name="files"
         :parseResponse="parseResponse"
         :file-list.sync="fileList"
         @error="error=$event"

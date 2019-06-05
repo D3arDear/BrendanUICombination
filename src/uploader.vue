@@ -75,12 +75,41 @@ export default {
     onClickUpload() {
       let input = this.createInput();
       input.addEventListener("change", () => {
-        this.uploadFile(input.files[0]);
+        this.uploadFiles(input.files);
         input.remove();
       });
       input.click();
     },
-    afterUploadFile(newName, url) {
+    uploadFiles(rawFiles) {
+      let newNames = [];
+      for (let i = 0; i < rawFiles.length; i++) {
+        let rawFile = rawFiles[i];
+        let { name, type } = rawFile;
+        let newName = this.generateName(name);
+        newNames[i] = newName;
+      }
+      if (!this.beforeUploadFiles(rawFiles, newNames)) {
+        return;
+      }
+      for (let i = 0; i < rawFiles.length; i++) {
+        let rawFile = rawFiles[i];
+        let newName = newNames[i];
+        let formData = new FormData();
+        formData.append(this.name, rawFile);
+        this.doUploadFiles(
+          formData,
+          response => {
+            let url = this.parseResponse(response);
+            this.url = url;
+            this.afterUploadFiles(newName, url);
+          },
+          xhr => {
+            this.uploadError(xhr, newName);
+          }
+        );
+      }
+    },
+    afterUploadFiles(newName, url) {
       let file = this.fileList.filter(f => f.name === newName)[0];
       let index = this.fileList.indexOf(file);
       let fileCopy = JSON.parse(JSON.stringify(file));
@@ -90,38 +119,21 @@ export default {
       fileListCopy.splice(index, 1, fileCopy);
       this.$emit("update:fileList", fileListCopy);
     },
-    beforeUploadFile(rawFile, newName, url) {
-      let { size, type } = rawFile;
-      if (size > this.sizeLimit) {
-        this.$emit("error", `文件大于${this.sizeLimit / 1024} kb`);
-        return false;
-      } else {
-        this.$emit("update:fileList", [
-          ...this.fileList,
-          { name: newName, type, size, status: "uploading" }
-        ]);
-        return true;
-      }
-    },
-    uploadFile(rawFile) {
-      let { name, size, type } = rawFile;
-      let newName = this.generateName(name);
-      if (!this.beforeUploadFile(rawFile, newName)) {
-        return;
-      }
-      let formData = new FormData();
-      formData.append(this.name, rawFile);
-      this.doUploadFile(
-        formData,
-        response => {
-          let url = this.parseResponse(response);
-          this.url = url;
-          this.afterUploadFile(newName, url);
-        },
-        xhr => {
-          this.uploadError(xhr, newName);
+    beforeUploadFiles(rawFiles, newNames) {
+      rawFiles = Array.from(rawFiles);
+      for (let i = 0; i < rawFiles.length; i++) {
+        let { size, type } = rawFiles[i];
+        if (size > this.sizeLimit) {
+          this.$emit("error", `文件大于${this.sizeLimit / 1024} kb`);
+          return false;
         }
-      );
+      }
+      let x = rawFiles.map((rawFile, i) => {
+        let { type, size } = rawFile;
+        return { name: newNames[i], type, size, status: "uploading" };
+      });
+      this.$emit("update:fileList", [...this.fileList, ...x]);
+      return true;
     },
     uploadError(xhr, newName) {
       let file = this.fileList.filter(f => f.name === newName)[0];
@@ -146,7 +158,7 @@ export default {
       }
       return name;
     },
-    doUploadFile(formData, success, fail) {
+    doUploadFiles(formData, success, fail) {
       let xhr = new XMLHttpRequest();
       xhr.open(this.method, this.action);
       xhr.onload = () => {
@@ -161,6 +173,7 @@ export default {
       this.$refs.temp.innerHTML = "";
       let input = document.createElement("input");
       input.type = "file";
+      input.multiple = true;
       this.$refs.temp.appendChild(input);
       return input;
     }
@@ -211,6 +224,7 @@ export default {
     width: 100%;
     height: 100%;
     @include spin;
+    fill: $symbol-color;
     &-wrapper {
       height: 32px;
       width: 32px;
