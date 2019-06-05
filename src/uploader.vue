@@ -55,6 +55,14 @@ export default {
     sizeLimit: {
       type: Number,
       default: 2 * 1024 * 1024
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    accept: {
+      type: String,
+      default: "image/*"
     }
   },
   data() {
@@ -172,6 +180,7 @@ export default {
     createInput() {
       this.$refs.temp.innerHTML = "";
       let input = document.createElement("input");
+      input.accept = this.accept;
       input.type = "file";
       input.multiple = true;
       this.$refs.temp.appendChild(input);

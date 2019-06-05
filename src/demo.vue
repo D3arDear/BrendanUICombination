@@ -7,11 +7,12 @@
         accept="image/*"
         action="http://127.0.0.1:3000/upload"
         methods="POST"
-        name="files"
+        name="file"
         :parseResponse="parseResponse"
         :file-list.sync="fileList"
         @error="error=$event"
-        :size-limit="3 * 1024 * 1024"
+        :size-limit="10 * 1024 * 1024"
+        multiple
       >
         <z-button icon="upload">上传</z-button>
       </z-uploader>
