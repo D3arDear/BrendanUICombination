@@ -28,6 +28,7 @@
 import { Stream } from "stream";
 import ZButton from "./button/button";
 import ZIcon from "./icon";
+import http from "./http";
 export default {
   name: "ZealotUploader",
   components: { ZButton, ZIcon },
@@ -167,15 +168,11 @@ export default {
       return name;
     },
     doUploadFiles(formData, success, fail) {
-      let xhr = new XMLHttpRequest();
-      xhr.open(this.method, this.action);
-      xhr.onload = () => {
-        success(xhr.response);
-      };
-      xhr.onerror = () => {
-        fail(xhr, xhr.status);
-      };
-      xhr.send(formData);
+      http[this.method.toLowerCase()](this.action, {
+        success,
+        fail,
+        data: formData
+      });
     },
     createInput() {
       this.$refs.temp.innerHTML = "";
