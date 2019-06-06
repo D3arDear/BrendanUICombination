@@ -127,6 +127,7 @@ export default {
       let fileListCopy = [...this.fileList];
       fileListCopy.splice(index, 1, fileCopy);
       this.$emit("update:fileList", fileListCopy);
+      this.$emit("uploaded");
     },
     beforeUploadFiles(rawFiles, newNames) {
       rawFiles = Array.from(rawFiles);
