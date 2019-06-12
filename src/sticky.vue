@@ -52,6 +52,10 @@ export default {
         this.top = this.distance + "px";
         this.sticky = true;
       } else {
+        this.height = undefined;
+        this.left = undefined;
+        this.width = undefined;
+        this.top = undefined;
         this.sticky = false;
       }
     }
@@ -69,8 +73,6 @@ export default {
 .zealot-sticky {
   &.sticky {
     position: fixed;
-    // left: 0;
-    // width: 100%;
   }
 }
 </style>
