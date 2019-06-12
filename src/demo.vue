@@ -2,7 +2,21 @@
   <div style="margin:20px;">
     <main style="margin: 50px 20px;display:flex; justify-content:center;">
       <div style="width:600px;border:1px solid black">
-        <z-sticky distance="100">
+        <p>段落15</p>
+        <p>段落16</p>
+        <p>段落17</p>
+        <p>段落18</p>
+        <p>段落19</p>
+        <p>段落20</p>
+        <p>段落21</p>
+        <p>段落22</p>
+        <p>段落23</p>
+        <p>段落24</p>
+        <p>段落25</p>
+        <p>段落26</p>
+        <p>段落27</p>
+        <p>段落28</p>
+        <z-sticky :distance="100">
           <div style="border:1px solid grey">我是粘滞内容</div>
         </z-sticky>
         <p>段落15</p>
