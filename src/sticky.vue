@@ -14,8 +14,7 @@ export default {
       sticky: false,
       left: undefined,
       width: undefined,
-      height: undefined,
-      timerId: null
+      height: undefined
     };
   },
   mounted() {
@@ -32,29 +31,21 @@ export default {
       return { top: top + window.scrollY };
     },
     _windowScrollHandler() {
-      let x = () => {
-        let { top } = this.top();
-        console.log(window.scrollY);
-        if (window.scrollY > top) {
-          let {
-            height,
-            left,
-            width
-          } = this.$refs.wrapper.getBoundingClientRect();
-          console.log(height, left, width);
-          this.height = height + "px";
-          this.left = left + "px";
-          this.width = width + "px";
-          this.sticky = true;
-        } else {
-          console.log("没有滚过元素");
-          this.sticky = false;
-        }
-      };
-      if (this.timerId) {
-        window.clearTimeout(this.timerId);
+      let { top } = this.top();
+      if (window.scrollY > top) {
+        let {
+          height,
+          left,
+          width
+        } = this.$refs.wrapper.getBoundingClientRect();
+        console.log(height, left, width);
+        this.height = height + "px";
+        this.left = left + "px";
+        this.width = width + "px";
+        this.sticky = true;
+      } else {
+        this.sticky = false;
       }
-      this.timerId = setTimeout(x, 200);
     }
   },
   computed: {
