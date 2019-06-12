@@ -14,29 +14,12 @@ export default {
       sticky: false,
       left: undefined,
       width: undefined,
-      height: undefined
+      height: undefined,
+      timerId: null
     };
   },
   mounted() {
-    let { top } = this.top();
-    this.windowScrollHandler = () => {
-      if (window.scrollY > top) {
-        console.log("滚过了元素的底部");
-        let {
-          height,
-          left,
-          width
-        } = this.$refs.wrapper.getBoundingClientRect();
-        console.log(height, left, width);
-        this.height = height + "px";
-        this.left = left + "px";
-        this.width = width + "px";
-        this.sticky = true;
-      } else {
-        console.log("没有滚过元素的底部");
-        this.sticky = false;
-      }
-    };
+    this.windowScrollHandler = this._windowScrollHandler.bind(this);
     window.addEventListener("scroll", this.windowScrollHandler);
   },
   created() {},
@@ -47,6 +30,31 @@ export default {
     top() {
       let { top } = this.$refs.wrapper.getBoundingClientRect();
       return { top: top + window.scrollY };
+    },
+    _windowScrollHandler() {
+      let x = () => {
+        let { top } = this.top();
+        console.log(window.scrollY);
+        if (window.scrollY > top) {
+          let {
+            height,
+            left,
+            width
+          } = this.$refs.wrapper.getBoundingClientRect();
+          console.log(height, left, width);
+          this.height = height + "px";
+          this.left = left + "px";
+          this.width = width + "px";
+          this.sticky = true;
+        } else {
+          console.log("没有滚过元素");
+          this.sticky = false;
+        }
+      };
+      if (this.timerId) {
+        window.clearTimeout(this.timerId);
+      }
+      this.timerId = setTimeout(x, 200);
     }
   },
   computed: {
