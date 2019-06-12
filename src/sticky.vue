@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     let { top } = this.top();
-    window.addEventListener("scroll", () => {
+    this.windowScrollHandler = () => {
       if (window.scrollY > top) {
         console.log("滚过了元素的底部");
         let {
@@ -36,10 +36,13 @@ export default {
         console.log("没有滚过元素的底部");
         this.sticky = false;
       }
-    });
+    };
+    window.addEventListener("scroll", this.windowScrollHandler);
   },
   created() {},
-  watch() {},
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.windowScrollHandler);
+  },
   methods: {
     top() {
       let { top } = this.$refs.wrapper.getBoundingClientRect();
