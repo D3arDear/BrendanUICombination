@@ -3,6 +3,11 @@
     <slot></slot>
   </div>
 </template>
+<script>
+export default{
+  name:'zealotContent'
+}
+</script>
 
 <style lang="scss" scoped>
 .content {

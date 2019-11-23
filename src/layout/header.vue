@@ -3,6 +3,11 @@
     <slot></slot>
   </div>
 </template>
+<script>
+export default {
+  name: "zealotHeader"
+};
+</script>
 
 <style lang="scss" scoped>
 .header {
