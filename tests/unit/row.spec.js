@@ -5,6 +5,7 @@ chai.use(sinonChai);
 import Vue from "vue";
 import Row from "@/grid/row";
 import Col from "@/grid/col";
+import { mount } from "@vue/test-utils";
 
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
@@ -16,30 +17,31 @@ describe("Row", () => {
   it("接收 gutter 属性.", done => {
     Vue.component("z-row", Row);
     Vue.component("z-col", Col);
-    const div = document.createElement("div");
-    document.body.appendChild(div);
-    div.innerHTML = `
-      <z-row gutter="20">
+    const wrapper = mount(Row, {
+      propsData: {
+        gutter: 20
+      },
+      slots: {
+        default: `
         <z-col span="12"></z-col>
         <z-col span="12"></z-col>
-      </z-row>
-    `;
-    let vm = new Vue({
-      el: div
+        `
+      }
     });
-    console.log(vm.$el);
-    setTimeout(() => {
-      let row = vm.$el.querySelectorAll(".row");
-      console.log(row[0]);
-      expect(getComputedStyle(row[0]).marginLeft).to.eq("-10px");
-      expect(getComputedStyle(row[0]).marginRight).to.eq("-10px");
+    const vm = wrapper.vm;
+    vm.$nextTick(() => {
+      let row = vm.$el;
+      console.log(row);
+      expect(row.style.marginLeft).to.eq("-10px");
+      expect(row.style.marginRight).to.eq("-10px");
       let cols = vm.$el.querySelectorAll(".col");
-      expect(getComputedStyle(cols[0]).paddingRight).to.eq("10px");
-      expect(getComputedStyle(cols[1]).paddingLeft).to.eq("10px");
+      console.log(cols[0]);
+      expect(cols[0].style.paddingRight).to.eq("10px");
+      expect(cols[1].style.paddingLeft).to.eq("10px");
       done();
       vm.$el.remove();
       vm.$destroy();
-    }, 1000);
+    });
   });
   it("接收 align 属性", () => {
     const div = document.createElement("div");
