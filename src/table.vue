@@ -1,29 +1,51 @@
 <template>
   <div class="zealot-table-wrapper" ref="wrapper">
-    <div :style="{height,overflow:'auto'}" ref="tableWrapper">
-      <table class="zealot-table" :class="{bordered,compact,striped:striped}" ref="table">
+    <div :style="{ height, overflow: 'auto' }" ref="tableWrapper">
+      <table
+        class="zealot-table"
+        :class="{ bordered, compact, striped: striped }"
+        ref="table"
+      >
         <thead>
           <tr>
-            <th v-if="expendField" :style="{width:'36px'}" class="zealot-table-center"></th>
-            <th v-if="checkable" :style="{width:'50px'}" class="zealot-table-center">
+            <th
+              v-if="expendField"
+              :style="{ width: '36px' }"
+              class="zealot-table-center"
+            ></th>
+            <th
+              v-if="checkable"
+              :style="{ width: '50px' }"
+              class="zealot-table-center"
+            >
               <input
                 type="checkbox"
                 @change="onChangeAllItems"
                 ref="allChecked"
                 :checked="areAllItemsSelected"
-              >
+              />
             </th>
-            <th :style="{width:'50px'}" v-if="numberVisible">#</th>
-            <th :style="{width:column.width + 'px'}" :key="column.field" v-for="column in columns">
+            <th :style="{ width: '50px' }" v-if="numberVisible">#</th>
+            <th
+              :style="{ width: column.width + 'px' }"
+              :key="column.field"
+              v-for="column in columns"
+            >
               <div class="zealot-table-header">
-                {{column.text}}
+                {{ column.text }}
                 <span
                   v-if="column.field in orderBy"
                   class="zealot-table-sorter"
                   @click="changeOrderBy(column.field)"
                 >
-                  <z-icon name="up" :class="{active:orderBy[column.field] === 'asc'}"></z-icon>
-                  <z-icon name="down" :class="{active:orderBy[column.field] === 'desc'}"></z-icon>
+                  <z-icon
+                    name="up"
+                    :class="{ active: orderBy[column.field] === 'asc' }"
+                  ></z-icon>
+                  <z-icon
+                    name="down"
+                    :class="{ active: orderBy[column.field] === 'desc' }"
+                  ></z-icon>
                 </span>
               </div>
             </th>
@@ -31,27 +53,39 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="item,index in dataSource">
+          <template v-for="(item, index) in dataSource">
             <tr :key="item.id">
-              <td v-if="expendField" :style="{width:'36px'}" class="zealot-table-center">
+              <td
+                v-if="expendField"
+                :style="{ width: '36px' }"
+                class="zealot-table-center"
+              >
                 <z-icon
                   v-if="item.description"
-                  :class="{active:inExpendedIds(item.id)}"
+                  :class="{ active: inExpendedIds(item.id) }"
                   class="zealot-table-expendIcon"
                   name="right"
                   @click="expendItem(item.id)"
                 />
               </td>
-              <td v-if="checkable" :style="{width:'50px'}" class="zealot-table-center">
+              <td
+                v-if="checkable"
+                :style="{ width: '50px' }"
+                class="zealot-table-center"
+              >
                 <input
                   type="checkbox"
-                  @change="onChangeItem(item,index,$event)"
+                  @change="onChangeItem(item, index, $event)"
                   :checked="inSelectedItems(item)"
-                >
+                />
               </td>
-              <td v-if="numberVisible" :style="{width:'50px'}">{{ index+1 }}</td>
+              <td v-if="numberVisible" :style="{ width: '50px' }">
+                {{ index + 1 }}
+              </td>
               <template v-for="column in columns">
-                <td :style="{width:column.width + 'px'}" :key="column.field">{{item[column.field]}}</td>
+                <td :style="{ width: column.width + 'px' }" :key="column.field">
+                  {{ item[column.field] }}
+                </td>
               </template>
               <td v-if="$scopedSlots.default">
                 <div ref="actions" style="display:inline-block">
@@ -60,12 +94,21 @@
               </td>
             </tr>
             <transition name="scroll">
-              <tr class="descriptionTr" v-if="inExpendedIds(item.id)" :key="`${item.id}-expend`">
-                <td v-for="n in expendedCellColSpan" class="descriptionHolder"></td>
+              <tr
+                class="descriptionTr"
+                v-if="inExpendedIds(item.id)"
+                :key="`${item.id}-expend`"
+              >
+                <td
+                  v-for="n in expendedCellColSpan"
+                  class="descriptionHolder"
+                ></td>
                 <td
                   class="description"
                   :colspan="columns.length + expendedCellColSpan"
-                >{{item[expendField]}}</td>
+                >
+                  {{ item[expendField] }}
+                </td>
               </tr>
             </transition>
           </template>
@@ -73,7 +116,7 @@
       </table>
     </div>
     <div class="zealot-table-loading" v-if="loading">
-      <z-icon name="loading"/>
+      <z-icon name="loading" />
     </div>
   </div>
 </template>
@@ -258,7 +301,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../style/var";
+@import "var";
 .zealot-table {
   border-collapse: collapse;
   width: 100%;

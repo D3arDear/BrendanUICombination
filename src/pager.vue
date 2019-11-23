@@ -1,27 +1,32 @@
 <template>
-  <div class="zealot-pager" :class="{hide:hideIfOnePage === true && totalPage <= 1}">
+  <div
+    class="zealot-pager"
+    :class="{ hide: hideIfOnePage === true && totalPage <= 1 }"
+  >
     <span
       class="zealot-pager-nav prev"
-      :class="{disabled: currentPage === 1}"
-      @click="onClickPage(currentPage-1)"
+      :class="{ disabled: currentPage === 1 }"
+      @click="onClickPage(currentPage - 1)"
     >
       <z-icon name="left"></z-icon>
     </span>
     <template v-for="page in pages">
       <template v-if="page === currentPage">
-        <span class="zealot-pager-item current">{{page}}</span>
+        <span class="zealot-pager-item current">{{ page }}</span>
       </template>
       <template v-else-if="page === '...'">
         <z-icon class="zealot-pager-separator" name="dots"></z-icon>
       </template>
       <template v-else>
-        <span class="zealot-pager-item other" @click="onClickPage(page)">{{page}}</span>
+        <span class="zealot-pager-item other" @click="onClickPage(page)">{{
+          page
+        }}</span>
       </template>
     </template>
     <span
       class="zealot-pager-nav next"
-      :class="{disabled: currentPage === totalPage}"
-      @click="onClickPage(currentPage+1)"
+      :class="{ disabled: currentPage === totalPage }"
+      @click="onClickPage(currentPage + 1)"
     >
       <z-icon name="right"></z-icon>
     </span>
@@ -29,7 +34,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "../style/var";
+@import "var";
 .zealot-pager {
   $width: 20px;
   $height: 20px;
@@ -54,7 +59,8 @@
     svg {
       fill: #009688;
     }
-    &.disabled { cursor: default;
+    &.disabled {
+      cursor: default;
       svg {
         fill: $darker-grey;
       }

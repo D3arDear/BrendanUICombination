@@ -1,6 +1,6 @@
 <template>
   <div class="collapseItem">
-    <div class="title" @click="toggle" :class="{open}">{{title}}</div>
+    <div class="title" @click="toggle" :class="{ open }">{{ title }}</div>
     <div class="content" v-if="open">
       <slot></slot>
     </div>
@@ -49,7 +49,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .collapseItem {
-  @import "../../style/var";
+  @import "var";
   > .title {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     min-height: 32px;

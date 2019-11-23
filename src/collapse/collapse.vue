@@ -52,7 +52,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../style/var";
+@import "var";
 .collapse {
   background: #fafafa;
   box-shadow: $card-shadow;

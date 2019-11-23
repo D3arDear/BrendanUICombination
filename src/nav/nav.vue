@@ -1,5 +1,5 @@
 <template>
-  <div class="z-nav" :class="{vertical:vertical}">
+  <div class="z-nav" :class="{ vertical: vertical }">
     <slot></slot>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/var";
+@import "var";
 .z-nav {
   color: $color;
   display: flex;

@@ -1,15 +1,20 @@
 
 <template>
-  <div class="z-sub-nav" :class="{active,vertical}" v-click-outside="close">
+  <div class="z-sub-nav" :class="{ active, vertical }" v-click-outside="close">
     <span class="z-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
-      <span class="z-sub-nav-icon" :class="{open,vertical}">
+      <span class="z-sub-nav-icon" :class="{ open, vertical }">
         <z-icon name="right"></z-icon>
       </span>
     </span>
     <template v-if="vertical">
-      <transition @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
-        <div class="z-sub-nav-popover" v-show="open" :class="{vertical}">
+      <transition
+        @enter="enter"
+        @after-enter="afterEnter"
+        @leave="leave"
+        @after-leave="afterLeave"
+      >
+        <div class="z-sub-nav-popover" v-show="open" :class="{ vertical }">
           <slot></slot>
         </div>
       </transition>
@@ -93,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/var";
+@import "var";
 .z-sub-nav {
   position: relative;
   &:not(.vertical) {

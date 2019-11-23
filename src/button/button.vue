@@ -1,5 +1,9 @@
 <template>
-  <button class="z-button" :class="{ [`icon-${iconposition}`]: true }" @click="$emit('click')">
+  <button
+    class="z-button"
+    :class="{ [`icon-${iconposition}`]: true }"
+    @click="$emit('click')"
+  >
     <z-icon class="icon loading" name="loading" v-if="loading"></z-icon>
     <z-icon class="icon" v-if="icon && !loading" :name="icon"></z-icon>
     <div class="z-button-content">
@@ -34,7 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/var";
+@import "var";
 .z-button {
   font-size: $font-size;
   height: $button-height;

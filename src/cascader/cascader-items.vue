@@ -1,14 +1,18 @@
 <template>
-  <div class="cascaderItem" :style="{height:height}">
+  <div class="cascaderItem" :style="{ height: height }">
     <div class="left">
       <div class="label" v-for="item in items" @click="onClickLabel(item)">
-        <span class="name">{{item.name}}</span>
+        <span class="name">{{ item.name }}</span>
         <span class="icons">
           <template v-if="item.name === loadingItem.name">
             <z-icon class="loading" name="loading"></z-icon>
           </template>
           <template v-else>
-            <z-icon class="next" v-if="rightArrowVisible(item)" name="right"></z-icon>
+            <z-icon
+              class="next"
+              v-if="rightArrowVisible(item)"
+              name="right"
+            ></z-icon>
           </template>
         </span>
       </div>
@@ -19,7 +23,7 @@
         :loading-item="loadingItem"
         @update:selected="onUpdateSelected"
         :selected="selected"
-        :level="level+1"
+        :level="level + 1"
         :items="rightItems"
         :height="height"
       ></zealot-cascader-items>
@@ -89,7 +93,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../style/var";
+@import "var";
 .cascaderItem {
   display: flex;
   align-items: flex-start;

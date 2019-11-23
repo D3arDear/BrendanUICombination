@@ -13,13 +13,24 @@
           </div>
         </template>
         <template v-else-if="file.type.indexOf('image') === 0">
-          <img class="zealot-uploader-image" :src="file.url" width="32" height="32">
+          <img
+            class="zealot-uploader-image"
+            :src="file.url"
+            width="32"
+            height="32"
+          />
         </template>
         <template v-else>
           <div class="zealot-uploader-defaultImage"></div>
         </template>
-        <span class="zealot-uploader-name" :class="{[file.status] : file.status}">{{file.name}}</span>
-        <z-button class="zealot-uploader-remove" @click="onRemoveFile(file)">x</z-button>
+        <span
+          class="zealot-uploader-name"
+          :class="{ [file.status]: file.status }"
+          >{{ file.name }}</span
+        >
+        <z-button class="zealot-uploader-remove" @click="onRemoveFile(file)"
+          >x</z-button
+        >
       </li>
     </ol>
   </div>
@@ -188,7 +199,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../style/var";
+@import "var";
 .zealot-uploader {
   box-shadow: $card-shadow;
   padding: 8px 0;

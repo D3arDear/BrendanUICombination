@@ -1,6 +1,6 @@
 <template>
   <div class="cascader" ref="cascader" v-click-outside="close">
-    <div class="trigger" @click="toggle">{{result || '&nbsp'}}</div>
+    <div class="trigger" @click="toggle">{{ result || "&nbsp" }}</div>
     <div class="popover-wrapper" v-if="popoverVisible">
       <cascader-items
         :loading-item="loadingItem"
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/var";
+@import "var";
 .cascader {
   display: inline-block;
   position: relative;

@@ -1,6 +1,11 @@
 
 <template>
-  <div class="z-nav-item" :class="{selected,vertical}" @click="onClick" :data-name="name">
+  <div
+    class="z-nav-item"
+    :class="{ selected, vertical }"
+    @click="onClick"
+    :data-name="name"
+  >
     <slot></slot>
   </div>
 </template>
@@ -35,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../style/var";
+@import "var";
 .z-nav-item {
   padding: 10px 20px;
   position: relative;
