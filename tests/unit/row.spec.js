@@ -13,7 +13,7 @@ describe("Row", () => {
   it("存在.", () => {
     expect(Row).to.exist;
   });
-  xit("接收 gutter 属性.", done => {
+  it("接收 gutter 属性.", done => {
     Vue.component("z-row", Row);
     Vue.component("z-col", Col);
     const div = document.createElement("div");

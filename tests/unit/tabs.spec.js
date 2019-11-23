@@ -21,7 +21,7 @@ describe("Tabs", () => {
   it("存在.", () => {
     expect(Tabs).to.exist;
   });
-  xit("接受 selected", done => {
+  it("接受 selected", done => {
     const div = document.createElement("div");
     document.body.appendChild(div);
     div.innerHTML = `<z-tabs selected="pc">
