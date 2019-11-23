@@ -39,7 +39,7 @@ describe("Tabs", () => {
     let vm = new Vue({
       el: div
     }).$mount(div);
-    vm.$nextTick(() => {
+    setTimeout(() => {
       let x = vm.$el.querySelector(`.tabs-item[data-name='pc']`);
       expect(x.classList.contains("active")).to.be.true;
       done();
