@@ -1,9 +1,9 @@
 {
   "name": "zealot-ui-primarydemo",
   "version": "0.0.10",
+  "main": "dist/zealotUi.umd.min.js",
   "description": "这是一个UI框架(自用)",
   "private": false,
-  "main": "dist/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
