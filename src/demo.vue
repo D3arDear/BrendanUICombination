@@ -2,52 +2,15 @@
   <div style="margin:20px;">
     <main style="margin: 50px 20px;display:flex; justify-content:center;">
       <div style="width:600px;border:1px solid black">
-        <p>段落15</p>
-        <p>段落16</p>
-        <p>段落17</p>
-        <p>段落18</p>
-        <p>段落19</p>
-        <p>段落20</p>
-        <p>段落21</p>
-        <p>段落22</p>
-        <p>段落23</p>
-        <p>段落24</p>
-        <p>段落25</p>
-        <p>段落26</p>
-        <p>段落27</p>
-        <p>段落28</p>
         <z-sticky :distance="100">
           <div style="border:1px solid grey">我是粘滞内容</div>
         </z-sticky>
-        <p>段落15</p>
-        <p>段落16</p>
-        <p>段落17</p>
-        <p>段落18</p>
-        <p>段落19</p>
-        <p>段落20</p>
-        <p>段落21</p>
-        <p>段落22</p>
-        <p>段落23</p>
-        <p>段落24</p>
-        <p>段落25</p>
-        <p>段落26</p>
-        <p>段落27</p>
-        <p>段落28</p>
-        <p>段落29</p>
-        <p>段落30</p>
-        <p>段落31</p>
-        <p>段落32</p>
-        <p>段落33</p>
-        <p>段落34</p>
-        <p>段落35</p>
-        <p>段落36</p>
-        <p>段落37</p>
       </div>
     </main>
 
-    <!-- 上面的有效 -->
+    <!-- 下面的有效 -->
     <main style="margin: 50px 20px;">
-      {{error}}
+      {{ error }}
       <div>只能上传 300kb 以内的 png jpeg 文件</div>
       <z-uploader
         accept="image/*"
@@ -56,7 +19,7 @@
         name="file"
         :parseResponse="parseResponse"
         :file-list.sync="fileList"
-        @error="error=$event"
+        @error="error = $event"
         :size-limit="10 * 1024 * 1024"
         multiple
       >
@@ -66,7 +29,6 @@
     <div style="margin: 50px 20px;">
       <z-table
         bordered
-        :columns="columns"
         :dataSource="dataSource"
         :selected-items.sync="selected"
         :order-by.sync="orderBy"
@@ -82,19 +44,20 @@
           <z-button @click="view(item)">查看</z-button>
           <z-button @click="view(item)">删除</z-button>
         </template>
+        <z-table-column text="姓名" field="name" :width="200">
+          <template slot-scope="props">
+            <a :href="`/users/${props.value}`">{{ props.value }}</a>
+          </template>
+        </z-table-column>
+        <z-table-column text="分数" field="score" :width="300">
+        </z-table-column>
       </z-table>
     </div>
-    <div style="margin: 50px 20px;overflow:auto">
-      <z-table
-        bordered
-        :columns="columns"
-        :dataSource="dataSource"
-        :selected-items.sync="selected"
-        expend-field="description"
-        compact
-      ></z-table>
-    </div>
-    <z-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false"></z-pager>
+    <z-pager
+      :total-page="10"
+      :current-page.sync="currentPage"
+      :hide-if-one-page="false"
+    ></z-pager>
   </div>
 </template>
 <script>
@@ -107,9 +70,11 @@ import ZButton from "./button/button";
 import ZUploader from "./uploader";
 import ZIcon from "./icon";
 import ZSticky from "./sticky";
+import ZTableColumn from "./table-column";
 export default {
   name: "demo",
   components: {
+    ZTableColumn,
     ZButton,
     ZNav,
     ZNavItem,
@@ -131,11 +96,11 @@ export default {
         rank: "desc"
       },
       loading: false,
-      columns: [
-        { text: "姓名", field: "name" },
-        { text: "分数", field: "score", width: 100 },
-        { text: "排名", field: "rank", width: 100 }
-      ],
+      // columns: [
+      //   { text: "姓名", field: "name" },
+      //   { text: "分数", field: "score", width: 100 },
+      //   { text: "排名", field: "rank", width: 100 }
+      // ],
       dataSource: [
         {
           id: 1,

@@ -1,6 +1,6 @@
 <template>
-  <div class="zealot-sticky-wrapper" ref="wrapper" :style="{height}">
-    <div class="zealot-sticky" :class="classes" :style="{left,width,top}">
+  <div class="zealot-sticky-wrapper" ref="wrapper" :style="{ height }">
+    <div class="zealot-sticky" :class="classes" :style="{ left, width, top }">
       <slot></slot>
     </div>
   </div>
@@ -73,6 +73,7 @@ export default {
 .zealot-sticky {
   &.sticky {
     position: fixed;
+    z-index: 1;
   }
 }
 </style>

@@ -84,7 +84,14 @@
               </td>
               <template v-for="column in columns">
                 <td :style="{ width: column.width + 'px' }" :key="column.field">
-                  {{ item[column.field] }}
+                  <template v-if="column.render">
+                    <vnodes
+                      :vnodes="column.render({ value: item[column.field] })"
+                    ></vnodes>
+                  </template>
+                  <template v-else>
+                    {{ item[column.field] }}
+                  </template>
                 </td>
               </template>
               <td v-if="$scopedSlots.default">
@@ -126,11 +133,16 @@ import { deepEqual } from "assert";
 export default {
   name: "ZealotTable",
   components: {
-    ZIcon
+    ZIcon,
+    vnodes: {
+      functional: true,
+      render: (h, context) => context.props.vnodes
+    }
   },
   data() {
     return {
-      expendedIDs: []
+      expendedIDs: [],
+      columns: []
     };
   },
   props: {
@@ -163,10 +175,6 @@ export default {
     compact: {
       type: Boolean,
       default: false
-    },
-    columns: {
-      type: Array,
-      required: true
     },
     dataSource: {
       type: Array,
@@ -241,6 +249,18 @@ export default {
     }
   },
   mounted() {
+    this.columns = this.$slots.default.map(node => {
+      let { text, field, width } = node.componentOptions.propsData;
+      let render = node.data.scopedSlots && node.data.scopedSlots.default;
+      return {
+        text,
+        field,
+        width,
+        render
+      };
+    });
+    // let result = this.columns[0].render({ value: "bren" });
+    // console.log(result);
     let table2 = this.$refs.table.cloneNode(false);
     this.table2 = table2;
     table2.classList.add("zealot-table-copy");
