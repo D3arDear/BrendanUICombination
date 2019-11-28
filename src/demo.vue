@@ -8,7 +8,6 @@
       </div>
     </main>
 
-    <!-- 下面的有效 -->
     <main style="margin: 50px 20px;">
       {{ error }}
       <div>只能上传 300kb 以内的 png jpeg 文件</div>
@@ -58,6 +57,9 @@
       :current-page.sync="currentPage"
       :hide-if-one-page="false"
     ></z-pager>
+    <!-- 下面的有效 -->
+    <z-date-picker></z-date-picker>
+    <div>其他内容</div>
   </div>
 </template>
 <script>
@@ -71,9 +73,11 @@ import ZUploader from "./uploader";
 import ZIcon from "./icon";
 import ZSticky from "./sticky";
 import ZTableColumn from "./table-column";
+import ZDatePicker from "./date-picker/date-picker.vue";
 export default {
   name: "demo",
   components: {
+    ZDatePicker,
     ZTableColumn,
     ZButton,
     ZNav,
@@ -96,11 +100,6 @@ export default {
         rank: "desc"
       },
       loading: false,
-      // columns: [
-      //   { text: "姓名", field: "name" },
-      //   { text: "分数", field: "score", width: 100 },
-      //   { text: "排名", field: "rank", width: 100 }
-      // ],
       dataSource: [
         {
           id: 1,
