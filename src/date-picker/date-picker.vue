@@ -20,7 +20,11 @@
               月
             </div>
             <div v-if="mode === 'days'" class="zealot-date-picker-content">
-              日
+              <div v-for="i in helper.range(1, 7)">
+                <span v-for="j in helper.range(1, 8)">
+                  {{ visibleDays[(i - 1) * 7 + j - 1].getDate() }}
+                </span>
+              </div>
             </div>
           </div>
           <div class="zealot-date-picker-actions"></div>
@@ -34,24 +38,19 @@ import ZInput from "../input.vue";
 import ZIcon from "../icon.vue";
 import ClickOutside from "../click-outside";
 import ZPopover from "../popover";
+import helper from "./helper";
 export default {
   components: { ZInput, ZIcon, ZPopover },
   directives: { ClickOutside },
   name: "ZealotDataPicker",
   data() {
     return {
-      mode: "days" | "months" | "years",
-      value: new Date()
+      mode: "days",
+      value: new Date(),
+      helper: helper
     };
   },
-  mounted() {
-    let date = new Date(2018, 2, 27);
-    let firstDay = date.setDate(1);
-    console.log(new Date(firstDay));
-    date.setMonth(date.getMonth() + 1);
-    let lastDay = date.setDate(0);
-    console.log(new Date(lastDay));
-  },
+  mounted() {},
   methods: {
     onClickMonth() {
       this.mode = "months";
@@ -63,7 +62,25 @@ export default {
   computed: {
     visibleDays() {
       let date = this.value;
-      console.log(date);
+      let first = helper.firstDayOfMonth(date);
+      let last = helper.lastDayOfMonth(date);
+      let array = [];
+      let [year, month, day] = helper.getYearMonthDate(date);
+      for (let i = first.getDate(); i <= last.getDate(); i++) {
+        array.push(new Date(year, month, i));
+      }
+      let n = first.getDay() === 0 ? 6 : first.getDay() - 1; // 0 - 6
+      let array2 = [];
+      for (let i = 0; i < n; i++) {
+        array2.push(new Date(year, month, -i));
+      }
+      array2 = array2.reverse();
+      let m = 42 - array.length - array2.length;
+      let array3 = [];
+      for (let i = 1; i <= m; i++) {
+        array3.push(new Date(year, month + 1, i));
+      }
+      return [...array2, ...array, ...array3];
     }
   }
 };
