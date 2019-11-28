@@ -20,14 +20,21 @@
               月
             </div>
             <div v-if="mode === 'days'" class="zealot-date-picker-content">
-              <div v-for="i in helper.range(1, 7)">
-                <span v-for="j in helper.range(1, 8)">
+              <div :class="c('weekdays')">
+                <span v-for="i in [1, 2, 3, 4, 5, 6, 0]">
+                  {{ weekdays[i] }}
+                </span>
+              </div>
+              <div :class="c('row')" v-for="i in helper.range(1, 7)">
+                <span :class="c('col')" v-for="j in helper.range(1, 8)">
                   {{ visibleDays[(i - 1) * 7 + j - 1].getDate() }}
                 </span>
               </div>
             </div>
           </div>
-          <div class="zealot-date-picker-actions"></div>
+          <div class="zealot-date-picker-actions">
+            <button>清除</button>
+          </div>
         </div>
       </template>
     </z-popover>
@@ -47,7 +54,8 @@ export default {
     return {
       mode: "days",
       value: new Date(),
-      helper: helper
+      helper: helper,
+      weekdays: ["日", "一", "二", "三", "四", "五", "六"]
     };
   },
   mounted() {},
@@ -57,6 +65,9 @@ export default {
     },
     onClickYear() {
       this.mode = "years";
+    },
+    c(className) {
+      return `zealot-date-picker-${className}`;
     }
   },
   computed: {
