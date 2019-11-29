@@ -3,7 +3,7 @@
     <div
       ref="contentWrapper"
       class="content-wrapper"
-      :class="{[ `position-${position}` ]:true}"
+      :class="[{ [`position-${position}`]: true }, popClassName]"
       v-if="visible"
     >
       <slot name="content" :close="close"></slot>
@@ -54,6 +54,9 @@ export default {
     }
   },
   props: {
+    popClassName: {
+      type: String
+    },
     position: {
       type: String,
       default: "top",
@@ -67,12 +70,15 @@ export default {
       validator(value) {
         return ["click", "hover"].indexOf(value) >= 0;
       }
+    },
+    container: {
+      type: Object
     }
   },
   methods: {
     positionContent() {
       const { contentWrapper, triggerWrapper } = this.$refs;
-      document.body.appendChild(contentWrapper);
+      (this.container || document.body).appendChild(contentWrapper);
       const {
         width,
         height,

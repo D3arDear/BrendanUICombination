@@ -1,16 +1,16 @@
 <template>
-  <div class="">
-    <z-popover position="bottom">
+  <div ref="wrapper">
+    <z-popover position="bottom" :container="this.$refs.wrapper">
       <z-input></z-input>
       <template slot="content">
         <div class="zealot-date-picker-pop">
           <div class="zealot-date-picker-nav">
-            <span><z-icon name="setting"></z-icon></span>
-            <span><z-icon name="setting"></z-icon></span>
+            <span><z-icon name="doubleLeft"></z-icon></span>
+            <span><z-icon name="left"></z-icon></span>
             <span @click="onClickYear">2012年</span>
             <span @click="onClickMonth">8月</span>
-            <span><z-icon name="setting"></z-icon></span>
-            <span><z-icon name="setting"></z-icon></span>
+            <span><z-icon name="right"></z-icon></span>
+            <span><z-icon name="doubleRight"></z-icon></span>
           </div>
           <div class="zealot-data-picker-panels">
             <div v-if="mode === 'years'" class="zealot-date-picker-content">
@@ -50,6 +50,9 @@ export default {
   components: { ZInput, ZIcon, ZPopover },
   directives: { ClickOutside },
   name: "ZealotDataPicker",
+  props: {
+    firstDayOfWeek: 0 | 1
+  },
   data() {
     return {
       mode: "days",
@@ -58,7 +61,9 @@ export default {
       weekdays: ["日", "一", "二", "三", "四", "五", "六"]
     };
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$refs.wrapper);
+  },
   methods: {
     onClickMonth() {
       this.mode = "months";
@@ -97,4 +102,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.zealot-date-picker {
+  &-nav {
+    background: red;
+  }
+  &-popWrapper {
+    padding: 0;
+  }
+}
 </style>
