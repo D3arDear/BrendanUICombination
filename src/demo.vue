@@ -7,7 +7,9 @@
         </z-sticky>
       </div>
     </main>
-
+    <!-- 下面的有效 -->
+    <z-date-picker></z-date-picker>
+    <!-- 上面的有效 -->
     <main style="margin: 50px 20px;">
       {{ error }}
       <div>只能上传 300kb 以内的 png jpeg 文件</div>
@@ -57,8 +59,6 @@
       :current-page.sync="currentPage"
       :hide-if-one-page="false"
     ></z-pager>
-    <!-- 下面的有效 -->
-    <z-date-picker></z-date-picker>
     <div>其他内容</div>
   </div>
 </template>

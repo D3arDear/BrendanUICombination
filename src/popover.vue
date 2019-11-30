@@ -2,7 +2,7 @@
   <div class="popover" ref="popover">
     <div
       ref="contentWrapper"
-      class="content-wrapper"
+      class="zealot-popover-content-wrapper"
       :class="[{ [`position-${position}`]: true }, popClassName]"
       v-if="visible"
     >
@@ -72,7 +72,7 @@ export default {
       }
     },
     container: {
-      type: Object
+      type: HTMLDivElement
     }
   },
   methods: {
@@ -155,7 +155,7 @@ $border-color: #ddd;
   vertical-align: top;
   position: relative;
 }
-.content-wrapper {
+.zealot-popover-content-wrapper {
   position: absolute;
   border: 1px solid $border-color;
   filter: drop-shadow(0 0 2px $box-shadow-color);
@@ -163,6 +163,7 @@ $border-color: #ddd;
   word-break: break-all;
   padding: 0.5em 1em;
   background: white;
+  z-index: 1;
   &::before,
   &::after {
     content: "";

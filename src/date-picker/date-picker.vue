@@ -1,6 +1,6 @@
 <template>
-  <div ref="wrapper">
-    <z-popover position="bottom" :container="this.$refs.wrapper">
+  <div ref="wrapper" class="zealot-date-picker">
+    <z-popover position="bottom" :container="popoverContainer">
       <z-input></z-input>
       <template slot="content">
         <div class="zealot-date-picker-pop">
@@ -12,7 +12,7 @@
             <span><z-icon name="right"></z-icon></span>
             <span><z-icon name="doubleRight"></z-icon></span>
           </div>
-          <div class="zealot-data-picker-panels">
+          <div class="zealot-date-picker-panels">
             <div v-if="mode === 'years'" class="zealot-date-picker-content">
               年
             </div>
@@ -49,7 +49,7 @@ import helper from "./helper";
 export default {
   components: { ZInput, ZIcon, ZPopover },
   directives: { ClickOutside },
-  name: "ZealotDataPicker",
+  name: "ZealotDatePicker",
   props: {
     firstDayOfWeek: 0 | 1
   },
@@ -58,11 +58,12 @@ export default {
       mode: "days",
       value: new Date(),
       helper: helper,
-      weekdays: ["日", "一", "二", "三", "四", "五", "六"]
+      weekdays: ["日", "一", "二", "三", "四", "五", "六"],
+      popoverContainer: null
     };
   },
   mounted() {
-    console.log(this.$refs.wrapper);
+    this.popoverContainer = this.$refs.wrapper;
   },
   methods: {
     onClickMonth() {
@@ -80,23 +81,14 @@ export default {
       let date = this.value;
       let first = helper.firstDayOfMonth(date);
       let last = helper.lastDayOfMonth(date);
-      let array = [];
       let [year, month, day] = helper.getYearMonthDate(date);
-      for (let i = first.getDate(); i <= last.getDate(); i++) {
-        array.push(new Date(year, month, i));
+      let n = first.getDay();
+      let array = [];
+      let x = first - (n === 0 ? 6 : n - 1) * 3600 * 24 * 1000;
+      for (let i = 0; i < 42; i++) {
+        array.push(new Date(x + i * 3600 * 24 * 1000));
       }
-      let n = first.getDay() === 0 ? 6 : first.getDay() - 1; // 0 - 6
-      let array2 = [];
-      for (let i = 0; i < n; i++) {
-        array2.push(new Date(year, month, -i));
-      }
-      array2 = array2.reverse();
-      let m = 42 - array.length - array2.length;
-      let array3 = [];
-      for (let i = 1; i <= m; i++) {
-        array3.push(new Date(year, month + 1, i));
-      }
-      return [...array2, ...array, ...array3];
+      return array;
     }
   }
 };
@@ -107,6 +99,9 @@ export default {
     background: red;
   }
   &-popWrapper {
+    padding: 0;
+  }
+  /deep/.zealot-popover-content-wrapper {
     padding: 0;
   }
 }
