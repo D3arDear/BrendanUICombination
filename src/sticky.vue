@@ -45,7 +45,6 @@ export default {
           left,
           width
         } = this.$refs.wrapper.getBoundingClientRect();
-        console.log(height, left, width);
         this.height = height + "px";
         this.left = left + "px";
         this.width = width + "px";

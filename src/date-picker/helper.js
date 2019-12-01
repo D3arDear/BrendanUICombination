@@ -14,7 +14,21 @@ export default {
     }
     return array;
   },
-  getYearMonthDate
+  getYearMonthDate,
+  addMonth(date, n) {
+    const [_1, month, _2] = getYearMonthDate(date);
+    const newMonth = month + n;
+    const copy = new Date(date);
+    copy.setMonth(newMonth);
+    return copy;
+  },
+  addYear(date, n) {
+    const [year] = getYearMonthDate(date);
+    const newYear = year + n;
+    const copy = new Date(date);
+    copy.setFullYear(newYear);
+    return copy;
+  }
 };
 function getYearMonthDate(date) {
   let year = date.getFullYear();
