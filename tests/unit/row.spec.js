@@ -14,7 +14,7 @@ describe("Row", () => {
   it("存在.", () => {
     expect(Row).to.exist;
   });
-  xit("接收 gutter 属性.", done => {
+  it("接收 gutter 属性.", done => {
     Vue.component("z-row", Row);
     Vue.component("z-col", Col);
     const wrapper = mount(Row, {
@@ -31,11 +31,9 @@ describe("Row", () => {
     const vm = wrapper.vm;
     vm.$nextTick(() => {
       let row = vm.$el;
-      console.log(row);
       expect(row.style.marginLeft).to.eq("-10px");
       expect(row.style.marginRight).to.eq("-10px");
       let cols = vm.$el.querySelectorAll(".col");
-      console.log(cols[0]);
       expect(cols[0].style.paddingRight).to.eq("10px");
       expect(cols[1].style.paddingLeft).to.eq("10px");
       done();

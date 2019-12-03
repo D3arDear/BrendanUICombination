@@ -14,7 +14,7 @@ describe("Toast", () => {
     expect(Toast).to.exist; // 断言 Button 存在
   });
   describe("props", function() {
-    xit("接受 autoClose", done => {
+    it("接受 autoClose", done => {
       let div = document.createElement("div");
       document.body.appendChild(div);
       const Constructor = Vue.extend(Toast);
