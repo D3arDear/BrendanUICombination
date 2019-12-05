@@ -59,7 +59,10 @@
       :current-page.sync="currentPage"
       :hide-if-one-page="false"
     ></z-pager>
-    <div>其他内容</div>
+    <div>
+      其他内容
+      <z-scroll></z-scroll>
+    </div>
   </div>
 </template>
 <script>
@@ -74,6 +77,7 @@ import ZIcon from "./icon";
 import ZSticky from "./sticky";
 import ZTableColumn from "./table-column";
 import ZDatePicker from "./date-picker/date-picker.vue";
+import ZScroll from "./scroll.vue";
 export default {
   name: "demo",
   components: {
@@ -87,7 +91,8 @@ export default {
     ZTable,
     ZUploader,
     ZIcon,
-    ZSticky
+    ZSticky,
+    ZScroll
   },
   data() {
     return {
