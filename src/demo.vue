@@ -61,7 +61,9 @@
     ></z-pager>
     <div>
       其他内容
-      <z-scroll></z-scroll>
+      <z-scroll style="height:400px;width:400px;margin:auto;">
+        <p style="margin:0;" v-for="i in 100">{{ i }}</p>
+      </z-scroll>
     </div>
   </div>
 </template>
