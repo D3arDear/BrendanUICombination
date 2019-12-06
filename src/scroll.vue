@@ -9,7 +9,12 @@
       <slot></slot>
     </div>
     <div class="zealot-scroll-track" v-show="scrollBarVisible">
-      <div class="zealot-scroll-bar" ref="bar">
+      <div
+        class="zealot-scroll-bar"
+        ref="bar"
+        @mousedown="onMouseDownScrollBar"
+        @selectstart="onSelectStartScrollBar"
+      >
         <div class="zealot-scroll-bar-inner"></div>
       </div>
     </div>
@@ -20,10 +25,21 @@ export default {
   name: "ZealotScroll",
   data() {
     return {
-      scrollBarVisible: false
+      scrollBarVisible: false,
+      isScrolling: false,
+      startPosition: undefined,
+      endPosition: undefined,
+      translateX: 0,
+      translateY: 0
     };
   },
   mounted() {
+    document.addEventListener("mousemove", e => {
+      this.onMouseMoveScrollBar(e);
+    });
+    document.addEventListener("mouseup", e => {
+      this.onMouseUpScrollBar(e);
+    });
     let { parent, child } = this.$refs;
     let translateY = 0;
     let { height: childHeight } = child.getBoundingClientRect();
@@ -38,7 +54,6 @@ export default {
     borderBottomWidth = parseInt(borderBottomWidth);
     paddingTop = parseInt(paddingTop);
     paddingBottom = parseInt(paddingBottom);
-    console.log(borderTopWidth, borderBottomWidth, paddingTop, paddingBottom);
     let maxHeight =
       childHeight -
       parentHeight +
@@ -77,6 +92,33 @@ export default {
     },
     onMouseLeave() {
       this.scrollBarVisible = false;
+      this.isScrolling = false;
+    },
+    onMouseDownScrollBar(e) {
+      this.isScrolling = true;
+      let { screenX, screenY } = e;
+      this.startPosition = { x: screenX, y: screenY };
+    },
+    onMouseMoveScrollBar(e) {
+      if (!this.isScrolling) {
+        return;
+      }
+      let { screenX, screenY } = e;
+      this.endPosition = { x: screenX, y: screenY };
+      let delta = {
+        x: this.endPosition.x - this.startPosition.x,
+        y: this.endPosition.y - this.startPosition.y
+      };
+      this.translateX = parseInt(this.translateX) + delta.x;
+      this.translateY = parseInt(this.translateY) + delta.y;
+      this.startPosition = this.endPosition;
+      this.$refs.bar.style.transform = `translate(0px,${this.translateY}px)`;
+    },
+    onMouseUpScrollBar(e) {
+      this.isScrolling = false;
+    },
+    onSelectStartScrollBar(e) {
+      e.preventDefault();
     }
   }
 };
