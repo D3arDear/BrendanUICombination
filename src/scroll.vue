@@ -43,6 +43,10 @@ export default {
   },
   beforeDestroy() {
     // 移除 document 的事件监听
+    document.removeEventListener("mousemove", e =>
+      this.onMouseMoveScrollBar(e)
+    );
+    document.removeEventListener("mouseup", e => this.onMouseUpScrollBar(e));
   },
   mounted() {
     this.listenToDocument();
@@ -167,7 +171,7 @@ export default {
   transition: transform 0.05s ease;
   &-wrapper {
     overflow: hidden;
-    position: absolute;
+    position: relative;
   }
   &-track {
     position: absolute;

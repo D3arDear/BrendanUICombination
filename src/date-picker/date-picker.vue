@@ -26,7 +26,16 @@
             <div class="zealot-date-picker-content">
               <template v-if="mode === 'month'">
                 <div :class="c('selectMonth')">
-                  选择年和月
+                  <select @change="onSelectYear" :value="display.year">
+                    <option v-for="year in years" :key="year" :value="year">{{
+                      year
+                    }}</option> </select
+                  >年
+                  <select @change="onSelectMonth" :value="display.month">
+                    <option v-for="month in 12" :value="month - 1">{{
+                      String(month)
+                    }}</option> </select
+                  >月
                 </div>
               </template>
               <template v-else>
@@ -71,8 +80,9 @@ import ZIcon from "../icon.vue";
 import ClickOutside from "../click-outside";
 import ZPopover from "../popover";
 import helper from "./helper";
+import ZScroll from "../scroll.vue";
 export default {
-  components: { ZInput, ZIcon, ZPopover },
+  components: { ZInput, ZIcon, ZPopover, ZScroll },
   directives: { ClickOutside },
   name: "ZealotDatePicker",
   props: {
@@ -85,6 +95,10 @@ export default {
       default: () => {
         return new Date();
       }
+    },
+    scope: {
+      type: Array,
+      default: () => [new Date(1900, 0, 1), helper.addYear(new Date(), 100)]
     }
   },
   data() {
@@ -99,8 +113,27 @@ export default {
   },
   mounted() {
     this.popoverContainer = this.$refs.wrapper;
+    console.log(this.years);
   },
   methods: {
+    onSelectYear(e) {
+      const year = Number(e.target.value);
+      const d = new Date(year, this.display.month);
+      if (d > this.scope[0] && d <= this.scope[1]) {
+        this.display.year = Number(e.target.value);
+      } else {
+        e.target.value = this.display.year;
+      }
+    },
+    onSelectMonth(e) {
+      const month = Number(e.target.value);
+      const d = new Date(this.display.year, month);
+      if (d > this.scope[0] && d <= this.scope[1]) {
+        this.display.month = Number(e.target.value);
+      } else {
+        e.target.value = this.display.month;
+      }
+    },
     onClickNextMonth() {
       const oldDate = new Date(this.display.year, this.display.month);
       const newDate = helper.addMonth(oldDate, 1);
@@ -145,6 +178,12 @@ export default {
     }
   },
   computed: {
+    years() {
+      return helper.range(
+        this.scope[0].getFullYear(),
+        this.scope[1].getFullYear() + 1
+      );
+    },
     formattedValue() {
       const [year, month, day] = helper.getYearMonthDate(this.value);
       return `${year}-${month + 1}-${day}`;
@@ -202,6 +241,9 @@ export default {
   &-selectMonth {
     width: 224px;
     height: 224px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   /deep/.zealot-popover-content-wrapper {
     padding: 0;

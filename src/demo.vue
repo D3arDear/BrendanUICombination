@@ -8,7 +8,11 @@
       </div>
     </main>
     <!-- 下面的有效 -->
-    <z-date-picker :value="d" @input="d = $event"></z-date-picker>
+    <z-date-picker
+      :value="d"
+      @input="d = $event"
+      :scope="scope"
+    ></z-date-picker>
     <!-- 上面的有效 -->
     <main style="margin: 50px 20px;">
       {{ error }}
@@ -103,6 +107,7 @@ export default {
       currentPage: 1,
       selected: [],
       d: new Date(),
+      scope: [new Date(1959, 1), new Date(2019, 6)],
       orderBy: {
         score: "desc",
         rank: "desc"
