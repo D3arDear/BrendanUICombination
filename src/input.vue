@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper" :class="{ error }">
     <input
+      ref="input"
       :value="value"
       type="text"
       :disabled="disabled"
@@ -35,6 +36,11 @@ export default {
     },
     error: {
       type: String
+    }
+  },
+  methods: {
+    setRawValue(value) {
+      this.$refs.input.value = value;
     }
   }
 };

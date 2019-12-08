@@ -126,10 +126,12 @@ export default {
     },
     close() {
       this.visible = false;
+      this.$emit("open");
       document.removeEventListener("click", this.onClickDocument);
     },
     open() {
       this.visible = true;
+      this.$emit("close");
       this.$nextTick(() => {
         this.positionContent();
         document.addEventListener("click", this.onClickDocument);

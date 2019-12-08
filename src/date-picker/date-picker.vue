@@ -1,7 +1,18 @@
 <template>
   <div ref="wrapper" class="zealot-date-picker">
-    <z-popover position="bottom" :container="popoverContainer">
-      <z-input type="text" :value="formattedValue"></z-input>
+    <z-popover
+      ref="zealotPopover"
+      position="bottom"
+      :container="popoverContainer"
+      @open="onOpen"
+    >
+      <z-input
+        type="text"
+        :value="formattedValue"
+        @input="onInput"
+        @change="onChange"
+        ref="datePickerInput"
+      ></z-input>
       <template slot="content">
         <div class="zealot-date-picker-pop" @selectstart.prevent>
           <div class="zealot-date-picker-nav">
@@ -26,16 +37,21 @@
             <div class="zealot-date-picker-content">
               <template v-if="mode === 'month'">
                 <div :class="c('selectMonth')">
-                  <select @change="onSelectYear" :value="display.year">
-                    <option v-for="year in years" :key="year" :value="year">{{
-                      year
-                    }}</option> </select
-                  >年
-                  <select @change="onSelectMonth" :value="display.month">
-                    <option v-for="month in 12" :value="month - 1">{{
-                      String(month)
-                    }}</option> </select
-                  >月
+                  <div :class="c('selects')">
+                    <select @change="onSelectYear" :value="display.year">
+                      <option v-for="year in years" :key="year" :value="year">{{
+                        year
+                      }}</option> </select
+                    >年
+                    <select @change="onSelectMonth" :value="display.month">
+                      <option v-for="month in 12" :value="month - 1">{{
+                        String(month)
+                      }}</option> </select
+                    >月
+                  </div>
+                  <div :class="c('returnToDayMode')">
+                    <button @click="mode = 'day'">返回</button>
+                  </div>
                 </div>
               </template>
               <template v-else>
@@ -116,6 +132,22 @@ export default {
     this.popoverContainer = this.$refs.wrapper;
   },
   methods: {
+    onInput(value) {
+      var regex = /^\d{4}-\d{2}-\d{2}$/;
+      if (value.match(regex)) {
+        let [year, month, day] = value.split("-");
+        month = month - 1;
+        year = year - 0;
+        this.display = { year, month };
+        this.$emit("input", new Date(year, month, day));
+      }
+    },
+    onChange() {
+      this.$refs.datePickerInput.setRawValue(this.formattedValue);
+    },
+    onOpen() {
+      this.mode = "day";
+    },
     onClickToday() {
       const now = new Date();
       const [year, month, day] = helper.getYearMonthDate(now);
@@ -123,8 +155,8 @@ export default {
       this.$emit("input", new Date(year, month, day));
     },
     onClickClear() {
-      console.log("清除");
       this.$emit("input", undefined);
+      this.$refs.zealotPopover.close();
     },
     onSelectYear(e) {
       const year = Number(e.target.value);
@@ -193,6 +225,7 @@ export default {
     onClickCell(date) {
       if (this.isCurrentMonth(date)) {
         this.$emit("input", date);
+        this.$refs.zealotPopover.close();
       }
     },
     isCurrentMonth(date) {
@@ -212,7 +245,7 @@ export default {
         return "";
       }
       const [year, month, day] = helper.getYearMonthDate(this.value);
-      return `${year}-${month + 1}-${day}`;
+      return `${year}-${month + 1}-${helper.pad2(day)}`;
     },
     visibleDays() {
       let date = new Date(this.display.year, this.display.month, 1);
@@ -284,6 +317,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+  }
+  &-selects {
+  }
+  &-returnToDayMode {
+    margin-top: 8px;
   }
   /deep/.zealot-popover-content-wrapper {
     padding: 0;
