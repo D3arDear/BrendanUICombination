@@ -153,6 +153,11 @@ export default {
       ]
     };
   },
+  watch: {
+    d(newValue) {
+      console.log(newValue);
+    }
+  },
   methods: {
     alert(error) {
       window.alert(error || "上传失败");

@@ -53,7 +53,9 @@
                     :class="[
                       c('cell'),
                       {
-                        currentMonth: isCurrentMonth(getVisibleDay(i, j))
+                        currentMonth: isCurrentMonth(getVisibleDay(i, j)),
+                        selected: isSelected(getVisibleDay(i, j)),
+                        today: isToday(getVisibleDay(i, j))
                       }
                     ]"
                     v-for="j in helper.range(1, 8)"
@@ -67,7 +69,8 @@
             </div>
           </div>
           <div class="zealot-date-picker-actions">
-            <button>清除</button>
+            <z-button @click="onClickToday">今天</z-button>
+            <z-button @click="onClickClear">清除</z-button>
           </div>
         </div>
       </template>
@@ -81,8 +84,9 @@ import ClickOutside from "../click-outside";
 import ZPopover from "../popover";
 import helper from "./helper";
 import ZScroll from "../scroll.vue";
+import ZButton from "../button/button";
 export default {
-  components: { ZInput, ZIcon, ZPopover, ZScroll },
+  components: { ZInput, ZIcon, ZPopover, ZScroll, ZButton },
   directives: { ClickOutside },
   name: "ZealotDatePicker",
   props: {
@@ -91,10 +95,7 @@ export default {
       default: 1
     },
     value: {
-      type: Date,
-      default: () => {
-        return new Date();
-      }
+      type: Date
     },
     scope: {
       type: Array,
@@ -102,7 +103,7 @@ export default {
     }
   },
   data() {
-    let [year, month] = helper.getYearMonthDate(this.value);
+    let [year, month] = helper.getYearMonthDate(this.value || new Date());
     return {
       mode: "days",
       helper: helper,
@@ -113,9 +114,18 @@ export default {
   },
   mounted() {
     this.popoverContainer = this.$refs.wrapper;
-    console.log(this.years);
   },
   methods: {
+    onClickToday() {
+      const now = new Date();
+      const [year, month, day] = helper.getYearMonthDate(now);
+      this.display = { year, month };
+      this.$emit("input", new Date(year, month, day));
+    },
+    onClickClear() {
+      console.log("清除");
+      this.$emit("input", undefined);
+    },
     onSelectYear(e) {
       const year = Number(e.target.value);
       const d = new Date(year, this.display.month);
@@ -158,6 +168,19 @@ export default {
       const [year, month] = helper.getYearMonthDate(newDate);
       this.display = { year, month };
     },
+    isSelected(date) {
+      if (!this.value) {
+        return false;
+      }
+      let [y, m, d] = helper.getYearMonthDate(date);
+      let [y2, m2, d2] = helper.getYearMonthDate(this.value);
+      return y === y2 && m === m2 && d === d2;
+    },
+    isToday(date) {
+      let [y, m, d] = helper.getYearMonthDate(date);
+      let [y2, m2, d2] = helper.getYearMonthDate(new Date());
+      return y === y2 && m === m2 && d === d2;
+    },
     onClickMonth() {
       this.mode !== "month" ? (this.mode = "month") : (this.mode = "days");
     },
@@ -185,6 +208,9 @@ export default {
       );
     },
     formattedValue() {
+      if (!this.value) {
+        return "";
+      }
       const [year, month, day] = helper.getYearMonthDate(this.value);
       return `${year}-${month + 1}-${day}`;
     },
@@ -205,6 +231,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "var";
 .zealot-date-picker {
   &-nav {
     display: flex;
@@ -231,8 +258,21 @@ export default {
   }
   &-cell {
     color: #ddd;
+    cursor: not-allowed;
     &.currentMonth {
       color: #444;
+      transition: all 0.3s;
+      border-radius: $border-radius;
+      &:hover {
+        background: $blue;
+        cursor: pointer;
+      }
+    }
+    &.today {
+      background: $grey;
+    }
+    &.selected {
+      border: 1px solid $blue;
     }
   }
   &-yearAndMonth {
@@ -247,6 +287,10 @@ export default {
   }
   /deep/.zealot-popover-content-wrapper {
     padding: 0;
+  }
+  &-actions {
+    padding: 8px;
+    text-align: right;
   }
 }
 </style>

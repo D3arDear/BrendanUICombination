@@ -1,12 +1,12 @@
 <template>
   <button
-    class="z-button"
+    class="zealot-button"
     :class="{ [`icon-${iconposition}`]: true }"
     @click="$emit('click')"
   >
     <z-icon class="icon loading" name="loading" v-if="loading"></z-icon>
     <z-icon class="icon" v-if="icon && !loading" :name="icon"></z-icon>
-    <div class="z-button-content">
+    <div class="zealot-button-content">
       <slot></slot>
     </div>
   </button>
@@ -39,7 +39,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "var";
-.z-button {
+.zealot-button {
   font-size: $font-size;
   height: $button-height;
   padding: 0 1em;
@@ -67,7 +67,7 @@ export default {
     margin-left: 0;
     fill: #636363;
   }
-  > .z-button-content {
+  > .zealot-button-content {
     order: 2;
     vertical-align: middle;
     display: inline-flex;
@@ -81,13 +81,16 @@ export default {
       margin-left: 0.1em;
       margin-right: 0;
     }
-    > .z-button-content {
+    > .zealot-button-content {
       order: 1;
     }
   }
   .loading {
     @include spin;
     fill: #acacac;
+  }
+  & + & {
+    margin-left: 4px;
   }
 }
 </style>
